@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Tab One
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <div id="content">
+    Hello InJoy
+    <div *ngIf="myPosition">
+      Localização atual:
+      <div>Latidute: {{myPosition.latitude}}</div>
+      <div>Longitude: {{myPosition.longitude}}</div>
+      <div>Total de updates: {{totalGeolocationUpdates}}</div>
+      <div *ngIf="myLocal">
+        <div>Estabelecimento comercial:{{myLocal.display_name}}</div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <div>foreground: {{foreground}}</div>
+    <div>background: {{background}}</div>
+  </div>
+
+</ion-content>
