@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Vaaaamo!
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="formItem">
+    <img *ngIf="photo" src="{{photo}}"/>
+    <ion-button expand="block" color="medium" (click)="addPicture()">add fotenha</ion-button>
+  </div>
+  <div class="formItem">
+    <div>{{location}}</div> 
+    <ion-button expand="block" color="medium" (click)="addLocation()">add rolê</ion-button>
+  </div>
+</ion-content>
+
+<ion-footer no-shadow>
+  <ion-toolbar position="bottom">
+    <ion-button id="addExperience" expand="block" color="primary" (click)="addExperience()">publicar experiência</ion-button>
+  </ion-toolbar>
+</ion-footer>

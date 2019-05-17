@@ -12,6 +12,6 @@ export class TabsPage implements OnInit {
   }
 
   onDeviceReady() {
-    console.log('device is ready!!!')
+    console.log('device is ready from tabs!!!')
   }
 }

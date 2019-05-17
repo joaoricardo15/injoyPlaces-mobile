@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { AddExperiencePage } from '../addExperience/addExperience.page';
 
 const routes: Routes = [
   {
@@ -17,11 +18,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab2',
+        path: 'addExperience',
         children: [
           {
             path: '',
-            loadChildren: '../tab2/tab2.module#Tab2PageModule'
+            loadChildren: '../addExperience/addExperience.module#AddExperienceModule'
           }
         ]
       },

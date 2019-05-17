@@ -9,20 +9,16 @@
 <ion-content>
   
   <div id="content">
-    Hello InJoy
-    <div *ngIf="myPosition">
+    Hello Pedrinho
+    <div *ngIf="backgroundGeolocation.myPosition">
       Localização atual:
-      <div>Latidute: {{myPosition.latitude}}</div>
-      <div>Longitude: {{myPosition.longitude}}</div>
-      <div>Total de updates: {{totalGeolocationUpdates}}</div>
-      <div *ngIf="myLocal">
-        <div>Estabelecimento comercial:{{myLocal.display_name}}</div>
+      <div>Latidute: {{backgroundGeolocation.myPosition.latitude}}</div>
+      <div>Longitude: {{backgroundGeolocation.myPosition.longitude}}</div>
+      <div>Total de updates: {{backgroundGeolocation.totalGeolocationUpdates}}</div>
+      <div *ngIf="backgroundGeolocation.myLocal">
+        <div>Estabelecimento comercial:{{backgroundGeolocation.myLocal.display_name}}</div>
       </div>
     </div>
-    <br/>
-    <br/>
-    <div>foreground: {{foreground}}</div>
-    <div>background: {{background}}</div>
   </div>
 
 </ion-content>
