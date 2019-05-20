@@ -1,13 +1,4 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Vaaaamo!
-    </ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <form  #form="ngForm" (ngSubmit)="addExperience(form)">
-
   <ion-content id="content">
     <div >
       <ion-grid>
@@ -28,17 +19,15 @@
         </ion-row>
       </ion-grid>
       <ion-img id="picture" [src]="pic"></ion-img>
-      <ion-button id="addPictureButton" size="large" color="warning" fill="outline" (click)="addPicture()">
+      <ion-button id="addPictureButton" size="large" fill="outline" (click)="addPicture()">
         <ion-icon name="camera" size="large" color="primary"></ion-icon>
       </ion-button>
     </div>
   </ion-content>
-
   <ion-footer>
     <ion-toolbar>
       <ion-button *ngIf="name" (click)="addExperience()" expand="block" color="primary">publicar experiência</ion-button>
       <ion-button *ngIf="!name" type="submit" [disabled]="!form.valid" expand="block" color="primary">publicar experiência</ion-button>
     </ion-toolbar>
   </ion-footer>
-
 </form>
