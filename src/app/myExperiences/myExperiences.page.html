@@ -1,0 +1,36 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Minhas experiências
+    </ion-title>
+  </ion-toolbar>
+</ion-header> -->
+  
+<ion-content>
+  <div id="content">
+    <ion-toolbar>
+      <ion-title>Minhas conquistas</ion-title>
+    </ion-toolbar>
+    
+    <ion-list>
+      <ion-item>
+        <ion-icon name="ribbon"></ion-icon>
+        <ion-label class="title">Total de experiências</ion-label>
+        <ion-badge>{{myExperiences.roles.length}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="trophy"></ion-icon>
+        <ion-label class="title">Rolês descobertos</ion-label>
+        <ion-badge>{{myExperiences.opened}}</ion-badge>
+      </ion-item>
+    </ion-list>
+   
+    <ion-toolbar>
+      <ion-title>Minhas experiências</ion-title>
+    </ion-toolbar>
+    
+    <div id="experiences">
+      <role class="experience" *ngFor="let experience of myExperiences.roles" [role]="experience"></role>
+    </div>
+  </div>
+</ion-content>

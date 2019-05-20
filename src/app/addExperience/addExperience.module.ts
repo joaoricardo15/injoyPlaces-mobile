@@ -1,23 +1,27 @@
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule as AngularCommonModule } from '@angular/common';
+import { CommonModule } from '../common/common.module';
 import { FormsModule } from '@angular/forms';
 import { AddExperiencePage } from './addExperience.page';
-import { CameraService } from '../utils/camera.service.';
+import { CameraService } from '../common/services/camera.service.';
+import { GeolocationService } from '../common/services/geolocation.service';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
+    AngularCommonModule,
     FormsModule,
     RouterModule.forChild([{ path: '', component: AddExperiencePage }])
   ],
   declarations: [
-    AddExperiencePage
+    AddExperiencePage,
   ],
   providers: [
-    CameraService
+    CameraService,
+    GeolocationService,
   ]
 })
 export class AddExperienceModule {}

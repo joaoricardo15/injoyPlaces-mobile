@@ -1,24 +1,44 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>
       Vaaaamo!
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content>
-  <div class="formItem">
-    <img *ngIf="photo" src="{{photo}}"/>
-    <ion-button expand="block" color="medium" (click)="addPicture()">add fotenha</ion-button>
-  </div>
-  <div class="formItem">
-    <div>{{location}}</div> 
-    <ion-button expand="block" color="medium" (click)="addLocation()">add rolê</ion-button>
-  </div>
-</ion-content>
+<form  #form="ngForm" (ngSubmit)="addExperience(form)">
 
-<ion-footer no-shadow>
-  <ion-toolbar position="bottom">
-    <ion-button id="addExperience" expand="block" color="primary" (click)="addExperience()">publicar experiência</ion-button>
-  </ion-toolbar>
-</ion-footer>
+  <ion-content id="content">
+    <div >
+      <ion-grid>
+        <ion-row id="nameForm" justify-content-center>
+          <ion-label id="name" *ngIf="name" size="large" >{{name}}</ion-label>
+          <div id="newRole" *ngIf="!name">
+            <ion-icon id="newRoleTitleIcon"name="trophy" size="large" color="primary"></ion-icon>
+            <ion-label id="newRoleTitle">Novo Rolê</ion-label>
+            <ion-input id="newRoleInput" name="name" type="text" placeholder="digite o nome rolê" size="large" ngModel required></ion-input>
+          </div> 
+        </ion-row>
+        <ion-row id="ratting" justify-content-center>
+          <role-ratting
+            [size]="'large'" 
+            [rate]="ratting" 
+            (onRate)="ratting = $event">
+          </role-ratting>
+        </ion-row>
+      </ion-grid>
+      <ion-img id="picture" [src]="pic"></ion-img>
+      <ion-button id="addPictureButton" size="large" color="warning" fill="outline" (click)="addPicture()">
+        <ion-icon name="camera" size="large" color="primary"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-content>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button *ngIf="name" (click)="addExperience()" expand="block" color="primary">publicar experiência</ion-button>
+      <ion-button *ngIf="!name" type="submit" [disabled]="!form.valid" expand="block" color="primary">publicar experiência</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+
+</form>

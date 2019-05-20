@@ -1,9 +1,50 @@
-
-
-.formItem {
-  display: flex;
+#content {
+  min-height: 74vh;
 }
 
-#addExperience {
-  float: bottom;
+#ratting, #name {
+  height: 100%;
+}
+
+#name {
+  font-size: 30px;
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+
+#newRole {
+  margin-top: 8%;
+}
+
+#newRoleTitleIcon {
+  margin-left: 18%;
+}
+
+#newRoleTitle {
+  font-size: 30px;
+  vertical-align: text-bottom;
+  margin-left: 10px;
+}
+
+#newRoleInput {
+  font-size: 20px;
+  margin-top: 5%;
+  margin-left: 20%;
+  margin-bottom: 5%;
+}
+
+#ratting {
+  zoom: 1.3;
+}
+
+#picture {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+#addPictureButton {
+  width: 50%;
+  height: 80%;
+  margin-top: 8%;
+  margin-left: 25%;
 }

@@ -1,0 +1,25 @@
+#main {
+
+}
+
+#header {
+  border-bottom: 1px solid var(--ion-color-medium-tint);
+}
+
+#title {
+  color: var(--ion-color-dark);
+}
+
+#content {
+  display: flex;
+  overflow: auto;
+}
+
+.role {
+  margin: 10px;
+}
+
+#content div {
+  margin-left: 0;
+}
+

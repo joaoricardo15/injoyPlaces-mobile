@@ -1,0 +1,12 @@
+<div id="main">
+  <div id="header">
+    <ion-toolbar><ion-title>
+      <div id="title">{{list.title}}</div>
+    </ion-title></ion-toolbar>
+  </div>
+  <div id="content" *ngIf="list.roles">
+    <div class="role" *ngFor="let role of list.roles">
+      <role [role]="role"></role>
+    </div>
+  </div>
+</div>

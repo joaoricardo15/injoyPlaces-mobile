@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
-import { AddExperiencePage } from '../addExperience/addExperience.page';
 
 const routes: Routes = [
   {
@@ -9,11 +8,11 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'myList',
         children: [
           {
             path: '',
-            loadChildren: '../tab1/tab1.module#Tab1PageModule'
+            loadChildren: '../myList/myList.module#MyListModule'
           }
         ]
       },
@@ -27,24 +26,24 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab3',
+        path: 'myExperiences',
         children: [
           {
             path: '',
-            loadChildren: '../tab3/tab3.module#Tab3PageModule'
+            loadChildren: '../myExperiences/myExperiences.module#MyExperiencesModule'
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/myList',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/myList',
     pathMatch: 'full'
   }
 ];

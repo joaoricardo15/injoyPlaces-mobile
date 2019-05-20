@@ -1,29 +1,13 @@
-import { Injectable, OnDestroy } from '@angular/core'
-import { BackgroundGeolocation, BackgroundGeolocationEvents, BackgroundGeolocationResponse, BackgroundGeolocationConfig } from '@ionic-native/background-geolocation';
-import { OpenStreepMapService } from './openStreetMap.service';
-import { InjoyApiService } from './injoyApi.service';
+import { Injectable } from '@angular/core'
+import { BackgroundGeolocation, BackgroundGeolocationEvents, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
+import { ApiService } from './api.service';
 
 @Injectable()
 export class BackgroundGeolocationService {
 
   public myPosition;
-  public myLocal;
-  public totalGeolocationUpdates: number = 0;
 
-  constructor(private injoyApi: InjoyApiService, private openStreetMap: OpenStreepMapService) { }
-
-  getCurrentLocation() {
-    return new Promise((resolve, reject) => {
-      BackgroundGeolocation.getCurrentLocation()
-        .then(position => {
-          this.openStreetMap.getMyLocal(position.latitude, position.longitude)
-            .subscribe(
-              local => { resolve(local['display_name'].split(',')[0]) },
-              error => { reject(error)  })
-        })
-        .catch(error => { reject(error) })
-    })
-  }
+  constructor(private injoyApi: ApiService) { }
 
   startBackgroundGeolocationTracker() {   
     BackgroundGeolocation.configure(config)
@@ -54,11 +38,6 @@ export class BackgroundGeolocationService {
     BackgroundGeolocation.on(BackgroundGeolocationEvents.location)
       .subscribe(position => {
         this.myPosition = position
-        this.totalGeolocationUpdates++
-        this.openStreetMap.getMyLocal(position.latitude, position.longitude)
-          .subscribe(local => {
-            this.myLocal = local
-          });
       });   
   }
 }

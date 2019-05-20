@@ -1,0 +1,27 @@
+#main {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  background-color: black;
+}
+
+#imageBackground {
+  position: relative;
+  width: 200px;
+  margin: 0;
+
+  & > div {
+    opacity: 0.8;
+
+    img {
+      position: absolute;
+      margin-left: -15%;
+    }
+  }
+}
+
+#content {
+  height: 100%;
+  padding: 10px;
+  position: relative;
+}
