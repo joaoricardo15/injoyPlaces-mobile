@@ -1,33 +1,66 @@
-<form  #form="ngForm" (ngSubmit)="addExperience(form)">
+<form [formGroup]="form" (ngSubmit)="addExperience(form.value, form.valid)">
   <ion-content id="content">
-    <div >
+    <div *ngIf="contetReady">
       <ion-grid>
+
         <ion-row id="nameForm" justify-content-center>
-          <ion-label id="name" *ngIf="name" size="large" >{{name}}</ion-label>
-          <div id="newRole" *ngIf="!name">
-            <ion-icon id="newRoleTitleIcon"name="trophy" size="large" color="primary"></ion-icon>
-            <ion-label id="newRoleTitle">Novo Rolê</ion-label>
-            <ion-input id="newRoleInput" name="name" type="text" placeholder="digite o nome rolê" size="large" ngModel required></ion-input>
+
+          <ion-chip *ngIf="name.value" color="primary">
+            <ion-icon name="pin"></ion-icon>
+            <ion-label color="dark">{{name.value}}</ion-label>
+            <ion-icon *ngIf="!currentRole" name="close-circle" (click)="name.setValue(null)"></ion-icon>
+          </ion-chip>
+
+          <ion-icon *ngIf="currentRoles && currentRoles.length > 0" name="arrow-dropdown" size="large" color="primary" (click)="presentActionSheet('roles')"></ion-icon>
+          
+          <div *ngIf="!name.value">
+            <div>
+              <ion-icon name="trophy" size="large" color="primary"></ion-icon>
+              <ion-label>Novo Rolê</ion-label>
+            </div>
+            <ion-input id="nameInput" (keyup.enter)="onName()" (focusout)="onName()" type="text" size="large" text-center placeholder="digite o nome rolê"></ion-input>
           </div> 
         </ion-row>
+
         <ion-row id="ratting" justify-content-center>
-          <role-ratting
-            [size]="'large'" 
-            [rate]="ratting" 
-            (onRate)="ratting = $event">
-          </role-ratting>
+          <role-rating
+            [size]="'large'"
+            [rate]="ratting.value" 
+            (onRate)="ratting.setValue($event)">
+          </role-rating>
         </ion-row>
+
+        <ion-row id="tag" justify-content-center>
+          <ion-chip *ngIf="tag.value" class="tagChip" color="primary">
+            <ion-icon name="pricetag"></ion-icon>
+            <ion-label class="tagChip" color="dark">{{tag.value}}</ion-label>
+            <ion-icon name="close-circle" (click)="tag.setValue(null)"></ion-icon>
+          </ion-chip>
+          <div id="newTag" *ngIf="!tag.value">
+            <ion-input id="tagInput" (keyup.enter)="onTag()" (focusout)="onTag()" type="text" size="large" text-center placeholder="digite a tag do rolê" ></ion-input>
+            <ion-icon *ngIf="currentRole" name="arrow-dropdown" size="large" color="primary" (click)="presentActionSheet('tags')"></ion-icon>
+          </div>
+        </ion-row>
+
+        <ion-fab vertical="top" horizontal="end" slot="fixed">
+          <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <ion-row id="image" justify-content-center>
+          <ion-img id="picture" [src]="pic.value"></ion-img>
+          <ion-button id="addPictureButton"  (click)="addPicture()">
+            <ion-icon name="camera" size="large" color="light"></ion-icon>
+          </ion-button>
+        </ion-row>
+
       </ion-grid>
-      <ion-img id="picture" [src]="pic"></ion-img>
-      <ion-button id="addPictureButton" size="large" fill="outline" (click)="addPicture()">
-        <ion-icon name="camera" size="large" color="primary"></ion-icon>
-      </ion-button>
     </div>
   </ion-content>
   <ion-footer>
     <ion-toolbar>
-      <ion-button *ngIf="name" (click)="addExperience()" expand="block" color="primary">publicar experiência</ion-button>
-      <ion-button *ngIf="!name" type="submit" [disabled]="!form.valid" expand="block" color="primary">publicar experiência</ion-button>
+      <ion-button type="submit" [disabled]="form.invalid" expand="block" color="primary">publicar experiência</ion-button>
     </ion-toolbar>
   </ion-footer>
 </form>

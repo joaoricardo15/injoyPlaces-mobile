@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule as AngularCommonModule } from '@angular/common';
 import { CommonModule } from '../common/common.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddExperiencePage } from './addExperience.page';
 import { CameraService } from '../common/services/camera.service.';
 import { GeolocationService } from '../common/services/geolocation.service';
@@ -14,6 +14,7 @@ import { GeolocationService } from '../common/services/geolocation.service';
     CommonModule,
     AngularCommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([{ path: '', component: AddExperiencePage }])
   ],
   declarations: [

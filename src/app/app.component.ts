@@ -20,7 +20,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then((device) => {
       this.splashScreen.hide();
-      this.backgroundGeolocation.startBackgroundGeolocationTracker();
+      //this.backgroundGeolocation.startBackgroundGeolocationTracker();
     });
   }
 }

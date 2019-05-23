@@ -1,0 +1,13 @@
+<div id="main" *ngIf="role">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-icon name="arrow-back" size="large" (click)="back()"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+
+  <div>name: {{role.name}}</div>
+  <div>rating: {{role.ratting}}</div>
+  <div>pic: {{role.pic}}</div>
+  <div *ngFor="let tag of role.tags">{{tag}}</div>
+</div>

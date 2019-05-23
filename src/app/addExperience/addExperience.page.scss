@@ -1,50 +1,86 @@
+@import './../styles/sizes.scss';
+
 #content {
   min-height: 74vh;
 }
 
-#ratting, #name {
-  height: 100%;
-}
+#nameForm {
+  height: $global-size-spacing-extraLarge*2;
+  margin: $global-size-spacing-extraLarge;
 
-#name {
-  font-size: 30px;
-  margin-top: 5%;
-  margin-bottom: 10%;
-}
+  & > ion-chip {
+    padding: $global-size-spacing-extraLarge;
 
-#newRole {
-  margin-top: 8%;
-}
+    & > ion-label {
+      width: 100%;
+      overflow: hidden;
+      word-break: break-all;
+      height: $global-size-font-extraLarge;
+      font-size: $global-size-font-extraLarge;
+      padding-left: $global-size-spacing-large;
+      padding-right: $global-size-spacing-large;
+    }
+  }
 
-#newRoleTitleIcon {
-  margin-left: 18%;
-}
+  & > ion-icon {
+    position: absolute;
+    right: $global-size-spacing-extraLarge;
+    top: $global-size-spacing-extraLarge + $global-size-spacing-default;
+  }
 
-#newRoleTitle {
-  font-size: 30px;
-  vertical-align: text-bottom;
-  margin-left: 10px;
-}
+  & > div {
 
-#newRoleInput {
-  font-size: 20px;
-  margin-top: 5%;
-  margin-left: 20%;
-  margin-bottom: 5%;
+    & > div {
+      text-align: center;
+
+      & > ion-icon {
+        vertical-align: bottom;
+      }
+  
+      & > ion-label {
+        font-size: $global-size-font-large;
+        margin-left: $global-size-spacing-default;
+      }
+    }
+
+    & > ion-input {
+      margin-top: $global-size-spacing-large;
+    }
+  }
 }
 
 #ratting {
   zoom: 1.3;
 }
 
-#picture {
-  margin-left: 15%;
-  margin-right: 15%;
+#tag {
+  height: $global-size-spacing-extraLarge;
+  padding-top: $global-size-spacing-large;
 }
 
-#addPictureButton {
+#newTag {
+  display: flex;
+
+  & > ion-icon {
+    position: absolute;
+    right: $global-size-spacing-extraLarge;
+  }
+}
+
+.tagChip {
+  padding: $global-size-spacing-default;
+}
+
+#image {
+  margin-top: $global-size-spacing-large;
+}
+
+#picture {
+  width: 80%;
+}
+
+#addPictureButton { 
   width: 50%;
-  height: 80%;
-  margin-top: 8%;
-  margin-left: 25%;
+  position: absolute;
+  bottom: $global-size-spacing-large;
 }

@@ -1,11 +1,12 @@
-<div id="main">
+<div id="main" (click)="navigate()">
   <div id="imageBackground">
     <div><img src="{{role.pic}}"></div>
   </div>
   <div id="content">
-    <role-display>
-      {{role.name}}
-      <role-ratting [rate]="role.ratting"></role-ratting>
-    </role-display>
+    <div id="name">{{role.name}}</div>
+    <role-rating [rate]="role.ratting"></role-rating>
+    <div id="tags">
+      <role-tag *ngFor="let role of role.tags">{{role}}</role-tag>
+    </div>    
   </div>
 </div>

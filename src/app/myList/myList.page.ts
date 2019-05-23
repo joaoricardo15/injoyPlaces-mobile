@@ -14,9 +14,9 @@ export class MyListPage implements AfterContentInit {
 
   ngAfterContentInit () {
     this.api.getMyList()
-    .subscribe(myList => {
-      this.myList = myList.myList
-    })
+      .then(myList => {
+        this.myList = myList.myList
+      })
   }
 
   segmentChanged() {

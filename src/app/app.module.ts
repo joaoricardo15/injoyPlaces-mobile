@@ -11,13 +11,17 @@ import { BackgroundGeolocationService } from './common/services/backgroundGeoloc
 import { ApiService } from './common/services/api.service';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(), 
     AppRoutingModule, 
+  ],
+  entryComponents: [
+
   ],
   providers: [
     StatusBar,
@@ -26,6 +30,7 @@ import { ApiService } from './common/services/api.service';
     BackgroundGeolocationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule {}

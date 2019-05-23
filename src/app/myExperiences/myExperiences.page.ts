@@ -15,8 +15,8 @@ export class MyExperiencesPage implements AfterContentInit {
 
   ngAfterContentInit () {
     this.api.getMyList()
-    .subscribe(myList => {
-      this.myExperiences = myList.myExperiences
-    })
+      .then(myList => {
+        this.myExperiences = myList.myExperiences
+      })
   }
 }

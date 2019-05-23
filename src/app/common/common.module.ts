@@ -4,10 +4,14 @@ import { CommonModule as AngularCommonModule } from '@angular/common';
 import { RoleComponent } from './components/role/role.component';
 import { RoleDisplayComponent } from './components/roleDisplay/roleDisplay.component';
 import { RolesHorizontalListComponent } from './components/rolesHorizontalList/rolesHorizontalList.component';
-import { RoleRattingComponent } from './components/roleRatting/roleRatting.component';
+import { RoleRatingComponent } from './components/roleRating/roleRating.component';
 import { Camera } from '@ionic-native/camera/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
+import { RoleTagComponent } from './components/roleTag/roleTag.component';
+import { ExperienceComponent } from './components/experience/experience.component';
+import { RolePageComponent } from './components/rolePage/rolePage.component';
 
 @NgModule({
   imports: [
@@ -16,20 +20,30 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
   ],
   declarations: [
     RoleComponent,
+    RolePageComponent,
+    ExperienceComponent,
+    RoleTagComponent,
     RoleDisplayComponent,
-    RoleRattingComponent,
-    RolesHorizontalListComponent
+    RoleRatingComponent,
+    RolesHorizontalListComponent,
   ],
   exports: [
     RoleComponent,
+    RolePageComponent,
+    ExperienceComponent,
+    RoleTagComponent,
     RoleDisplayComponent,
-    RoleRattingComponent,
+    RoleRatingComponent,
     RolesHorizontalListComponent
+  ],
+  entryComponents: [
+    RoleRatingComponent
   ],
   providers: [
     Camera,
     Geolocation,
-    LocalNotifications
+    LocalNotifications,
+    BackgroundGeolocation,
   ]
 })
 export class CommonModule {}

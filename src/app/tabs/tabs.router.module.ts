@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { CommonModule } from '../common/common.module';
+import { RolePageComponent } from '../common/components/rolePage/rolePage.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,10 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'role',
+        component: RolePageComponent,
+      },
+      {
         path: '',
         redirectTo: '/tabs/myList',
         pathMatch: 'full'
@@ -50,7 +56,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    CommonModule
   ],
   exports: [RouterModule]
 })

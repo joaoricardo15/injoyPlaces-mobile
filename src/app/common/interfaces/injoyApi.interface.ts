@@ -10,14 +10,23 @@ export interface iRoleList {
   roles: iRole[]
 }
 
-export interface iMyExperiences {
-  opened: number
-  roles: iRole[]
-}
-
 export interface iRole {
   name: string
   ratting: number
   location: iLocation
   pic: string
+  tags?: string[]
+}
+
+export interface iMyExperiences {
+  opened: number
+  experiences: iExperience[]
+}
+
+export interface iExperience {
+  name: string
+  ratting: number
+  location: iLocation
+  pic: string
+  tag: string
 }

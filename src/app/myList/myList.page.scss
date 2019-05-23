@@ -1,11 +1,13 @@
+@import './../styles/sizes.scss';
+
 #content {
-  padding: 10px;
+  padding: $global-size-spacing-default;
 }
 
 #lists {
-  margin-top: 20px
+  margin-top: $global-size-spacing-default*2;
 }
 
 .list {
-  padding: 10px;
+  padding: $global-size-spacing-default;
 }

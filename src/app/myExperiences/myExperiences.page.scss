@@ -1,17 +1,23 @@
+@import './../styles/sizes.scss';
+
 #content {
-  padding: 10px;
+  padding: $global-size-spacing-extraLarge;
 }
 
 .title {
-  margin-left: 10px;
+  margin-left: $global-size-spacing-extraLarge;
 }
 
 #experiences {
   display: flex;
   flex-wrap: wrap;
-  padding: 10px;
+  padding: $global-size-spacing-large;
 }
 
 .experience {
-  padding: 0 10px 10px 0;
+  padding: 0 $global-size-spacing-default $global-size-spacing-default 0;
+}
+
+.bagde {
+  padding: $global-size-spacing-small;
 }
