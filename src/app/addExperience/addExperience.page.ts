@@ -25,7 +25,7 @@ export class AddExperiencePage {
 
   form: FormGroup
 
-  contetReady: boolean = false
+  contentReady: boolean = false
 
   constructor(
     private router: Router,
@@ -41,7 +41,7 @@ export class AddExperiencePage {
     this.name = new FormControl('', Validators.required);
     this.location = new FormControl('', Validators.required);
     this.ratting = new FormControl('' , Validators.required);
-    this.pic = new FormControl('assets/images/Homer-icon.png', Validators.required);
+    this.pic = new FormControl('assets/images/InJoyWoman.png', Validators.required);
     this.tag = new FormControl('', Validators.required);
 
     this.form = new FormGroup({
@@ -51,18 +51,6 @@ export class AddExperiencePage {
       pic: this.pic,
       tag: this.tag
     })
-  }
-
-  onTag()  {
-    let tag = document.getElementById('tagInput')['value']
-    if (tag.length > 1)
-      this.tag.setValue(tag) 
-  }
-
-  onName()  {
-    let name = document.getElementById('nameInput')['value']
-    if (name.length > 1)
-      this.name.setValue(name) 
   }
 
   ionViewWillEnter() {
@@ -78,7 +66,7 @@ export class AddExperiencePage {
                   this.currentRole = roles[0]
                   this.name.setValue(roles[0].name)
                 }               
-                this.contetReady = true
+                this.contentReady = true
                 this.loading.dismiss()
               })
           })
@@ -89,7 +77,19 @@ export class AddExperiencePage {
   }
 
   ionViewWillLeave() {
-    this.contetReady = false
+    this.contentReady = false
+  }
+
+  addName()  {
+    let name = document.getElementById('nameInput')['value']
+    if (name.length > 1)
+      this.name.setValue(name) 
+  }
+
+  addTag()  {
+    let tag = document.getElementById('tagInput')['value']
+    if (tag.length > 1)
+      this.tag.setValue(tag) 
   }
 
   addPicture() {
@@ -121,6 +121,7 @@ export class AddExperiencePage {
               name: this.name.value,
               ratting: this.ratting.value,
               location: this.location.value,
+              date: new Date(),
               pic: this.pic.value,
               tag: this.tag.value
             }
@@ -130,7 +131,7 @@ export class AddExperiencePage {
                 this.name.setValue(null)
                 this.ratting.setValue(null)
                 this.location.setValue(null)
-                this.pic.setValue('assets/images/Homer-icon.png')
+                this.pic.setValue('assets/images/InJoyWoman.png')
                 this.tag.setValue(null)
                 this.router.navigate(['/tabs/myList']) 
               })
@@ -151,32 +152,41 @@ export class AddExperiencePage {
 
   async triggerLoading() {
     let loadingInstance = await this.loading.create({
-      spinner: "bubbles",
+      spinner: "crescent",
       message: 'taix por ondi?',
-      duration: 5000,
       translucent: true
+      
     })
     return await loadingInstance.present();
   }
 
   async presentActionSheet(type: string) {
-    let buttons = []
+    let sheetObject = {
+      header: null,
+      buttons: []
+    }
 
-    if (type == 'roles') 
+    if (type == 'roles') {
+      sheetObject.header = 'Rolês próximos'
+
       for (let i = 0; i < this.currentRoles.length; i++) {
-        buttons.push({
+        sheetObject.buttons.push({
           text: this.currentRoles[i].name,
           role: 'destructive',
           icon: 'pin',
           handler: () => {
             this.name.setValue(this.currentRoles[i].name)
             this.tag.setValue(null)
+            this.currentRole = this.currentRoles[i]
           }
         })
       }
-    else if (type == 'tags')
+    }
+    else if (type == 'tags') {
+      sheetObject.header = 'Tags mais votadas'
+
       for (let i = 0; i < this.currentRole.tags.length; i++) {
-        buttons.push({
+        sheetObject.buttons.push({
           text: this.currentRole.tags[i],
           role: 'destructive',
           icon: 'pricetag',
@@ -185,17 +195,15 @@ export class AddExperiencePage {
           }
         })
       }
+    }
 
-    buttons.push({
+    sheetObject.buttons.push({
       text: 'Cancel',
       icon: 'close',
       role: 'cancel'
     })
 
-    const actionSheet = await this.sheet.create({
-      header: 'Tags mais votadas',
-      buttons: buttons
-    });
+    const actionSheet = await this.sheet.create(sheetObject);
     await actionSheet.present()
   }
 }

@@ -1,13 +1,43 @@
-<div id="main" *ngIf="role">
+<div *ngIf="role">
+  <ion-content>
+    <backgroundImageWrap [img]="role.pic">
 
-  <ion-header>
-    <ion-toolbar>
-      <ion-icon name="arrow-back" size="large" (click)="back()"></ion-icon>
-    </ion-toolbar>
-  </ion-header>
+      <div id="content">
 
-  <div>name: {{role.name}}</div>
-  <div>rating: {{role.ratting}}</div>
-  <div>pic: {{role.pic}}</div>
-  <div *ngFor="let tag of role.tags">{{tag}}</div>
+        <ion-label color="light">{{role.name}}</ion-label>
+
+        <role-rating [rate]="role.ratting" [size]="'large'"></role-rating>
+    
+        <role-tag id="address" [icon]="'pin'" [color]="'medium'">{{role.address.split('-')[0]}}</role-tag>
+
+        <div id="tags">
+          <div>
+            <div *ngFor="let tag of role.tags" class="tag">
+              <role-tag>{{tag}}</role-tag>
+            </div>
+          </div>
+        </div>
+
+        <div id="pics">
+          <div>
+            <img class="pic" *ngFor="let pic of role.pics" src="{{pic}}">
+          </div>
+        </div>
+
+        <div id="coments">
+          <div *ngFor="let coment of role.coments" class="coment">
+            <role-tag [icon]="'contact'" [color]="'success'">"{{coment}}"</role-tag>
+          </div>
+        </div>
+
+      </div>
+
+      <ion-fab vertical="top" horizontal="start" slot="fixed">
+        <ion-fab-button color="vmdl" size="small">
+          <ion-icon id="backButton" name="arrow-back" color="light" size="large" (click)="back()"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      
+    </backgroundImageWrap>
+  </ion-content>  
 </div>

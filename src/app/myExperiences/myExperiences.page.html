@@ -7,13 +7,13 @@
     <ion-list>
       <ion-item>
         <ion-icon name="ribbon"></ion-icon>
-        <ion-label class="title">Total de experiências</ion-label>
-        <ion-badge *ngIf="myExperiences" class="bagde">{{myExperiences.experiences.length}}</ion-badge>
+        <ion-label class="achievementTitle">Total de experiências</ion-label>
+        <ion-badge *ngIf="myExperiences">{{myExperiences.experiences.length}}</ion-badge>
       </ion-item>
       <ion-item>
         <ion-icon name="trophy"></ion-icon>
-        <ion-label class="title">Rolês descobertos</ion-label>
-        <ion-badge *ngIf="myExperiences" class="bagde">{{myExperiences.opened}}</ion-badge>
+        <ion-label class="achievementTitle">Rolês descobertos</ion-label>
+        <ion-badge *ngIf="myExperiences">{{myExperiences.opened}}</ion-badge>
       </ion-item>
     </ion-list>
    

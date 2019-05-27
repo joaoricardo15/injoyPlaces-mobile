@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { iRole } from '../../interfaces/injoyApi.interface';
 import { Router } from '@angular/router';
+import { iRole } from '../../interfaces/injoyApi.interface';
 
 @Component({
   selector: 'role',

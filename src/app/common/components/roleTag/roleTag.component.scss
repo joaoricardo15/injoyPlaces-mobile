@@ -1,13 +1,37 @@
 @import './../../../styles/sizes.scss';
 
 #main {
-  width: fit-content;
-  color: var(--ion-color-dark);
-  font-size: $global-size-font-small;
-  
-  margin: $global-size-spacing-small;
-  padding: $global-size-spacing-small;
-  
-  border-radius: $global-size-spacing-default;
-  background-color: var(--ion-color-warning-shade);
+  padding-left: $global-size-spacing-small;
+  padding-right: $global-size-spacing-small;
+
+  ion-icon {
+    min-width: $global-size-font-small*2;
+  }
+
+  ion-label {
+    overflow: hidden;
+    height: $global-size-font-default;
+    padding-left: $global-size-spacing-default;
+    padding-right: $global-size-spacing-default;
+  }
+}
+
+.small {
+  zoom: 0.8;
+
+  ion-icon {
+    zoom: 0.8;
+  }
+}
+
+.large {
+  zoom: 2;
+
+  ion-label {
+    zoom: 1.5;
+  }
+
+  ion-icon {
+    zoom: 0.4;
+  }
 }

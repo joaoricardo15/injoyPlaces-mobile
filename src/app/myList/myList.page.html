@@ -1,13 +1,18 @@
 <ion-content>
   <div id="content">
-    <ion-segment (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="bars">
-        <ion-label>Bares</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="restaurants">
-        <ion-label>Restaurantes</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+
+    <ion-toolbar>
+      <div id="topBar">
+        <ion-avatar><img src="./../../assets/icon/favicon.ico"></ion-avatar>
+        <ion-searchbar (ionInput)="onSearchInput($event)" (ionBlur)="onBlur($event)" (ionFocus)="onSearchInput($event)" color="light" autocomplete="true" placeholder="buscar rolê"></ion-searchbar>
+      </div>
+    </ion-toolbar>
+  
+    <div id="searchOptions" *ngIf="searchOptions.length > 0">
+      <div id="options">
+        <role-tag class="option" *ngFor="let role of searchOptions | slice:0:10" [icon]="'pin'" [color]="'warning'" (click)="selectRole(role)">{{role.name}}</role-tag>
+      </div>
+    </div>     
     
     <div id="lists">
       <div class="list" *ngFor="let list of myList">

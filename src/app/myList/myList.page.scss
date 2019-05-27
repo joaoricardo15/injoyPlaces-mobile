@@ -1,5 +1,46 @@
 @import './../styles/sizes.scss';
 
+#topBar {
+  display: flex;
+
+  ion-avatar {
+    
+    height: 100%;
+    margin-right: $global-size-spacing-large;
+    margin-left: $global-size-spacing-large;
+
+    img {
+      width: $global-size-spacing-extraLarge + $global-size-spacing-large;
+      height: $global-size-spacing-extraLarge + $global-size-spacing-large;
+    }
+  }
+
+  ion-searchbar {
+    padding: 0;
+  }
+}
+
+#searchOptions {
+  z-index: 20;
+  margin-left: $global-size-spacing-extraLarge*2 + $global-size-spacing-large + $global-size-spacing-small;
+  border-radius: $global-size-spacing-small/2;
+  width: calc(100vw - 96px);
+  background-color: rgba(0,0,0,.7);
+
+  #options {
+    display: grid;
+    padding-top: $global-size-spacing-large;
+    padding-bottom: $global-size-spacing-large*2;
+    padding-right: $global-size-spacing-large*2;
+    padding-left: $global-size-spacing-large*2;
+
+    .option {
+      margin-top: $global-size-spacing-large;
+    }
+  }
+}
+
+
 #content {
   padding: $global-size-spacing-default;
 }

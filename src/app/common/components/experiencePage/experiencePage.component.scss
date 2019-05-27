@@ -1,0 +1,20 @@
+@import './../../../styles/sizes.scss';
+
+ion-content {
+  min-height: 91vh;
+}
+
+#content {
+  min-height: 100%;
+  padding: $global-size-spacing-extraLarge*3;
+}
+
+ion-label {
+  overflow: hidden;
+  height: $global-size-font-extraLarge;
+  font-size: $global-size-font-extraLarge;
+}
+
+.tag {
+  margin-top: $global-size-spacing-default;
+}

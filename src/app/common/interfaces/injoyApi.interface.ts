@@ -14,7 +14,10 @@ export interface iRole {
   name: string
   ratting: number
   location: iLocation
+  address: string
   pic: string
+  pics: string[]
+  coments: string[] 
   tags?: string[]
 }
 
@@ -27,6 +30,7 @@ export interface iExperience {
   name: string
   ratting: number
   location: iLocation
+  date: Date
   pic: string
   tag: string
 }

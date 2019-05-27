@@ -1,23 +1,28 @@
 @import './../styles/sizes.scss';
 
 #content {
-  padding: $global-size-spacing-extraLarge;
+  padding: $global-size-spacing-large;
 }
 
-.title {
+ion-title {
+  padding-left: $global-size-spacing-large;
+}
+
+ion-badge {
+  padding: $global-size-spacing-small;
+  border-radius: $global-size-spacing-extraLarge;
+  background-color: var(--ion-color-danger-tint);
+}
+
+.achievementTitle {
   margin-left: $global-size-spacing-extraLarge;
 }
 
 #experiences {
   display: flex;
   flex-wrap: wrap;
-  padding: $global-size-spacing-large;
 }
 
 .experience {
   padding: 0 $global-size-spacing-default $global-size-spacing-default 0;
-}
-
-.bagde {
-  padding: $global-size-spacing-small;
 }

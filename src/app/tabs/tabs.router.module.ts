@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { CommonModule } from '../common/common.module';
 import { RolePageComponent } from '../common/components/rolePage/rolePage.component';
+import { ExperiencePageComponent } from '../common/components/experiencePage/experiencePage.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: 'role',
         component: RolePageComponent,
+      },
+      {
+        path: 'experience',
+        component: ExperiencePageComponent,
       },
       {
         path: '',

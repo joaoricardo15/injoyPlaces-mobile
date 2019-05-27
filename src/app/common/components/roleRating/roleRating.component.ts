@@ -16,7 +16,7 @@ import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from
 })
 export class RoleRatingComponent implements OnChanges {
   @Input() rate: number = 0
-  @Input() size: string = "small"
+  @Input() size: string = 'small'
   @Output() onRate = new EventEmitter()
 
   starsNames = ['star-outline', 'star-outline', 'star-outline', 'star-outline', 'star-outline']

@@ -13,7 +13,10 @@ export class RolePageComponent implements OnInit {
     name: null,
     ratting: null,
     location: null,
+    address: null,
     pic: null,
+    pics: null,
+    coments: null,
     tags: null,
   }
 
@@ -23,8 +26,11 @@ export class RolePageComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.role.name = params.name
       this.role.ratting = params.ratting
+      this.role.address = params.address
       this.role.location = params.location
       this.role.pic = params.pic
+      this.role.pics = params.pics.split(',')
+      this.role.coments = params.coments.split(',')
       this.role.tags = params.tags.split(',')
     });
   }
@@ -32,5 +38,4 @@ export class RolePageComponent implements OnInit {
   back() {
     this.location.back()
   }
-  
 }

@@ -1,6 +1,7 @@
 import { Component, AfterContentInit } from '@angular/core';
 import { ApiService } from '../common/services/api.service';
-import { iRoleList } from '../common/interfaces/injoyApi.interface';
+import { iRoleList, iRole } from '../common/interfaces/injoyApi.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'myList-page',
@@ -9,8 +10,13 @@ import { iRoleList } from '../common/interfaces/injoyApi.interface';
 })
 export class MyListPage implements AfterContentInit { 
   myList: iRoleList[]
-  
-  constructor(private api: ApiService) { }
+  searchOptions: iRole[] = []
+
+  constructor(private api: ApiService, private router: Router) { }
+
+  ionViewWillEnter() {
+    this.searchOptions = []
+  }
 
   ngAfterContentInit () {
     this.api.getMyList()
@@ -19,7 +25,28 @@ export class MyListPage implements AfterContentInit {
       })
   }
 
-  segmentChanged() {
+  onBlur(input) {
+    input.target.value = ''
+    setTimeout(() => { this.searchOptions = [] })
+  }
 
+  onSearchInput(input) {
+    this.searchOptions = []
+    input = input.target.value.toLowerCase()
+
+    for (let i = 0; i < this.myList.length; i++) {
+      let roles = this.myList[i].roles.filter(x => x.name.toLowerCase().includes(input))
+
+      for (let j = 0; j < roles.length; j++) {
+        let role = this.searchOptions.find(x => x.name === roles[j].name)
+        if (!role) {
+          this.searchOptions.push(roles[j])
+        }
+      }
+    }
+  }
+
+  selectRole(role: iRole) {
+    this.router.navigate(['tabs/role', role]);
   }
 }

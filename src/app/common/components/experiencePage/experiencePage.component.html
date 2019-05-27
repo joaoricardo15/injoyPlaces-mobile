@@ -1,0 +1,29 @@
+<div *ngIf="experience">
+  <ion-content>
+    <backgroundImageWrap [img]="experience.pic">
+
+      <div id="content">
+
+        <ion-label color="light">{{experience.name}}</ion-label>
+
+        <role-rating [rate]="experience.ratting" [size]="'large'"></role-rating>
+
+        <div class="tag">
+          <role-tag class="tag">{{experience.tag}}</role-tag>
+        </div>
+        <div class="tag">
+          <role-tag [icon]="'calendar'" [color]="'danger'">{{experience.date | date: 'short'}}</role-tag>
+        </div>
+
+      </div>
+
+      <ion-fab vertical="top" horizontal="start" slot="fixed">
+        <ion-fab-button color="vmdl" size="small">
+          <ion-icon id="backButton" name="arrow-back" color="light" size="large" (click)="back()"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
+    </backgroundImageWrap>
+  </ion-content>  
+</div>
+

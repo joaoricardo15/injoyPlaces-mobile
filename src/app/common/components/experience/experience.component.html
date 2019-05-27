@@ -1,10 +1,9 @@
-<div id="main">
-  <div id="imageBackground">
-    <div><img src="{{experience.pic}}"></div>
-  </div>
-  <div id="content">
-    <div id="name">{{experience.name}}</div>
-    <role-rating [rate]="experience.ratting"></role-rating>
-    <role-tag>{{experience.tag}}</role-tag>
-  </div>
+<div id="main" (click)="navigate()">
+  <backgroundImageWrap [img]="experience.pic" [borderRadius]="true">
+    <div id="content">
+      <div id="name">{{experience.name}}</div>
+      <role-rating [rate]="experience.ratting"></role-rating>
+      <role-tag [size]="'small'">{{experience.tag}}</role-tag>
+    </div>
+  </backgroundImageWrap>
 </div>
