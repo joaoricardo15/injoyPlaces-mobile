@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../common/services/api.service';
-import { CameraService } from '../common/services/camera.service.';
+import { CameraService } from '../common/services/camera.service';
 import { GeolocationService } from '../common/services/geolocation.service';
 import { ToastController, AlertController, LoadingController, ActionSheetController } from '@ionic/angular';
 import { iRole, iExperience } from '../common/interfaces/injoyApi.interface';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ImageService } from '../common/services/image.service';
 
 @Component({
   selector: 'addExperience-page',
@@ -30,6 +31,7 @@ export class AddExperiencePage {
   constructor(
     private router: Router,
     private api: ApiService,
+    private image: ImageService,
     private camera: CameraService,
     private toast: ToastController,
     private alert: AlertController,
@@ -126,15 +128,25 @@ export class AddExperiencePage {
               tag: this.tag.value
             }
         
-            this.api.postExperience(experience)
-              .then(() => {
+            this.image.getBase64ImageFromURL(experience.pic).subscribe(file => {
+      
+              this.api.postExperience({
+                name: experience.name,
+                pic: file
+              })
+              .subscribe(() => {
                 this.name.setValue(null)
                 this.ratting.setValue(null)
                 this.location.setValue(null)
                 this.pic.setValue('assets/images/InJoyWoman.png')
                 this.tag.setValue(null)
+
+                console.log('postei e recebi a resposta')
+
                 this.router.navigate(['/tabs/myList']) 
               })
+
+            })
           }
         }
       ]

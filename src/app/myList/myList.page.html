@@ -8,6 +8,8 @@
       </div>
     </ion-toolbar>
   
+    <img src="{{imageData}}">
+
     <div id="searchOptions" *ngIf="searchOptions.length > 0">
       <div id="options">
         <role-tag class="option" *ngFor="let role of searchOptions | slice:0:10" [icon]="'pin'" [color]="'warning'" (click)="selectRole(role)">{{role.name}}</role-tag>

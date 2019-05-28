@@ -13,6 +13,7 @@ import { ExperienceComponent } from './components/experience/experience.componen
 import { RolePageComponent } from './components/rolePage/rolePage.component';
 import { ExperiencePageComponent } from './components/experiencePage/experiencePage.component';
 import { BackgroundImageWrapComponent } from './components/backgroundImageWrap/backgroundImageWrap.component';
+import { ImageService } from './services/image.service';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { BackgroundImageWrapComponent } from './components/backgroundImageWrap/b
   providers: [
     Camera,
     Geolocation,
+    ImageService,
     LocalNotifications,
     BackgroundGeolocation,
   ]

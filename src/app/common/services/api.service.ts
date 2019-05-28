@@ -27,12 +27,18 @@ export class ApiService {
     })
   }
 
-  postExperience(experience: iExperience): Promise<null> {
-    return new Promise(resolve => {
-      myList.myExperiences.experiences.push(experience)
-      myList.myExperiences.opened++
-      resolve()
-    })
+  postExperience(experience: any): Observable<any> {
+    // return new Promise(resolve => {
+    //   myList.myExperiences.experiences.push(experience)
+    //   myList.myExperiences.opened++
+    //   resolve()
+    // })
+
+    return this.http.post('http://localhost:1000/roles', { name: experience.name, pic: experience.pic })
+  }
+
+  getMyListTest() {
+    return this.http.get('http://localhost:1000/roles')
   }
 
   postLocations(locations: object[]): Observable<Object> {

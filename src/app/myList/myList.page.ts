@@ -12,10 +12,21 @@ export class MyListPage implements AfterContentInit {
   myList: iRoleList[]
   searchOptions: iRole[] = []
 
+  imageData
+
   constructor(private api: ApiService, private router: Router) { }
 
   ionViewWillEnter() {
     this.searchOptions = []
+
+    this.api.getMyListTest().subscribe(myList => {
+      
+      alert(JSON.stringify(myList['img']))
+
+      var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(myList['img']['data'])));
+      this.imageData = 'data:image/png;base64,' + base64String
+
+    })
   }
 
   ngAfterContentInit () {
