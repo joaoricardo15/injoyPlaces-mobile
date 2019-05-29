@@ -34,7 +34,7 @@ export class ApiService {
     //   resolve()
     // })
 
-    return this.http.post('http://localhost:1000/roles', { name: experience.name, pic: experience.pic })
+    return this.http.post('http://localhost:1000/roles', experience)
   }
 
   getMyListTest() {

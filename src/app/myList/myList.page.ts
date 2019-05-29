@@ -2,6 +2,7 @@ import { Component, AfterContentInit } from '@angular/core';
 import { ApiService } from '../common/services/api.service';
 import { iRoleList, iRole } from '../common/interfaces/injoyApi.interface';
 import { Router } from '@angular/router';
+import { ImageService } from '../common/services/image.service';
 
 @Component({
   selector: 'myList-page',
@@ -14,17 +15,14 @@ export class MyListPage implements AfterContentInit {
 
   imageData
 
-  constructor(private api: ApiService, private router: Router) { }
+  constructor(private api: ApiService, private image: ImageService, private router: Router) { }
 
   ionViewWillEnter() {
     this.searchOptions = []
 
     this.api.getMyListTest().subscribe(myList => {
-      
-      alert(JSON.stringify(myList['img']))
 
-      var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(myList['img']['data'])));
-      this.imageData = 'data:image/png;base64,' + base64String
+      this.imageData = this.image.getURLFromImageFile(myList['img']['data']['data'], myList['img']['contentType'])
 
     })
   }

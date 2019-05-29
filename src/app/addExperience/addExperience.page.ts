@@ -128,25 +128,20 @@ export class AddExperiencePage {
               tag: this.tag.value
             }
         
-            this.image.getBase64ImageFromURL(experience.pic).subscribe(file => {
-      
-              this.api.postExperience({
-                name: experience.name,
-                pic: file
+            this.image.getBase64ImageFromURL(experience.pic)
+              .subscribe(imgFile => {
+                this.api.postExperience({ name: experience.name, img: { data: imgFile, contentType: 'image/png' } })
+                  .subscribe(() => {
+                    this.name.setValue(null)
+                    this.ratting.setValue(null)
+                    this.location.setValue(null)
+                    this.pic.setValue('assets/images/InJoyWoman.png')
+                    this.tag.setValue(null)
+
+                    console.log('postei e recebi a resposta')
+                    //this.router.navigate(['/tabs/myList']) 
+                  })
               })
-              .subscribe(() => {
-                this.name.setValue(null)
-                this.ratting.setValue(null)
-                this.location.setValue(null)
-                this.pic.setValue('assets/images/InJoyWoman.png')
-                this.tag.setValue(null)
-
-                console.log('postei e recebi a resposta')
-
-                this.router.navigate(['/tabs/myList']) 
-              })
-
-            })
           }
         }
       ]

@@ -4,8 +4,12 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class ImageService {
 
+  getURLFromImageFile(arrayBuffer: [], type: string): string {
+    return 'data:'+type+';base64,' + btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)))
+  }
+
   getBase64ImageFromURL(url: string) {
-    return Observable.create((observer: Observer<string>) => {
+    return new Observable(observer => {
       // create an image object
       let img = new Image();
       img.crossOrigin = 'Anonymous';
