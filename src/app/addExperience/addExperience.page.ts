@@ -43,7 +43,7 @@ export class AddExperiencePage {
     this.name = new FormControl('', Validators.required);
     this.location = new FormControl('', Validators.required);
     this.ratting = new FormControl('' , Validators.required);
-    this.pic = new FormControl('assets/images/InJoyWoman.png', Validators.required);
+    this.pic = new FormControl('assets/images/Homer-icon.png', Validators.required);
     this.tag = new FormControl('', Validators.required);
 
     this.form = new FormGroup({
@@ -127,19 +127,29 @@ export class AddExperiencePage {
               pic: this.pic.value,
               tag: this.tag.value
             }
-        
+
             this.image.getBase64ImageFromURL(experience.pic)
               .subscribe(imgFile => {
-                this.api.postExperience({ name: experience.name, img: { data: imgFile, contentType: 'image/png' } })
+
+                let role: iRole = {
+                  name: experience.name,
+                  ratting: experience.ratting,
+                  location: experience.location,
+                  address: 'R. General Lima e Silva, 697 - Cidade Baixa, Porto Alegre - RS',
+                  pics: [],
+                  pic: { data: imgFile, contentType: 'image/png' },
+                  coments: ["Gente fina elegante e sincera", "Lugar maneiro e serviço da hora", "Musica massa, comida meia boca", "Gente fina elegante e sincera", "Lugar maneiro e serviço da hora", "Musica massa, comida meia boca"],
+	                tags: [ experience.tag ,'ApDuzGuri', 'zueira', 'tendel']
+                }
+
+                this.api.postExperience(role)
                   .subscribe(() => {
                     this.name.setValue(null)
                     this.ratting.setValue(null)
                     this.location.setValue(null)
-                    this.pic.setValue('assets/images/InJoyWoman.png')
+                    this.pic.setValue('assets/images/Homer-icon.png')
                     this.tag.setValue(null)
-
-                    console.log('postei e recebi a resposta')
-                    //this.router.navigate(['/tabs/myList']) 
+                    this.router.navigate(['/tabs/myList']) 
                   })
               })
           }

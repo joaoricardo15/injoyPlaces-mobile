@@ -15,7 +15,7 @@ export interface iRole {
   ratting: number
   location: iLocation
   address: string
-  pic: string
+  pic: string | Object
   pics: string[]
   coments: string[] 
   tags?: string[]

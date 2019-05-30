@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { iRole } from '../../interfaces/injoyApi.interface';
+import { RoleService } from './roles.service';
 
 @Component({
   selector: 'role',
@@ -9,12 +10,13 @@ import { iRole } from '../../interfaces/injoyApi.interface';
 })
 export class RoleComponent {
 
-  constructor(public router: Router) {}
+  constructor(private roleService: RoleService, private router: Router) {}
   
   @Input() role: iRole
   @Input() columnSize: number = 5
 
   public navigate(){
-    this.router.navigate(['tabs/role', this.role]);
+    this.roleService.setRole(this.role)
+    this.router.navigate(['tabs/role']);
   }
 }

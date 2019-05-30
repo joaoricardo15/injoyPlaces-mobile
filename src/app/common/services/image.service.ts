@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class ImageService {
 
-  getURLFromImageFile(arrayBuffer: [], type: string): string {
-    return 'data:'+type+';base64,' + btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)))
+  getURLFromImageFile(imgObject: Object): string {
+    return 'data:'+imgObject['contentType']+';base64,' + btoa(String.fromCharCode.apply(null, new Uint8Array(imgObject['data']['data'])))
   }
 
   getBase64ImageFromURL(url: string) {
@@ -40,7 +40,8 @@ export class ImageService {
     ctx.drawImage(img, 0, 0);
     // Convert the drawn image to Data URL
     var dataURL = canvas.toDataURL("image/png");
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
- }
-}
+    var dataURI = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 
+    return dataURI
+  }
+}

@@ -14,6 +14,7 @@ import { RolePageComponent } from './components/rolePage/rolePage.component';
 import { ExperiencePageComponent } from './components/experiencePage/experiencePage.component';
 import { BackgroundImageWrapComponent } from './components/backgroundImageWrap/backgroundImageWrap.component';
 import { ImageService } from './services/image.service';
+import { RoleService } from './components/role/roles.service';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { ImageService } from './services/image.service';
   ],
   providers: [
     Camera,
+    RoleService,
     Geolocation,
     ImageService,
     LocalNotifications,

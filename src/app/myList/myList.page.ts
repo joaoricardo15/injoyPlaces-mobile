@@ -3,35 +3,71 @@ import { ApiService } from '../common/services/api.service';
 import { iRoleList, iRole } from '../common/interfaces/injoyApi.interface';
 import { Router } from '@angular/router';
 import { ImageService } from '../common/services/image.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'myList-page',
   templateUrl: 'myList.page.html',
   styleUrls: ['myList.page.scss']
 })
-export class MyListPage implements AfterContentInit { 
+export class MyListPage implements AfterContentInit {
   myList: iRoleList[]
   searchOptions: iRole[] = []
 
-  imageData
+  constructor(
+    private api: ApiService,
+    private image: ImageService,
+    private router: Router,
+    private loading: LoadingController) { }
 
-  constructor(private api: ApiService, private image: ImageService, private router: Router) { }
+  async triggerLoading() {
+    let loadingInstance = await this.loading.create({
+      spinner: "crescent",
+      message: 'Carregando rolês pra você',
+      translucent: true
+    })
+    return await loadingInstance.present();
+  }
 
   ionViewWillEnter() {
+
     this.searchOptions = []
+    
+    if (this.myList)
+    {
 
-    this.api.getMyListTest().subscribe(myList => {
+    }
+    else {
+      this.triggerLoading()
+      .then(() => {
+        this.api.getRoles()
+          .subscribe((roles: iRole[]) => {
 
-      this.imageData = this.image.getURLFromImageFile(myList['img']['data']['data'], myList['img']['contentType'])
+            for (let i = 0; i < roles.length; i++) {
+              roles[i].pic = this.image.getURLFromImageFile(roles[i].pic)
+              for (let j = 0; j < roles[i].pics.length; j++) {
+                roles[i].pics[j] = this.image.getURLFromImageFile(roles[i].pics[j])
+              }
+            }
 
-    })
+            this.myList = [
+              {
+                title: 'Todos os rolês',
+                roles: roles
+              }
+            ]
+
+            this.loading.dismiss()
+          }) 
+      })
+    }  
   }
 
   ngAfterContentInit () {
-    this.api.getMyList()
-      .then(myList => {
-        this.myList = myList.myList
-      })
+    // this.api.getMyList()
+    //   .then(myList => {
+    //     this.myList = myList.myList
+    //   })
   }
 
   onBlur(input) {
