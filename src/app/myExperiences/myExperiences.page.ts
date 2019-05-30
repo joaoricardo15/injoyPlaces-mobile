@@ -1,22 +1,44 @@
-import { Component, AfterContentInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ApiService } from '../common/services/api.service';
-import { iMyExperiences } from '../common/interfaces/injoyApi.interface';
+import { iMyExperiences, iExperience } from '../common/interfaces/injoyApi.interface';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'myExperiences-page',
   templateUrl: 'myExperiences.page.html',
   styleUrls: ['myExperiences.page.scss']
 })
-export class MyExperiencesPage implements AfterContentInit {
+export class MyExperiencesPage {
 
   myExperiences: iMyExperiences
   
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private loading: LoadingController) { }
 
-  ngAfterContentInit () {
-    this.api.getMyList()
-      .then(myList => {
-        this.myExperiences = myList.myExperiences
-      })
+  ionViewWillEnter () {
+    if (this.myExperiences) {
+      this.api.getMyExperiences()
+        .subscribe((experiences: iExperience[]) => {
+          this.myExperiences = { opened: experiences.length, experiences: experiences }
+        })
+    }
+    else {
+      this.triggerLoading()
+        .then(() => {
+          this.api.getMyExperiences()
+            .subscribe((experiences: iExperience[]) => {
+              this.myExperiences = { opened: experiences.length, experiences: experiences }
+              this.loading.dismiss()
+            })
+        })
+    }
+  }
+
+  async triggerLoading() {
+    let loadingInstance = await this.loading.create({
+      spinner: "crescent",
+      message: 'Carregando experiências',
+      translucent: true
+    })
+    return await loadingInstance.present();
   }
 }

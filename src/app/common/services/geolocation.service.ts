@@ -11,7 +11,7 @@ export class GeolocationService {
     return new Promise((resolve, reject) => {
       this.geoLocation.getCurrentPosition()
         .then(location => {
-          resolve({ latitude: location.coords.latitude, longitude: location.coords.latitude }) 
+          resolve({ lat: location.coords.latitude, lng: location.coords.longitude }) 
         })
         .catch(error => { reject(error) })
     })

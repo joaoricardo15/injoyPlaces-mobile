@@ -23,6 +23,7 @@ export class AddExperiencePage {
   ratting: FormControl
   pic: FormControl
   tag: FormControl
+  comment: FormControl
 
   form: FormGroup
 
@@ -45,13 +46,15 @@ export class AddExperiencePage {
     this.ratting = new FormControl('' , Validators.required);
     this.pic = new FormControl('assets/images/Homer-icon.png', Validators.required);
     this.tag = new FormControl('', Validators.required);
+    this.comment = new FormControl('vmdl', Validators.required);
 
     this.form = new FormGroup({
       name: this.name,
       location: this.location,
       ratting: this.ratting,
       pic: this.pic,
-      tag: this.tag
+      tag: this.tag,
+      comment: this.comment
     })
   }
 
@@ -61,8 +64,8 @@ export class AddExperiencePage {
         this.geoLocation.getCurrentLocation()
           .then(location => {
             this.location.setValue(location)
-            this.api.getCurrentRole(location)
-              .then(roles => {
+            this.api.getPossibleRoles(location)
+              .subscribe(roles => {
                 if (roles.length > 0) {
                   this.currentRoles = roles
                   this.currentRole = roles[0]
@@ -94,6 +97,12 @@ export class AddExperiencePage {
       this.tag.setValue(tag) 
   }
 
+  addComment()  {
+    let comment = document.getElementById('commentInput')['value']
+    if (comment.length > 1)
+      this.comment.setValue(comment) 
+  }
+
   addPicture() {
     this.camera.getPicture()
       .then(imageData => { 
@@ -119,36 +128,29 @@ export class AddExperiencePage {
         }, {
           text: 'Confirmar',
           handler: () => {
-            let experience: iExperience = {
-              name: this.name.value,
-              ratting: this.ratting.value,
-              location: this.location.value,
-              date: new Date(),
-              pic: this.pic.value,
-              tag: this.tag.value
-            }
-
-            this.image.getBase64ImageFromURL(experience.pic)
+            
+            this.image.getBase64ImageFromURL(this.pic.value)
               .subscribe(imgFile => {
 
-                let role: iRole = {
-                  name: experience.name,
-                  ratting: experience.ratting,
-                  location: experience.location,
-                  address: 'R. General Lima e Silva, 697 - Cidade Baixa, Porto Alegre - RS',
-                  pics: [],
+                let experience: iExperience = {
+                  user: this.api.UserName,
+                  name: this.name.value,
+                  ratting: this.ratting.value,
+                  location: this.location.value,
+                  date: new Date(),
                   pic: { data: imgFile, contentType: 'image/png' },
-                  coments: ["Gente fina elegante e sincera", "Lugar maneiro e serviço da hora", "Musica massa, comida meia boca", "Gente fina elegante e sincera", "Lugar maneiro e serviço da hora", "Musica massa, comida meia boca"],
-	                tags: [ experience.tag ,'ApDuzGuri', 'zueira', 'tendel']
+                  tag: this.tag.value,
+                  comment: this.comment.value
                 }
 
-                this.api.postExperience(role)
+                this.api.postExperience(experience)
                   .subscribe(() => {
                     this.name.setValue(null)
                     this.ratting.setValue(null)
                     this.location.setValue(null)
                     this.pic.setValue('assets/images/Homer-icon.png')
                     this.tag.setValue(null)
+                    this.comment.setValue('vmdl')
                     this.router.navigate(['/tabs/myList']) 
                   })
               })

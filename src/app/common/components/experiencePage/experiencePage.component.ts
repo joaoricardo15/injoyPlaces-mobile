@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { iExperience } from '../../interfaces/injoyApi.interface';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { iExperience } from '../../interfaces/injoyApi.interface';
+import { ExperienceService } from '../experience/experience.service';
 
 @Component({
   selector: 'experience-page',
@@ -9,25 +10,16 @@ import { Location } from '@angular/common';
   styleUrls: ['experiencePage.component.scss']
 })
 export class ExperiencePageComponent implements OnInit {
-  @Input() experience: iExperience = {
-    name: null,
-    ratting: null,
-    location: null,
-    date: null,
-    pic: null,
-    tag: null,
-  }
+  experience: iExperience
 
-  constructor(private router: Router, private route: ActivatedRoute, private location: Location) {}
+  constructor(
+    private experienceService: ExperienceService,
+    private route: ActivatedRoute,
+    private location: Location) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.experience.name = params.name
-      this.experience.ratting = params.ratting
-      this.experience.location = params.location
-      this.experience.date = params.date
-      this.experience.pic = params.pic
-      this.experience.tag = params.tag
+      this.experience = this.experienceService.getExperience()
     });
   }
 

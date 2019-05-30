@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module'
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular'
 import { BackgroundGeolocationService } from './common/services/backgroundGeolocation.service'
 import { ApiService } from './common/services/api.service';
+import { RoleService } from './common/components/role/roles.service';
+import { ExperienceService } from './common/components/experience/experience.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { ApiService } from './common/services/api.service';
   providers: [
     StatusBar,
     SplashScreen,
+    RoleService,
+    ExperienceService,
     ApiService,
     BackgroundGeolocationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

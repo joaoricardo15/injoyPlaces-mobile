@@ -14,7 +14,7 @@ import { RolePageComponent } from './components/rolePage/rolePage.component';
 import { ExperiencePageComponent } from './components/experiencePage/experiencePage.component';
 import { BackgroundImageWrapComponent } from './components/backgroundImageWrap/backgroundImageWrap.component';
 import { ImageService } from './services/image.service';
-import { RoleService } from './components/role/roles.service';
+import { ImageURIPipe } from './pipes/imageURI.pipe';
 
 @NgModule({
   imports: [
@@ -22,6 +22,7 @@ import { RoleService } from './components/role/roles.service';
     AngularCommonModule
   ],
   declarations: [
+    ImageURIPipe,
     RoleComponent,
     RolePageComponent,
     ExperienceComponent,
@@ -32,6 +33,7 @@ import { RoleService } from './components/role/roles.service';
     BackgroundImageWrapComponent,
   ],
   exports: [
+    ImageURIPipe,
     RoleComponent,
     RolePageComponent,
     ExperienceComponent,
@@ -46,7 +48,6 @@ import { RoleService } from './components/role/roles.service';
   ],
   providers: [
     Camera,
-    RoleService,
     Geolocation,
     ImageService,
     LocalNotifications,

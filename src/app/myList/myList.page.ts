@@ -1,8 +1,7 @@
-import { Component, AfterContentInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ApiService } from '../common/services/api.service';
 import { iRoleList, iRole } from '../common/interfaces/injoyApi.interface';
 import { Router } from '@angular/router';
-import { ImageService } from '../common/services/image.service';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -10,64 +9,35 @@ import { LoadingController } from '@ionic/angular';
   templateUrl: 'myList.page.html',
   styleUrls: ['myList.page.scss']
 })
-export class MyListPage implements AfterContentInit {
+export class MyListPage {
   myList: iRoleList[]
   searchOptions: iRole[] = []
 
   constructor(
     private api: ApiService,
-    private image: ImageService,
     private router: Router,
     private loading: LoadingController) { }
-
-  async triggerLoading() {
-    let loadingInstance = await this.loading.create({
-      spinner: "crescent",
-      message: 'Carregando rolês pra você',
-      translucent: true
-    })
-    return await loadingInstance.present();
-  }
 
   ionViewWillEnter() {
 
     this.searchOptions = []
     
-    if (this.myList)
-    {
-
+    if (this.myList) {
+      this.api.getRoles()
+        .subscribe((roles: iRole[]) => {
+          this.myList = [{ title: 'Todos os rolês', roles: roles }]
+        }) 
     }
     else {
       this.triggerLoading()
-      .then(() => {
-        this.api.getRoles()
-          .subscribe((roles: iRole[]) => {
-
-            for (let i = 0; i < roles.length; i++) {
-              roles[i].pic = this.image.getURLFromImageFile(roles[i].pic)
-              for (let j = 0; j < roles[i].pics.length; j++) {
-                roles[i].pics[j] = this.image.getURLFromImageFile(roles[i].pics[j])
-              }
-            }
-
-            this.myList = [
-              {
-                title: 'Todos os rolês',
-                roles: roles
-              }
-            ]
-
-            this.loading.dismiss()
-          }) 
-      })
+        .then(() => {
+          this.api.getRoles()
+            .subscribe((roles: iRole[]) => {
+              this.myList = [{ title: 'Todos os rolês', roles: roles }]
+              this.loading.dismiss()
+            }) 
+        })
     }  
-  }
-
-  ngAfterContentInit () {
-    // this.api.getMyList()
-    //   .then(myList => {
-    //     this.myList = myList.myList
-    //   })
   }
 
   onBlur(input) {
@@ -93,5 +63,14 @@ export class MyListPage implements AfterContentInit {
 
   selectRole(role: iRole) {
     this.router.navigate(['tabs/role', role]);
+  }
+
+  async triggerLoading() {
+    let loadingInstance = await this.loading.create({
+      spinner: "crescent",
+      message: 'Carregando rolês pra você',
+      translucent: true
+    })
+    return await loadingInstance.present();
   }
 }

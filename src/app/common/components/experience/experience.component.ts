@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { iExperience } from '../../interfaces/injoyApi.interface';
+import { ExperienceService } from './experience.service';
 
 @Component({
   selector: 'experience',
@@ -9,12 +10,13 @@ import { iExperience } from '../../interfaces/injoyApi.interface';
 })
 export class ExperienceComponent {
 
-  constructor(public router: Router) {}
+  constructor(private experienceService: ExperienceService, private router: Router) {}
 
   @Input() experience: iExperience
   @Input() columnSize: number = 5
 
   public navigate(){
-    this.router.navigate(['tabs/experience', this.experience]);
+    this.experienceService.setExperience(this.experience)
+    this.router.navigate(['tabs/experience']);
   }
 }

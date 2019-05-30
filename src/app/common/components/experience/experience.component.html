@@ -1,5 +1,5 @@
 <div id="main" (click)="navigate()">
-  <backgroundImageWrap [img]="experience.pic" [borderRadius]="true">
+  <backgroundImageWrap [img]="experience.pic | imageURI" [borderRadius]="true">
     <div id="content">
       <div id="name">{{experience.name}}</div>
       <role-rating [rate]="experience.ratting"></role-rating>

@@ -1,6 +1,6 @@
 <div *ngIf="role">
   <ion-content>
-    <backgroundImageWrap [img]="role.pic">
+    <backgroundImageWrap [img]="role.pic | imageURI">
 
       <div id="content">
 
@@ -20,7 +20,7 @@
 
         <div id="pics">
           <div>
-            <img class="pic" *ngFor="let pic of role.pics" src="{{pic}}">
+            <img class="pic" *ngFor="let pic of role.pics" src="{{pic | imageURI}}">
           </div>
         </div>
 

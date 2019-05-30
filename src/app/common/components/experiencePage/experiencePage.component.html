@@ -1,6 +1,6 @@
 <div *ngIf="experience">
   <ion-content>
-    <backgroundImageWrap [img]="experience.pic">
+    <backgroundImageWrap [img]="experience.pic | imageURI">
 
       <div id="content">
 

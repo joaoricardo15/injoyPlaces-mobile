@@ -1,5 +1,5 @@
 <div id="main" (click)="navigate()">
-  <backgroundImageWrap [img]="role.pic" [borderRadius]="true">
+  <backgroundImageWrap [img]="role.pic | imageURI" [borderRadius]="true">
     <div id="content">
       <div id="name">{{role.name}}</div>
       <role-rating [rate]="role.ratting"></role-rating>
