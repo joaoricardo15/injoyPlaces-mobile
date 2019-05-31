@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../common/services/api.service';
-import { CameraService } from '../common/services/camera.service';
-import { GeolocationService } from '../common/services/geolocation.service';
+import { ApiService } from '../../common/services/api.service';
+import { CameraService } from '../../common/services/camera.service';
+import { GeolocationService } from '../../common/services/geolocation.service';
 import { ToastController, AlertController, LoadingController, ActionSheetController } from '@ionic/angular';
-import { iRole, iExperience } from '../common/interfaces/injoyApi.interface';
+import { iRole, iExperience } from '../../common/interfaces/injoyApi.interface';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ImageService } from '../common/services/image.service';
+import { ImageService } from '../../common/services/image.service';
+import { LocalStorageService } from 'src/app/common/services/localStorage.service';
 
 @Component({
   selector: 'addExperience-page',
@@ -38,15 +39,16 @@ export class AddExperiencePage {
     private alert: AlertController,
     private loading: LoadingController,
     private sheet: ActionSheetController,
-    private geoLocation: GeolocationService) {  }
+    private geoLocation: GeolocationService,
+    private localStorage: LocalStorageService) {  }
 
   ngOnInit() {
     this.name = new FormControl('', Validators.required);
     this.location = new FormControl('', Validators.required);
     this.ratting = new FormControl('' , Validators.required);
-    this.pic = new FormControl('assets/images/Homer-icon.png', Validators.required);
+    this.pic = new FormControl('');
     this.tag = new FormControl('', Validators.required);
-    this.comment = new FormControl('vmdl', Validators.required);
+    this.comment = new FormControl('');
 
     this.form = new FormGroup({
       name: this.name,
@@ -64,7 +66,7 @@ export class AddExperiencePage {
         this.geoLocation.getCurrentLocation()
           .then(location => {
             this.location.setValue(location)
-            this.api.getPossibleRoles(location)
+            this.api.getRolesAround(location)
               .subscribe(roles => {
                 if (roles.length > 0) {
                   this.currentRoles = roles
@@ -92,25 +94,31 @@ export class AddExperiencePage {
   }
 
   addTag()  {
-    let tag = document.getElementById('tagInput')['value']
-    if (tag.length > 1)
-      this.tag.setValue(tag) 
+    this.tag.setValue(document.getElementById('tagInput')['value']) 
   }
 
-  addComment()  {
-    let comment = document.getElementById('commentInput')['value']
-    if (comment.length > 1)
-      this.comment.setValue(comment) 
+  addComment() {
+    this.comment.setValue(document.getElementById('commentInput')['value']) 
   }
 
   addPicture() {
     this.camera.getPicture()
       .then(imageData => { 
-        this.pic.setValue('data:image/jpeg;base64,' + imageData) 
+        let pic = 'data:image/jpeg;base64,' + imageData
+        this.pic.setValue(pic) 
       })
       .catch(error => { 
         this.triggerToast('cameraError: '+error) 
       })
+  }
+
+  resetForm() {
+    this.name.setValue(null)
+    this.ratting.setValue(null)
+    this.location.setValue(null)
+    this.pic.setValue(null)
+    this.tag.setValue(null)
+    this.comment.setValue(null)
   }
 
   addExperience(form, valid: boolean) {
@@ -129,31 +137,35 @@ export class AddExperiencePage {
           text: 'Confirmar',
           handler: () => {
             
-            this.image.getBase64ImageFromURL(this.pic.value)
-              .subscribe(imgFile => {
+            var experience: iExperience = {
+              user: this.localStorage.getUser().user,
+              name: this.name.value,
+              ratting: this.ratting.value,
+              location: this.location.value,
+              date: new Date(),
+              pic: null,
+              tag: this.tag.value,
+              comment: this.comment.value
+            }
 
-                let experience: iExperience = {
-                  user: this.api.UserName,
-                  name: this.name.value,
-                  ratting: this.ratting.value,
-                  location: this.location.value,
-                  date: new Date(),
-                  pic: { data: imgFile, contentType: 'image/png' },
-                  tag: this.tag.value,
-                  comment: this.comment.value
-                }
-
-                this.api.postExperience(experience)
-                  .subscribe(() => {
-                    this.name.setValue(null)
-                    this.ratting.setValue(null)
-                    this.location.setValue(null)
-                    this.pic.setValue('assets/images/Homer-icon.png')
-                    this.tag.setValue(null)
-                    this.comment.setValue('vmdl')
-                    this.router.navigate(['/tabs/myList']) 
-                  })
-              })
+            if (this.pic.value) {
+              this.image.getBase64ImageFromURL(this.pic.value)
+                .subscribe(imgFile => {
+                  experience.pic = { data: imgFile, contentType: 'image/png' }
+                  this.api.postExperience(experience)
+                    .subscribe(() => {
+                      this.resetForm()
+                      this.router.navigate(['home/myExperiences']) 
+                    })
+                })
+            } 
+            else {
+              this.api.postExperience(experience)
+                .subscribe(() => {
+                  this.resetForm()
+                  this.router.navigate(['home/myExperiences']) 
+                })
+            }
           }
         }
       ]

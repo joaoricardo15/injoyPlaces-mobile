@@ -1,0 +1,23 @@
+@import './../../styles/sizes.scss';
+
+#main {
+  height: 70vh;
+  padding: $global-size-spacing-extraLarge*2;
+}
+
+#title {
+  text-align: center;
+  margin-top: $global-size-spacing-extraLarge;
+  margin-bottom: $global-size-spacing-extraLarge;
+}
+
+.form {
+  display: block;
+  height: $global-size-spacing-extraLarge*2;
+}
+
+.formWarning { 
+  font-size: $global-size-font-small;
+  color: var(--ion-color-danger-tint); 
+  padding-left: $global-size-spacing-extraLarge*2;
+}

@@ -15,8 +15,8 @@ export class RoleComponent {
   @Input() role: iRole
   @Input() columnSize: number = 5
 
-  public navigate(){
+  public navigate() {
     this.roleService.setRole(this.role)
-    this.router.navigate(['tabs/role']);
+    this.router.navigate(['home/role']);
   }
 }

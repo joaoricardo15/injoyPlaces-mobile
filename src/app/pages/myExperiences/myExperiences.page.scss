@@ -1,4 +1,4 @@
-@import './../styles/sizes.scss';
+@import './../../styles/sizes.scss';
 
 #content {
   padding: $global-size-spacing-large;
@@ -21,6 +21,7 @@ ion-badge {
 #experiences {
   display: flex;
   flex-wrap: wrap;
+  margin-left: calc(5vw - 10px);
 }
 
 .experience {

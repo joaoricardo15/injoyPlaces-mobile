@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ApiService } from '../common/services/api.service';
-import { iMyExperiences, iExperience } from '../common/interfaces/injoyApi.interface';
+import { ApiService } from './../../common/services/api.service';
+import { iMyExperiences, iExperience } from './../../common/interfaces/injoyApi.interface';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -16,17 +16,17 @@ export class MyExperiencesPage {
 
   ionViewWillEnter () {
     if (this.myExperiences) {
-      this.api.getMyExperiences()
-        .subscribe((experiences: iExperience[]) => {
-          this.myExperiences = { opened: experiences.length, experiences: experiences }
-        })
+      // this.api.getMyExperiences()
+      //   .subscribe((experiences: iMyExperiences) => {
+      //     this.myExperiences = experiences
+      //   })
     }
     else {
       this.triggerLoading()
         .then(() => {
           this.api.getMyExperiences()
-            .subscribe((experiences: iExperience[]) => {
-              this.myExperiences = { opened: experiences.length, experiences: experiences }
+            .subscribe((experiences: iMyExperiences) => {
+              this.myExperiences = experiences
               this.loading.dismiss()
             })
         })

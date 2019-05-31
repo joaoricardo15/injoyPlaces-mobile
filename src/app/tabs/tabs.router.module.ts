@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { CommonModule } from '../common/common.module';
-import { RolePageComponent } from '../common/components/rolePage/rolePage.component';
-import { ExperiencePageComponent } from '../common/components/experiencePage/experiencePage.component';
+import { RolePageComponent } from '../pages/role/role.page';
+import { ExperiencePage } from '../pages/experience/experience.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
@@ -15,7 +15,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../myList/myList.module#MyListModule'
+            loadChildren: './../pages/myList/myList.module#MyListModule'
           }
         ]
       },
@@ -24,7 +24,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../addExperience/addExperience.module#AddExperienceModule'
+            loadChildren: './../pages/addExperience/addExperience.module#AddExperienceModule'
           }
         ]
       },
@@ -33,7 +33,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../myExperiences/myExperiences.module#MyExperiencesModule'
+            loadChildren: './../pages/myExperiences/myExperiences.module#MyExperiencesModule'
           }
         ]
       },
@@ -43,18 +43,18 @@ const routes: Routes = [
       },
       {
         path: 'experience',
-        component: ExperiencePageComponent,
+        component: ExperiencePage,
       },
       {
         path: '',
-        redirectTo: '/tabs/myList',
+        redirectTo: 'myList',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/myList',
+    redirectTo: 'myList',
     pathMatch: 'full'
   }
 ];

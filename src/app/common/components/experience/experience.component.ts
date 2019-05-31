@@ -17,6 +17,6 @@ export class ExperienceComponent {
 
   public navigate(){
     this.experienceService.setExperience(this.experience)
-    this.router.navigate(['tabs/experience']);
+    this.router.navigate(['home/experience']);
   }
 }

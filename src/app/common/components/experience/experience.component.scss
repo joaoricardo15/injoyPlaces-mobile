@@ -1,12 +1,12 @@
 @import './../../../styles/sizes.scss';
 
 #main {
-  width: 150px;
-  height: 150px;
+  width: 90vw;
+  height: 30vh;
 }
 
 #content {
-  padding: $global-size-spacing-default;
+  padding: $global-size-spacing-extraLarge;
 }
 
 #name {

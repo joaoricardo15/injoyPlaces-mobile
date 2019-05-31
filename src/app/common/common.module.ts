@@ -10,8 +10,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
 import { RoleTagComponent } from './components/roleTag/roleTag.component';
 import { ExperienceComponent } from './components/experience/experience.component';
-import { RolePageComponent } from './components/rolePage/rolePage.component';
-import { ExperiencePageComponent } from './components/experiencePage/experiencePage.component';
+import { RolePageComponent } from '../pages/role/role.page';
+import { ExperiencePage } from '../pages/experience/experience.page';
 import { BackgroundImageWrapComponent } from './components/backgroundImageWrap/backgroundImageWrap.component';
 import { ImageService } from './services/image.service';
 import { ImageURIPipe } from './pipes/imageURI.pipe';
@@ -26,7 +26,7 @@ import { ImageURIPipe } from './pipes/imageURI.pipe';
     RoleComponent,
     RolePageComponent,
     ExperienceComponent,
-    ExperiencePageComponent,
+    ExperiencePage,
     RoleTagComponent,
     RoleRatingComponent,
     RolesHorizontalListComponent,
@@ -37,7 +37,7 @@ import { ImageURIPipe } from './pipes/imageURI.pipe';
     RoleComponent,
     RolePageComponent,
     ExperienceComponent,
-    ExperiencePageComponent,
+    ExperiencePage,
     RoleTagComponent,
     RoleRatingComponent,
     RolesHorizontalListComponent,

@@ -2,29 +2,43 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { iLocation } from '../interfaces/location.interface';
+import { iUser } from '../interfaces/injoyApi.interface';
+import { LocalStorageService } from './localStorage.service';
 
 @Injectable()
 export class ApiService {
 
-  InJoyServerURL = 'https://injoyserver.azurewebsites.net'
-  UserName = 'Dão'
+  //InJoyServerURL = 'https://injoyserver.azurewebsites.net'
+  InJoyServerURL = 'http://localhost:1000'
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
-  getPossibleRoles(location: iLocation): Observable<any> {
-    return this.http.get(this.InJoyServerURL + '/possibleRoles', {
+  getUser(user: string): Observable<any> {
+    return this.http.get(this.InJoyServerURL + '/user', {
+      params: { user: user }
+    })
+  }
+
+  getRolesForMe(): Observable<any> {
+    return this.http.get(this.InJoyServerURL + '/rolesForMe', {
+      params: { user: this.localStorage.getUser().user }
+    })
+  }
+
+  getRolesAround(location: iLocation): Observable<any> {
+    return this.http.get(this.InJoyServerURL + '/rolesAround', {
       params: { location: JSON.stringify(location) }
     })
   }
 
   getMyExperiences(): Observable<any> {
     return this.http.get(this.InJoyServerURL + '/myExperiences', {
-      params: { user: this.UserName }
+      params: { user: this.localStorage.getUser().user }
     })
   }
 
-  getRoles(): Observable<any> {
-    return this.http.get(this.InJoyServerURL + '/roles')
+  postUser(user: iUser): Observable<any> {
+    return this.http.post(this.InJoyServerURL + '/user', user)
   }
 
   postExperience(experience: any): Observable<any> {

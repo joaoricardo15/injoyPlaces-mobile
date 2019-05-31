@@ -1,5 +1,10 @@
 import { iLocation } from './location.interface';
 
+export interface iUser {
+  user: string
+  email: string
+}
+
 export interface iMylist {
   myList: iRoleList[]
   myExperiences: iMyExperiences
@@ -22,8 +27,13 @@ export interface iRole {
 }
 
 export interface iMyExperiences {
-  opened: number
+  achievements: iAchievement[]
   experiences: iExperience[]
+}
+
+export interface iAchievement {
+  title: string
+  value?: number
 }
 
 export interface iExperience {

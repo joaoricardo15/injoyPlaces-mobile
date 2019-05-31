@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ApiService } from '../common/services/api.service';
-import { iRoleList, iRole } from '../common/interfaces/injoyApi.interface';
+import { ApiService } from '../../common/services/api.service';
+import { iRoleList, iRole } from '../../common/interfaces/injoyApi.interface';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
@@ -23,17 +23,17 @@ export class MyListPage {
     this.searchOptions = []
     
     if (this.myList) {
-      this.api.getRoles()
-        .subscribe((roles: iRole[]) => {
-          this.myList = [{ title: 'Todos os rolês', roles: roles }]
-        }) 
+      // this.api.getRolesForMe()
+      //   .subscribe((lists: iRoleList[]) => {
+      //     this.myList = lists
+      //   }) 
     }
     else {
       this.triggerLoading()
         .then(() => {
-          this.api.getRoles()
-            .subscribe((roles: iRole[]) => {
-              this.myList = [{ title: 'Todos os rolês', roles: roles }]
+          this.api.getRolesForMe()
+            .subscribe((lists: iRoleList[]) => {
+              this.myList = lists
               this.loading.dismiss()
             }) 
         })

@@ -1,4 +1,4 @@
-@import './../styles/sizes.scss';
+@import './../../styles/sizes.scss';
 
 #content {
   min-height: 74vh;
@@ -10,24 +10,6 @@
   margin-bottom: $global-size-spacing-extraLarge;
   margin-right: $global-size-spacing-extraLarge + $global-size-spacing-large;
   margin-left: $global-size-spacing-extraLarge + $global-size-spacing-large;
-
-  & > ion-chip {
-    padding-top: $global-size-spacing-extraLarge;
-    padding-bottom: $global-size-spacing-extraLarge;
-    padding-right: $global-size-spacing-large;
-    padding-left: $global-size-spacing-large;
-    border-radius: $global-size-spacing-extraLarge*2;
-
-    & > ion-label {
-      width: 100%;
-      overflow: hidden;
-      word-break: break-all;
-      height: $global-size-font-extraLarge;
-      font-size: $global-size-font-extraLarge;
-      padding-left: $global-size-spacing-large;
-      padding-right: $global-size-spacing-large;
-    }
-  }
 
   & > ion-icon {
     position: absolute;
@@ -66,19 +48,6 @@
   margin-right: $global-size-spacing-extraLarge + $global-size-spacing-large;
   margin-left: $global-size-spacing-extraLarge + $global-size-spacing-large;
 
-  & > ion-chip {
-    padding: $global-size-spacing-default;
-
-    & > ion-label { 
-      overflow: hidden;
-      word-break: break-all;
-      height: $global-size-font-default;
-      font-size: $global-size-font-default;
-      padding-right: $global-size-spacing-default;
-      padding-left: $global-size-spacing-default;
-    }
-  }
-
   & > ion-icon {
     position: absolute;
     right: $global-size-spacing-large;
@@ -87,6 +56,24 @@
   & > ion-input {
     margin-left: $global-size-spacing-extraLarge;
     margin-right: $global-size-spacing-extraLarge;
+  }
+}
+
+#commentForm {
+  padding: $global-size-spacing-extraLarge;
+
+  & > div {
+    width: 100%;
+    padding: $global-size-spacing-large;
+    border-radius: $global-size-spacing-small;
+    background-color: rgba(255,255,255,0.1);
+
+    & > div {
+
+      & > ion-label {
+        margin-left: $global-size-spacing-default;
+      }
+    }
   }
 }
 
