@@ -8,8 +8,8 @@ import { LocalStorageService } from './localStorage.service';
 @Injectable()
 export class ApiService {
 
-  //InJoyServerURL = 'https://injoyserver.azurewebsites.net'
-  InJoyServerURL = 'http://localhost:1000'
+  InJoyServerURL = 'https://injoyserver.azurewebsites.net'
+  //InJoyServerURL = 'http://localhost:1000'
 
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
