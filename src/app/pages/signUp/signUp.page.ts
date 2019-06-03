@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LocalStorageService } from 'src/app/common/services/localStorage.service';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/common/services/api.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'signUp-page',
@@ -10,7 +11,11 @@ import { ApiService } from 'src/app/common/services/api.service';
 })
 export class SignUpPage {
 
-  constructor(private router: Router, private api: ApiService, private localStorage: LocalStorageService) {}
+  constructor(
+    private router: Router,
+    private api: ApiService,
+    private toast: ToastController,
+    private localStorage: LocalStorageService) {}
 
   user: any
   email: any
@@ -28,6 +33,7 @@ export class SignUpPage {
             this.api.postUser(form.value)
               .subscribe(() => {
                 this.localStorage.setUser(form.value)
+                this.triggerToast('Inscrição realizada com sucesso!!!')
                 this.router.navigate(['/home'])
               })
           }
@@ -37,5 +43,14 @@ export class SignUpPage {
           }
         })
     }
+  }
+
+  async triggerToast(message: string) {
+    const toast = await this.toast.create({
+      message: message,
+      color: "success",
+      duration: 2000
+    })
+    return await toast.present()
   }
 }

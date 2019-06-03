@@ -8,13 +8,13 @@
 
         <role-rating [rate]="experience.ratting" [size]="'large'"></role-rating>
 
-        <div class="tag">
+        <div class="tag" *ngIf="experience.tag">
           <role-tag class="tag">{{experience.tag}}</role-tag>
         </div>
         <div class="tag">
           <role-tag [icon]="'calendar'" [color]="'danger'">{{experience.date | date: 'short'}}</role-tag>
         </div>
-        <div class="tag">
+        <div class="tag" *ngIf="experience.comment">
           <role-tag [icon]="'text'" [color]="'success'">{{experience.comment}}</role-tag>
         </div>
 

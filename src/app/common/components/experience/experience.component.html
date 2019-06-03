@@ -3,7 +3,7 @@
     <div id="content">
       <div id="name">{{experience.name}}</div>
       <role-rating [rate]="experience.ratting"></role-rating>
-      <role-tag [size]="'small'">{{experience.tag}}</role-tag>
+      <role-tag *ngIf="experience.tag" [size]="'small'">{{experience.tag}}</role-tag>
     </div>
   </backgroundImageWrap>
 </div>

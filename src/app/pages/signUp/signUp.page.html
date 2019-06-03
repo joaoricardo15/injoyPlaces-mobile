@@ -6,12 +6,12 @@
       </ion-row>
       <ion-title id="title" color="dark">Seja Bem vindo : )</ion-title>
       <ion-row class="form" justify-content-center>
-        <em class="formWarning" *ngIf="form.controls.user?.invalid && submitted">tem que dale aqui...</em>
+        <em class="formWarning" *ngIf="form.controls.user?.invalid && submitted">faltou preencher aqui...</em>
         <em class="formWarning" *ngIf="alreadyInUse && alreadyInUseName == form.value.user">nome já utilizado...</em>
         <ion-input (ngModel)="user" name="user" required type="text" color="medium" text-center placeholder="digite o seu nome"></ion-input>
       </ion-row>
       <ion-row class="form" justify-content-center>
-        <em class="formWarning" *ngIf="form.controls.email?.invalid && submitted">tem que dale aqui...</em>
+        <em class="formWarning" *ngIf="form.controls.email?.invalid && submitted">faltou preencher aqui...</em>
         <ion-input (ngModel)="email" name="email" required type="email" color="medium" text-center placeholder="digite o seu e-mail"></ion-input>
       </ion-row>
     </ion-grid>
@@ -22,6 +22,3 @@
     </ion-toolbar>
   </ion-footer>
 </form>
-
-
-<!-- [disabled]="form.invalid" -->

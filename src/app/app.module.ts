@@ -14,6 +14,7 @@ import { ApiService } from './common/services/api.service';
 import { RoleService } from './common/components/role/roles.service';
 import { ExperienceService } from './common/components/experience/experience.service';
 import { LocalStorageService } from './common/services/localStorage.service';
+import { NavigationService } from './common/services/navigation.service';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { LocalStorageService } from './common/services/localStorage.service';
     ApiService,
     RoleService,
     ExperienceService,
+    NavigationService,
     LocalStorageService,
     BackgroundGeolocationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

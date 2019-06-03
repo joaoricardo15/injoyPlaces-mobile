@@ -1,27 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from './../../common/services/api.service';
 import { iMyExperiences, iExperience } from './../../common/interfaces/injoyApi.interface';
 import { LoadingController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { ExperienceService } from 'src/app/common/components/experience/experience.service';
 
 @Component({
   selector: 'myExperiences-page',
   templateUrl: 'myExperiences.page.html',
   styleUrls: ['myExperiences.page.scss']
 })
-export class MyExperiencesPage {
+export class MyExperiencesPage implements OnInit {
 
   myExperiences: iMyExperiences
   
-  constructor(private api: ApiService, private loading: LoadingController) { }
+  constructor(
+    private api: ApiService,
+    private route: ActivatedRoute,
+    private loading: LoadingController,
+    private experienceService: ExperienceService) { }
 
-  ionViewWillEnter () {
-    if (this.myExperiences) {
-      // this.api.getMyExperiences()
-      //   .subscribe((experiences: iMyExperiences) => {
-      //     this.myExperiences = experiences
-      //   })
-    }
-    else {
+  ngOnInit() {
+    if (!this.myExperiences)
       this.triggerLoading()
         .then(() => {
           this.api.getMyExperiences()
@@ -30,7 +30,11 @@ export class MyExperiencesPage {
               this.loading.dismiss()
             })
         })
-    }
+
+    this.route.params.subscribe(params => {
+      if (params.udpdate)
+        this.myExperiences.experiences.push(this.experienceService.getExperience())
+    });
   }
 
   async triggerLoading() {

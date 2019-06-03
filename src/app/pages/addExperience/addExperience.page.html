@@ -1,21 +1,26 @@
-<form *ngIf="contentReady" [formGroup]="form" (ngSubmit)="addExperience(form.value, form.valid)">
+<form *ngIf="contentReady" [formGroup]="form" (ngSubmit)="addExperience(form)">
   <ion-content id="content">
-    <backgroundImageWrap [img]="pic.value | imageURI">
+    <backgroundImageWrap [img]="currentPic">
       <ion-grid>
 
         <ion-row id="nameForm" justify-content-center>
           <role-tag *ngIf="name.value" [icon]="'pin'" [size]="'large'" [close]="true" (onClose)="name.setValue(null); tag.setValue(null); currentRole = null">{{name.value}}</role-tag>
-          <ion-icon *ngIf="currentRoles && currentRoles.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('roles')"></ion-icon>
           <div *ngIf="!name.value">
-            <div>
+            <div id="newRoleTitle">
               <ion-icon name="trophy" size="large" color="warning"></ion-icon>
               <ion-label color="light">Novo Rolê</ion-label>
             </div>
-            <ion-input id="nameInput" (keyup.enter)="addName()" (focusout)="addName()" type="text" color="light" text-center placeholder="digite o nome rolê"></ion-input>
+            <div class="formWarning" *ngIf="form.controls.name?.invalid && submitted">é necessário preencher o nome do rolê...</div>
+            <div id="newRoleInput">
+              <ion-icon id="pinIcon" name="pin" color="warning"></ion-icon>
+              <ion-input id="nameInput" (keyup.enter)="addName()" (focusout)="addName()" type="text" color="light" minlength="2" maxlength="20" placeholder="digite o nome rolê"></ion-input>
+              <ion-icon id="optionsIcon" *ngIf="currentRoles?.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('roles')"></ion-icon>
+            </div>
           </div> 
         </ion-row>
 
         <ion-row id="rattingForm" justify-content-center>
+          <div class="formWarning" *ngIf="form.controls.ratting?.invalid && submitted">é necessário avaliar o rolê...</div>
           <role-rating
             [size]="'large'"
             [rate]="ratting.value" 
@@ -25,32 +30,38 @@
 
         <ion-row id="tagForm" justify-content-center>
           <role-tag *ngIf="tag.value" [close]="true" (onClose)="tag.setValue(null)">{{tag.value}}</role-tag>
-          <ion-icon *ngIf="currentRole" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('tags')"></ion-icon>
-          <ion-input *ngIf="!tag.value" id="tagInput" (keyup.enter)="addTag()" (focusout)="addTag()" type="text" color="light" size="large" minlength="2" maxlength="20" text-center placeholder="digite a tag do rolê"></ion-input>
+          <div *ngIf="!tag.value">
+            <ion-icon id="tagIcon" name="pricetag" color="warning"></ion-icon>
+            <ion-input id="tagInput" (keyup.enter)="addTag()" (focusout)="addTag()" type="text" color="light" size="large" minlength="2" maxlength="20" placeholder="digite a tag do rolê"></ion-input>
+            <ion-icon id="optionsIcon" *ngIf="currentRole && currentRole.tags?.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('tags')"></ion-icon>
+          </div>
+        </ion-row>
+
+        <ion-row id="imageForm" justify-content-center>
+          <div (click)="addPicture()">
+            <ion-icon name="camera" color="warning"></ion-icon>
+            <ion-label color="light">Adicionar foto</ion-label>
+          </div>
         </ion-row>
 
         <ion-row id="commentForm" justify-content-center>
           <div>
-            <div style="display: flex;">
-              <ion-icon name="text" color="medium" ></ion-icon>
-              <ion-label color="medium">Comentário</ion-label>
+            <div>
+              <ion-icon name="text" color="warning" ></ion-icon>
+              <ion-label color="light">Comentário</ion-label>
             </div>
             <ion-textarea id="commentInput" (keyup.enter)="addComment()" (focusout)="addComment()" color="light" size="large" spellcheck="true" rows="3" maxlength="140"></ion-textarea>
           </div>
         </ion-row>
 
-        <ion-row id="imageForm" justify-content-center>
-          <ion-button (click)="addPicture()" color="warning" fill="outline">
-            <ion-icon name="camera" size="large" color="light"></ion-icon>
-          </ion-button>
-        </ion-row>
-
       </ion-grid>
+
+      <div id="submitForm">
+        <div (click)="submitted=true; addExperience(form)">
+          <ion-icon name="checkmark" size="large" color="light"></ion-icon>
+        </div>
+      </div>
+
     </backgroundImageWrap>
   </ion-content>
-  <ion-footer>
-    <ion-toolbar>
-      <ion-button type="submit" [disabled]="form.invalid" expand="block" color="medium">Add Experiência</ion-button>
-    </ion-toolbar>
-  </ion-footer>
 </form>

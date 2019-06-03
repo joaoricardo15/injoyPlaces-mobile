@@ -8,6 +8,8 @@ import { iRole, iExperience } from '../../common/interfaces/injoyApi.interface';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ImageService } from '../../common/services/image.service';
 import { LocalStorageService } from 'src/app/common/services/localStorage.service';
+import { ExperienceService } from 'src/app/common/components/experience/experience.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'addExperience-page',
@@ -18,6 +20,8 @@ export class AddExperiencePage {
 
   currentRoles: iRole[]
   currentRole: iRole
+  currentPic: string = 'assets/images/InJoyWoman.png'
+  submitted: boolean = false
 
   name: FormControl
   location: FormControl
@@ -25,7 +29,6 @@ export class AddExperiencePage {
   pic: FormControl
   tag: FormControl
   comment: FormControl
-
   form: FormGroup
 
   contentReady: boolean = false
@@ -37,17 +40,19 @@ export class AddExperiencePage {
     private camera: CameraService,
     private toast: ToastController,
     private alert: AlertController,
+    private Routerlocation: Location,
     private loading: LoadingController,
     private sheet: ActionSheetController,
     private geoLocation: GeolocationService,
-    private localStorage: LocalStorageService) {  }
+    private localStorage: LocalStorageService,
+    private experienceService: ExperienceService) {  }
 
   ngOnInit() {
     this.name = new FormControl('', Validators.required);
     this.location = new FormControl('', Validators.required);
     this.ratting = new FormControl('' , Validators.required);
     this.pic = new FormControl('');
-    this.tag = new FormControl('', Validators.required);
+    this.tag = new FormControl('');
     this.comment = new FormControl('');
 
     this.form = new FormGroup({
@@ -61,77 +66,118 @@ export class AddExperiencePage {
   }
 
   ionViewWillEnter() {
-    this.triggerLoading()
-      .then(() => {
-        this.geoLocation.getCurrentLocation()
-          .then(location => {
-            this.location.setValue(location)
-            this.api.getRolesAround(location)
-              .subscribe(roles => {
-                if (roles.length > 0) {
-                  this.currentRoles = roles
-                  this.currentRole = roles[0]
-                  this.name.setValue(roles[0].name)
-                }               
-                this.contentReady = true
-                this.loading.dismiss()
-              })
-          })
-          .catch(error => { 
-            this.triggerToast('geolocationError: '+error) 
-          })
-      })   
+    if (!this.location.value) {
+      this.triggerLoading()
+        .then(() => {
+          this.addCurrentRole()
+            .then(() => {
+              this.contentReady = true
+            })
+            .finally(() => {
+              this.loading.dismiss()
+            })
+        })   
+    }
+    else {
+      this.addCurrentRole()
+    }
   }
 
   ionViewWillLeave() {
-    this.contentReady = false
+    if(this.ratting.value || this.pic.value || this.tag.value || this.comment.value) {
+      //this.leaveConfirmationAlert()
+    }
   }
 
   addName()  {
     let name = document.getElementById('nameInput')['value']
-    if (name.length > 1)
+    if (name.length > 2)
       this.name.setValue(name) 
   }
 
+  addCurrentRole() {
+    return new Promise((resolve, reject) => {
+      this.getCurrentRole()
+        .then((roles: iRole[]) => {
+          if (roles.length > 0) {
+            this.currentRoles = roles
+            if (this.name.value != roles[0].name) {
+              this.name.setValue(roles[0].name)
+              this.currentRole = roles[0]
+            }
+          }
+          resolve()
+        })
+        .catch(() => {
+          reject()
+          this.router.navigate(['home/myList']) 
+          this.triggerToast('Não foi possível determinar os rolês perto de você...', 'danger') 
+        })
+      })
+  }
+            
+  getCurrentRole() {
+    return new Promise((resolve, reject) => {
+      this.geoLocation.getCurrentLocation()
+        .then(location => {
+          this.location.setValue(location)
+          this.api.getRolesAround(location)
+            .subscribe(roles => {
+              resolve(roles)
+            })
+        })
+        .catch(error => { 
+          reject()
+        })
+    })
+  }
+
   addTag()  {
-    this.tag.setValue(document.getElementById('tagInput')['value']) 
+    let tag = document.getElementById('tagInput')['value']
+    if (tag.length > 1)
+    this.tag.setValue(tag) 
   }
 
   addComment() {
-    this.comment.setValue(document.getElementById('commentInput')['value']) 
+    let comment = document.getElementById('commentInput')['value']
+    if (comment.length > 3)
+      this.comment.setValue(comment) 
   }
 
   addPicture() {
     this.camera.getPicture()
       .then(imageData => { 
-        let pic = 'data:image/jpeg;base64,' + imageData
+        let pic = 'data:image/png;base64,' + imageData
+        this.currentPic = pic
         this.pic.setValue(pic) 
       })
       .catch(error => { 
-        this.triggerToast('cameraError: '+error) 
+        this.triggerToast('não foi possível acessar a sua câmera', 'danger')
       })
+  }
+
+  addExperience(form) {
+    if (form.valid)
+      this.confirmationAlert()
   }
 
   resetForm() {
     this.name.setValue(null)
     this.ratting.setValue(null)
-    this.location.setValue(null)
     this.pic.setValue(null)
     this.tag.setValue(null)
     this.comment.setValue(null)
-  }
-
-  addExperience(form, valid: boolean) {
-    if (valid)
-      this.confirmationAlert()
+    this.currentPic = 'assets/images/InJoyWoman.png'
+    this.submitted = false
   }
 
   async confirmationAlert() {
     const alert = await this.alert.create({
-      header: 'Postar experiência?',
+      header: 'Vamo dale!',
+      cssClass: 'dark',
       buttons: [
         {
-          text: 'cancelar',
+          text: 'voltar',
           role: 'cancel',
         }, {
           text: 'Confirmar',
@@ -154,16 +200,18 @@ export class AddExperiencePage {
                   experience.pic = { data: imgFile, contentType: 'image/png' }
                   this.api.postExperience(experience)
                     .subscribe(() => {
-                      this.resetForm()
-                      this.router.navigate(['home/myExperiences']) 
+                      this.triggerToast('Experiência salva com sucesso!!!', 'success')
+                      this.experienceService.setExperience(experience)
+                      this.router.navigate(['home/myExperiences', { update: true }]) 
                     })
                 })
             } 
             else {
               this.api.postExperience(experience)
                 .subscribe(() => {
-                  this.resetForm()
-                  this.router.navigate(['home/myExperiences']) 
+                  this.triggerToast('Experiência salva com sucesso!!!', 'success')
+                  this.experienceService.setExperience(experience)
+                  this.router.navigate(['home/myExperiences', { update: true }])
                 })
             }
           }
@@ -173,9 +221,32 @@ export class AddExperiencePage {
     await alert.present()
   }
 
-  async triggerToast(message: string) {
+  async leaveConfirmationAlert() {
+    const alert = await this.alert.create({
+      header: 'Abortar missão?',
+      cssClass: 'dark',
+      buttons: [
+        {
+          text: 'voltar',
+          role: 'cancel',
+          handler: () => {
+            this.Routerlocation.back()
+          }
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            this.resetForm();
+          }
+        }
+      ]
+    })
+    await alert.present()
+  }
+
+  async triggerToast(message: string, color: string) {
     const toast = await this.toast.create({
       message: message,
+      color: color,
       duration: 1500
     })
     return await toast.present()
@@ -184,9 +255,8 @@ export class AddExperiencePage {
   async triggerLoading() {
     let loadingInstance = await this.loading.create({
       spinner: "crescent",
-      message: 'taix por ondi?',
+      message: 'verificando sua localização',
       translucent: true
-      
     })
     return await loadingInstance.present();
   }
@@ -198,7 +268,7 @@ export class AddExperiencePage {
     }
 
     if (type == 'roles') {
-      sheetObject.header = 'Rolês próximos'
+      sheetObject.header = 'Rolês perto de você'
 
       for (let i = 0; i < this.currentRoles.length; i++) {
         sheetObject.buttons.push({
@@ -214,7 +284,7 @@ export class AddExperiencePage {
       }
     }
     else if (type == 'tags') {
-      sheetObject.header = 'Tags mais votadas'
+      sheetObject.header = 'Tags mais votadas do rolê'
 
       for (let i = 0; i < this.currentRole.tags.length; i++) {
         sheetObject.buttons.push({
@@ -229,7 +299,7 @@ export class AddExperiencePage {
     }
 
     sheetObject.buttons.push({
-      text: 'Cancel',
+      text: 'voltar',
       icon: 'close',
       role: 'cancel'
     })

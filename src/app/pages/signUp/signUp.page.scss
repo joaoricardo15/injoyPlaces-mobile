@@ -1,7 +1,7 @@
 @import './../../styles/sizes.scss';
 
 #main {
-  height: 70vh;
+  height: 100vh;
   padding: $global-size-spacing-extraLarge*2;
 }
 
@@ -20,4 +20,8 @@
   font-size: $global-size-font-small;
   color: var(--ion-color-danger-tint); 
   padding-left: $global-size-spacing-extraLarge*2;
+}
+
+ion-footer {
+  height: 15vh;
 }
