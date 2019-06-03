@@ -17,7 +17,7 @@ export interface iRoleList {
 
 export interface iRole {
   name: string
-  ratting: number
+  ratting: { rattings: number, average: number }
   location: iLocation
   address: string
   pic: string | Object

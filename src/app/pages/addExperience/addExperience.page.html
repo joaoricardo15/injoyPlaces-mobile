@@ -1,3 +1,9 @@
+<ion-header id="header">
+  <ion-toolbar>
+    <ion-title>Adicionar Nova Experiência</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <form *ngIf="contentReady" [formGroup]="form" (ngSubmit)="addExperience(form)">
   <ion-content id="content">
     <backgroundImageWrap [img]="currentPic">
@@ -33,32 +39,32 @@
           <div *ngIf="!tag.value">
             <ion-icon id="tagIcon" name="pricetag" color="warning"></ion-icon>
             <ion-input id="tagInput" (keyup.enter)="addTag()" (focusout)="addTag()" type="text" color="light" size="large" minlength="2" maxlength="20" placeholder="digite a tag do rolê"></ion-input>
-            <ion-icon id="optionsIcon" *ngIf="currentRole && currentRole.tags?.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('tags')"></ion-icon>
+            <ion-icon id="optionsIcon" *ngIf="currentRole?.tags[0]" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('tags')"></ion-icon>
           </div>
         </ion-row>
 
         <ion-row id="imageForm" justify-content-center>
-          <div (click)="addPicture()">
+          <div [class.filledBackground]="pic.value" (click)="addPicture()">
             <ion-icon name="camera" color="warning"></ion-icon>
             <ion-label color="light">Adicionar foto</ion-label>
           </div>
         </ion-row>
 
         <ion-row id="commentForm" justify-content-center>
-          <div>
+          <div [class.filledBackground]="comment.value">
             <div>
               <ion-icon name="text" color="warning" ></ion-icon>
-              <ion-label color="light">Comentário</ion-label>
+              <ion-label color="light">Comentário</ion-label><div class="formCommentWarning" *ngIf="form.controls.comment?.invalid">mínimo 3 caracteres...</div>
             </div>
-            <ion-textarea id="commentInput" (keyup.enter)="addComment()" (focusout)="addComment()" color="light" size="large" spellcheck="true" rows="3" maxlength="140"></ion-textarea>
+            <ion-textarea id="commentInput" formControlName="comment" color="light" size="large" rows="2" maxlength="140"></ion-textarea>
           </div>
         </ion-row>
 
       </ion-grid>
 
       <div id="submitForm">
-        <div (click)="submitted=true; addExperience(form)">
-          <ion-icon name="checkmark" size="large" color="light"></ion-icon>
+        <div (click)="addExperience(form)">
+          <ion-icon name="checkmark" color="success" size="large"></ion-icon>
         </div>
       </div>
 

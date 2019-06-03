@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from './../../common/services/api.service';
 import { iMyExperiences, iExperience } from './../../common/interfaces/injoyApi.interface';
 import { LoadingController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { ExperienceService } from 'src/app/common/components/experience/experience.service';
+import { DataService } from 'src/app/common/services/data.service';
 
 @Component({
   selector: 'myExperiences-page',
@@ -15,24 +15,17 @@ export class MyExperiencesPage implements OnInit {
   myExperiences: iMyExperiences
   
   constructor(
-    private api: ApiService,
+    private api: DataService,
     private route: ActivatedRoute,
     private loading: LoadingController,
     private experienceService: ExperienceService) { }
 
   ngOnInit() {
-    if (!this.myExperiences)
-      this.triggerLoading()
-        .then(() => {
-          this.api.getMyExperiences()
-            .subscribe((experiences: iMyExperiences) => {
-              this.myExperiences = experiences
-              this.loading.dismiss()
-            })
-        })
+    if (this.api.myExperiences)
+      this.myExperiences = this.api.myExperiences
 
     this.route.params.subscribe(params => {
-      if (params.udpdate)
+      if (params.update)
         this.myExperiences.experiences.push(this.experienceService.getExperience())
     });
   }

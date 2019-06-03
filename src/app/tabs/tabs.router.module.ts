@@ -4,6 +4,8 @@ import { TabsPage } from './tabs.page';
 import { CommonModule } from '../common/common.module';
 import { RolePageComponent } from '../pages/role/role.page';
 import { ExperiencePage } from '../pages/experience/experience.page';
+import { CanDeactivateService } from '../common/services/canDeactivate';
+import { AddExperiencePage } from '../pages/addExperience/addExperience.page';
 
 const routes: Routes = [
   {
@@ -24,7 +26,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: './../pages/addExperience/addExperience.module#AddExperienceModule'
+            component: AddExperiencePage,
+            canDeactivate: [CanDeactivateService]
           }
         ]
       },

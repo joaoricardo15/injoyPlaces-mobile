@@ -6,7 +6,7 @@
 
         <ion-label color="light">{{role.name}}</ion-label>
 
-        <role-rating [rate]="role.ratting" [size]="'large'"></role-rating>
+        <role-rating [rate]="role.ratting.average" [size]="'large'"></role-rating>
     
         <role-tag id="address" [icon]="'pin'" [color]="'medium'">{{role.address.split('-')[0]}}</role-tag>
 

@@ -1,11 +1,17 @@
 @import './../../styles/sizes.scss';
 
 #content {
-  padding: $global-size-spacing-large;
+
+  
 }
 
 ion-title {
+  text-align: center;
   padding-left: $global-size-spacing-large;
+}
+
+ion-list {
+  padding: $global-size-spacing-large;
 }
 
 ion-badge {
@@ -22,6 +28,7 @@ ion-badge {
   display: flex;
   flex-wrap: wrap;
   margin-left: calc(5vw - 10px);
+  padding: $global-size-spacing-large;
 }
 
 .experience {

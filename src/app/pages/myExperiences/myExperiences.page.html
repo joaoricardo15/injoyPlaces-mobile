@@ -1,31 +1,27 @@
-<ion-content>
-  <div id="content">
-    <ion-toolbar>
-      <ion-title>Minhas conquistas</ion-title>
-    </ion-toolbar>
-    
-    <ion-list>
-      <ion-item>
-        <ion-icon name="ribbon"></ion-icon>
-        <ion-label class="achievementTitle">Total de experiências</ion-label>
-        <ion-badge *ngIf="myExperiences">{{myExperiences.experiences.length}}</ion-badge>
-      </ion-item>
-      <ion-item *ngFor="let achievement of myExperiences?.achievements">
-        <ion-icon name="trophy"></ion-icon>
-        <ion-label class="achievementTitle">{{achievement.title}}</ion-label>
-        <ion-badge *ngIf="myExperiences">{{achievement.value}}</ion-badge>
-      </ion-item>
-    </ion-list>
-   
-    <ion-toolbar>
-      <ion-title>Minhas experiências</ion-title>
-    </ion-toolbar>
-    
-    <div id="experiences" *ngIf="myExperiences">
-      <experience class="experience" *ngFor="let experience of myExperiences.experiences" [experience]="experience"></experience>
-      <div *ngIf="myExperiences.experiences.length == 0">
-        <role-tag [icon]="'sad'" [color]="'danger'">Você ainda não registrou nenhum experiência</role-tag>
-      </div>
+<ion-header id="header">
+  <ion-toolbar>
+    <ion-title>Minhas Experiências</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="content">
+  <ion-list>
+    <ion-item>
+      <ion-icon name="ribbon"></ion-icon>
+      <ion-label class="achievementTitle">Total de experiências</ion-label>
+      <ion-badge *ngIf="myExperiences">{{myExperiences.experiences.length}}</ion-badge>
+    </ion-item>
+    <ion-item *ngFor="let achievement of myExperiences?.achievements">
+      <ion-icon name="trophy"></ion-icon>
+      <ion-label class="achievementTitle">{{achievement.title}}</ion-label>
+      <ion-badge *ngIf="myExperiences">{{achievement.value}}</ion-badge>
+    </ion-item>
+  </ion-list>
+  
+  <div id="experiences" *ngIf="myExperiences">
+    <experience class="experience" *ngFor="let experience of myExperiences.experiences" [experience]="experience"></experience>
+    <div *ngIf="myExperiences.experiences.length == 0">
+      <role-tag [icon]="'sad'" [color]="'danger'">Você ainda não registrou nenhum experiência</role-tag>
     </div>
   </div>
 </ion-content>

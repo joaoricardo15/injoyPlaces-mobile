@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { iLocation } from '../interfaces/location.interface';
 import { iUser } from '../interfaces/injoyApi.interface';
 import { LocalStorageService } from './localStorage.service';
+import { GeolocationService } from './geolocation.service';
 
 @Injectable()
 export class ApiService {
@@ -11,7 +11,9 @@ export class ApiService {
   InJoyServerURL = 'https://injoyserver.azurewebsites.net'
   //InJoyServerURL = 'http://localhost:1000'
 
-  constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
+  constructor(
+    private http: HttpClient, 
+    private geoLocation: GeolocationService,private localStorage: LocalStorageService) { }
 
   getUser(user: string): Observable<any> {
     return this.http.get(this.InJoyServerURL + '/user', {
@@ -25,9 +27,16 @@ export class ApiService {
     })
   }
 
-  getRolesAround(location: iLocation): Observable<any> {
-    return this.http.get(this.InJoyServerURL + '/rolesAround', {
-      params: { location: JSON.stringify(location) }
+  getRolesAround(): Observable<any> {
+    return new Observable(observer => {
+      this.geoLocation.getCurrentLocation()
+        .then(location => {
+          this.http.get(this.InJoyServerURL + '/rolesAround', {
+            params: { location: JSON.stringify(location) }
+          }).subscribe(
+              roles => { observer.next({ location: location, roles: roles}) },
+              error => { observer.error() })
+        }).catch(error => { observer.error() })
     })
   }
 

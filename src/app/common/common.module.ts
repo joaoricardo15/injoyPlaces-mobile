@@ -13,8 +13,17 @@ import { ExperienceComponent } from './components/experience/experience.componen
 import { RolePageComponent } from '../pages/role/role.page';
 import { ExperiencePage } from '../pages/experience/experience.page';
 import { BackgroundImageWrapComponent } from './components/backgroundImageWrap/backgroundImageWrap.component';
-import { ImageService } from './services/image.service';
 import { ImageURIPipe } from './pipes/imageURI.pipe';
+import { GeolocationService } from './services/geolocation.service';
+import { ApiService } from './services/api.service';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { NavigationService } from './services/navigation.service';
+import { LocalStorageService } from './services/localStorage.service';
+import { BackgroundGeolocationService } from './services/backgroundGeolocation.service';
+import { CameraService } from './services/camera.service';
+import { CanDeactivateService } from './services/canDeactivate';
+import { AlertService } from './services/alert.service';
 
 @NgModule({
   imports: [
@@ -47,11 +56,20 @@ import { ImageURIPipe } from './pipes/imageURI.pipe';
     RoleRatingComponent
   ],
   providers: [
+    StatusBar,
+    SplashScreen,
+    AlertService,
+    ApiService,
+    NavigationService,
+    CanDeactivateService,
     Camera,
+    CameraService,
     Geolocation,
-    ImageService,
-    LocalNotifications,
+    GeolocationService,
+    LocalStorageService,
     BackgroundGeolocation,
+    BackgroundGeolocationService,
+    LocalNotifications,
   ]
 })
 export class CommonModule {}

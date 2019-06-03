@@ -2,14 +2,16 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../common/services/api.service';
 import { CameraService } from '../../common/services/camera.service';
-import { GeolocationService } from '../../common/services/geolocation.service';
-import { ToastController, AlertController, LoadingController, ActionSheetController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular';
 import { iRole, iExperience } from '../../common/interfaces/injoyApi.interface';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ImageService } from '../../common/services/image.service';
 import { LocalStorageService } from 'src/app/common/services/localStorage.service';
 import { ExperienceService } from 'src/app/common/components/experience/experience.service';
-import { Location } from '@angular/common';
+import { DataService } from 'src/app/common/services/data.service';
+import { Observable } from 'rxjs';
+import { AlertService } from 'src/app/common/services/alert.service';
 
 @Component({
   selector: 'addExperience-page',
@@ -36,14 +38,12 @@ export class AddExperiencePage {
   constructor(
     private router: Router,
     private api: ApiService,
-    private image: ImageService,
+    private data: DataService,
+    private alert: AlertService,
     private camera: CameraService,
     private toast: ToastController,
-    private alert: AlertController,
-    private Routerlocation: Location,
     private loading: LoadingController,
     private sheet: ActionSheetController,
-    private geoLocation: GeolocationService,
     private localStorage: LocalStorageService,
     private experienceService: ExperienceService) {  }
 
@@ -53,7 +53,7 @@ export class AddExperiencePage {
     this.ratting = new FormControl('' , Validators.required);
     this.pic = new FormControl('');
     this.tag = new FormControl('');
-    this.comment = new FormControl('');
+    this.comment = new FormControl('', Validators.minLength(3));
 
     this.form = new FormGroup({
       name: this.name,
@@ -66,70 +66,45 @@ export class AddExperiencePage {
   }
 
   ionViewWillEnter() {
-    if (!this.location.value) {
-      this.triggerLoading()
-        .then(() => {
-          this.addCurrentRole()
-            .then(() => {
-              this.contentReady = true
-            })
-            .finally(() => {
-              this.loading.dismiss()
-            })
-        })   
-    }
-    else {
-      this.addCurrentRole()
-    }
+    // if (!this.location.value ) {
+    //   this.location.setValue(this.data.myLocation)
+    //   this.currentRoles = this.data.rolesAround
+    //   if (this.data.rolesAround.length > 0) {
+    //     this.presentActionSheet('roles')
+    //   }
+
+       this.contentReady = true
+    // }
+    // else {
+      this.api.getRolesAround()
+        .subscribe(result => {
+          this.location.setValue(result.location)
+          this.currentRoles = result.roles
+          if (result.roles.length > 0) {
+
+            let choosedRole = result.roles.find(x => x.name == this.name.value)
+            if (!choosedRole)
+              this.presentActionSheet('roles')
+          }
+        })
+    //}
   }
 
   ionViewWillLeave() {
-    if(this.ratting.value || this.pic.value || this.tag.value || this.comment.value) {
-      //this.leaveConfirmationAlert()
-    }
+    this.resetForm()
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if(!this.submitted && this.ratting.value || this.pic.value || this.tag.value || this.comment.value)
+      return this.alert.create()
+    else 
+      return true
   }
 
   addName()  {
     let name = document.getElementById('nameInput')['value']
     if (name.length > 2)
       this.name.setValue(name) 
-  }
-
-  addCurrentRole() {
-    return new Promise((resolve, reject) => {
-      this.getCurrentRole()
-        .then((roles: iRole[]) => {
-          if (roles.length > 0) {
-            this.currentRoles = roles
-            if (this.name.value != roles[0].name) {
-              this.name.setValue(roles[0].name)
-              this.currentRole = roles[0]
-            }
-          }
-          resolve()
-        })
-        .catch(() => {
-          reject()
-          this.router.navigate(['home/myList']) 
-          this.triggerToast('Não foi possível determinar os rolês perto de você...', 'danger') 
-        })
-      })
-  }
-            
-  getCurrentRole() {
-    return new Promise((resolve, reject) => {
-      this.geoLocation.getCurrentLocation()
-        .then(location => {
-          this.location.setValue(location)
-          this.api.getRolesAround(location)
-            .subscribe(roles => {
-              resolve(roles)
-            })
-        })
-        .catch(error => { 
-          reject()
-        })
-    })
   }
 
   addTag()  {
@@ -157,32 +132,11 @@ export class AddExperiencePage {
   }
 
   addExperience(form) {
+    this. submitted = true; 
     if (form.valid)
-      this.confirmationAlert()
-  }
-
-  resetForm() {
-    this.name.setValue(null)
-    this.ratting.setValue(null)
-    this.pic.setValue(null)
-    this.tag.setValue(null)
-    this.comment.setValue(null)
-    this.currentPic = 'assets/images/InJoyWoman.png'
-    this.submitted = false
-  }
-
-  async confirmationAlert() {
-    const alert = await this.alert.create({
-      header: 'Vamo dale!',
-      cssClass: 'dark',
-      buttons: [
-        {
-          text: 'voltar',
-          role: 'cancel',
-        }, {
-          text: 'Confirmar',
-          handler: () => {
-            
+      this.alert.create('Vamo dale?')
+        .subscribe( async result => {
+          if (result) {
             var experience: iExperience = {
               user: this.localStorage.getUser().user,
               name: this.name.value,
@@ -193,54 +147,30 @@ export class AddExperiencePage {
               tag: this.tag.value,
               comment: this.comment.value
             }
-
             if (this.pic.value) {
-              this.image.getBase64ImageFromURL(this.pic.value)
-                .subscribe(imgFile => {
-                  experience.pic = { data: imgFile, contentType: 'image/png' }
-                  this.api.postExperience(experience)
-                    .subscribe(() => {
-                      this.triggerToast('Experiência salva com sucesso!!!', 'success')
-                      this.experienceService.setExperience(experience)
-                      this.router.navigate(['home/myExperiences', { update: true }]) 
-                    })
-                })
+              experience.pic = { 
+                data: await this.camera.getBase64ImageFromURL(this.pic.value),
+                contentType: 'image/png' 
+              }
             } 
-            else {
-              this.api.postExperience(experience)
-                .subscribe(() => {
-                  this.triggerToast('Experiência salva com sucesso!!!', 'success')
-                  this.experienceService.setExperience(experience)
-                  this.router.navigate(['home/myExperiences', { update: true }])
-                })
-            }
+            this.api.postExperience(experience)
+              .subscribe(() => {
+                this.triggerToast('Experiência salva com sucesso!!!', 'success')
+                this.experienceService.setExperience(experience)
+                
+                this.router.navigate(['home/myExperiences', { update: true }]) 
+              })
           }
-        }
-      ]
-    })
-    await alert.present()
+        })
   }
 
-  async leaveConfirmationAlert() {
-    const alert = await this.alert.create({
-      header: 'Abortar missão?',
-      cssClass: 'dark',
-      buttons: [
-        {
-          text: 'voltar',
-          role: 'cancel',
-          handler: () => {
-            this.Routerlocation.back()
-          }
-        }, {
-          text: 'Confirmar',
-          handler: () => {
-            this.resetForm();
-          }
-        }
-      ]
-    })
-    await alert.present()
+  resetForm() {
+    this.ratting.setValue(null)
+    this.pic.setValue(null)
+    this.tag.setValue(null)
+    this.comment.setValue(null)
+    this.currentPic = 'assets/images/InJoyWoman.png'
+    this.submitted = false
   }
 
   async triggerToast(message: string, color: string) {
@@ -268,7 +198,7 @@ export class AddExperiencePage {
     }
 
     if (type == 'roles') {
-      sheetObject.header = 'Rolês perto de você'
+      sheetObject.header = 'Em qual Rolê você está?'
 
       for (let i = 0; i < this.currentRoles.length; i++) {
         sheetObject.buttons.push({
@@ -276,12 +206,17 @@ export class AddExperiencePage {
           role: 'destructive',
           icon: 'pin',
           handler: () => {
+            this.currentRole = this.currentRoles[i]
             this.name.setValue(this.currentRoles[i].name)
             this.tag.setValue(null)
-            this.currentRole = this.currentRoles[i]
           }
         })
       }
+      sheetObject.buttons.push({
+        text: 'Nenhum dos rolês listados...',
+        icon: 'close',
+        role: 'cancel'
+      })
     }
     else if (type == 'tags') {
       sheetObject.header = 'Tags mais votadas do rolê'
@@ -296,14 +231,12 @@ export class AddExperiencePage {
           }
         })
       }
+      sheetObject.buttons.push({
+        text: 'cancelar',
+        icon: 'close',
+        role: 'cancel'
+      })
     }
-
-    sheetObject.buttons.push({
-      text: 'voltar',
-      icon: 'close',
-      role: 'cancel'
-    })
-
     const actionSheet = await this.sheet.create(sheetObject);
     await actionSheet.present()
   }

@@ -1,43 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../common/services/api.service';
 import { iRoleList, iRole } from '../../common/interfaces/injoyApi.interface';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { DataService } from 'src/app/common/services/data.service';
 
 @Component({
   selector: 'myList-page',
   templateUrl: 'myList.page.html',
   styleUrls: ['myList.page.scss']
 })
-export class MyListPage {
+export class MyListPage implements OnInit {
   myList: iRoleList[]
   searchOptions: iRole[] = []
 
   constructor(
     private api: ApiService,
     private router: Router,
+    private apiDataService: DataService,
     private loading: LoadingController) { }
 
-  ionViewWillEnter() {
+  ngOnInit() {
+    this.apiDataService.getAllData()
 
-    this.searchOptions = []
-    
-    if (this.myList) {
-      // this.api.getRolesForMe()
-      //   .subscribe((lists: iRoleList[]) => {
-      //     this.myList = lists
-      //   }) 
-    }
-    else {
-      this.triggerLoading()
-        .then(() => {
-          this.api.getRolesForMe()
-            .subscribe((lists: iRoleList[]) => {
-              this.myList = lists
-              this.loading.dismiss()
-            }) 
-        })
-    }  
+    this.triggerLoading()
+      .then(() => {
+        this.api.getRolesForMe()
+          .subscribe((lists: iRoleList[]) => {
+            this.myList = lists
+            this.loading.dismiss()
+          }) 
+      })
   }
 
   onBlur(input) {

@@ -12,7 +12,7 @@
       <div id="options">
         <role-tag class="option" *ngFor="let role of searchOptions | slice:0:10" [icon]="'pin'" [color]="'warning'" (click)="selectRole(role)">{{role.name}}</role-tag>
       </div>
-    </div>     
+    </div>
 
     <div id="lists">
       <div class="list" *ngFor="let list of myList">

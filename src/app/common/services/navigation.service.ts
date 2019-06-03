@@ -59,7 +59,7 @@ export class NavigationService {
           return
         }
       }
-      if (this.router.url != '/' && this.router.url != '/home' && this.router.url != '/home/myList') {
+      if (this.router.url != '/' && this.router.url != '/home' && this.router.url != '/home/myList' && this.router.url != '/signUp') {
         this.location.back()
       }
     })
