@@ -13,7 +13,8 @@ export class ApiService {
 
   constructor(
     private http: HttpClient, 
-    private geoLocation: GeolocationService,private localStorage: LocalStorageService) { }
+    private geoLocation: GeolocationService,
+    private localStorage: LocalStorageService) { }
 
   getUser(user: string): Observable<any> {
     return this.http.get(this.InJoyServerURL + '/user', {
@@ -27,16 +28,23 @@ export class ApiService {
     })
   }
 
+  getMyLocation(): Observable<any> {
+    return this.geoLocation.getCurrentLocation()
+  }
+
   getRolesAround(): Observable<any> {
     return new Observable(observer => {
-      this.geoLocation.getCurrentLocation()
-        .then(location => {
-          this.http.get(this.InJoyServerURL + '/rolesAround', {
-            params: { location: JSON.stringify(location) }
-          }).subscribe(
+      this.getMyLocation()
+        .subscribe(
+          location => {
+            this.http.get(this.InJoyServerURL + '/rolesAround', {
+              params: { location: JSON.stringify(location) }
+            })
+            .subscribe(
               roles => { observer.next({ location: location, roles: roles}) },
               error => { observer.error() })
-        }).catch(error => { observer.error() })
+          },
+          error => { observer.error() })
     })
   }
 

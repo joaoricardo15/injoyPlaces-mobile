@@ -7,7 +7,6 @@ ion-content {
 #content {
   min-height: 100%;
   padding-top: $global-size-spacing-extraLarge*2;
-  padding-bottom: $global-size-spacing-extraLarge*2;
   padding-left: $global-size-spacing-extraLarge;
   padding-right: $global-size-spacing-extraLarge;
 }
@@ -23,13 +22,15 @@ ion-label {
   margin-top: $global-size-spacing-default;
 }
 
+#tags, #pics, #comments {
+  border-radius: $global-size-spacing-small;
+  background-color: rgba(0,0,0,0.2);
+}
+
 #tags {
-  height: 7.5vh;
   margin-top: $global-size-spacing-large;
   padding-left: $global-size-spacing-default;
   padding-right: $global-size-spacing-default;
-  border-radius: $global-size-spacing-small/2;
-  background-color: rgba(255,255,255, 0.1);
   
   & > div {
     display: flex;
@@ -44,12 +45,9 @@ ion-label {
 }
 
 #pics {
-  height: 20vh;
   margin-top: $global-size-spacing-large;
   padding-left: $global-size-spacing-default;
   padding-right: $global-size-spacing-default;
-  border-radius: $global-size-spacing-small/2;
-  background-color: rgba(255,255,255, 0.1);
 
   & > div {
     display: flex;
@@ -65,13 +63,11 @@ ion-label {
   border-radius: $global-size-spacing-small/2;
 }
 
-#comment {
+#comments {
   height: 28vh;
   overflow: scroll;
   padding: $global-size-spacing-default;
   margin-top: $global-size-spacing-large;
-  border-radius: $global-size-spacing-small/2;
-  background-color: rgba(255,255,255, 0.1);
 }
 
 .comment {

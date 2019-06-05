@@ -9,7 +9,7 @@ import { RoleService } from '../../common/components/role/roles.service';
   templateUrl: 'role.page.html',
   styleUrls: ['role.page.scss']
 })
-export class RolePageComponent implements OnInit {
+export class RolePage implements OnInit {
   role: iRole
 
   constructor(

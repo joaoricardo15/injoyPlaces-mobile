@@ -5,7 +5,14 @@
 }
 
 #header {
-  border-bottom: 1px solid var(--ion-color-medium-tint);
+  border-bottom: 1px solid var(--ion-color-medium-shade);
+
+  & > div {
+    font-weight: 300;
+    font-size: $global-size-font-default;
+    color: var(--ion-color-dark-tint);
+    margin-bottom: $global-size-spacing-default;
+  }
 }
 
 #content {

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { iRoleList } from '../../interfaces/injoyApi.interface';
+import { iRoleList, iRole } from '../../interfaces/injoyApi.interface';
 
 @Component({
   selector: 'role-horizontalList',
@@ -8,4 +8,5 @@ import { iRoleList } from '../../interfaces/injoyApi.interface';
 })
 export class RolesHorizontalListComponent {
   @Input() list: iRoleList
+  @Input() roles: iRole[]
 }

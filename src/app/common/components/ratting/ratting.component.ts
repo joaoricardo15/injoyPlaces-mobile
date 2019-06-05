@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'role-rating',
+  selector: 'ratting',
   template: `
     <div id="main">
       <ion-icon *ngFor="let starName of starsNames; let i = index" 
@@ -12,9 +12,9 @@ import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from
       </ion-icon>
     </div>
   `,
-  styleUrls: ['roleRating.component.scss']
+  styleUrls: ['ratting.component.scss']
 })
-export class RoleRatingComponent implements OnChanges {
+export class RattingComponent implements OnChanges {
   @Input() rate: number = 0
   @Input() size: string = 'small'
   @Output() onRate = new EventEmitter()
@@ -24,8 +24,10 @@ export class RoleRatingComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.rate)
       for (let i = 0; i < this.starsNames.length; i++) 
-        if (i < changes.rate.currentValue)
+        if (i+1 <= changes.rate.currentValue)
           this.starsNames[i] = 'star'
+        else if (i+0.5 <= changes.rate.currentValue)
+          this.starsNames[i] = 'star-half'
         else
           this.starsNames[i] = 'star-outline'
   }

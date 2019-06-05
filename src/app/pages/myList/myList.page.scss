@@ -1,5 +1,12 @@
 @import './../../styles/sizes.scss';
 
+#content {
+  height: 100%;
+  padding: $global-size-spacing-default;
+  //background-color: rgba(0,0,0,0.85);
+  //background-color: #141414; //netflix
+}
+
 #topBar {
   display: flex;
 
@@ -38,11 +45,6 @@
       margin-top: $global-size-spacing-large;
     }
   }
-}
-
-
-#content {
-  padding: $global-size-spacing-default;
 }
 
 #lists {

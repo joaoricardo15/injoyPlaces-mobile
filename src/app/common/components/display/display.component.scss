@@ -1,0 +1,8 @@
+@import './../../../styles/sizes.scss';
+
+#main {  
+  width: 100%;
+  display: flex;
+  border-radius: $global-size-spacing-small;
+  background-color: rgba(0,0,0,0.2);
+}

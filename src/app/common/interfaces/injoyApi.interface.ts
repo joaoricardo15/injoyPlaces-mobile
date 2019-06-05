@@ -6,13 +6,13 @@ export interface iUser {
 }
 
 export interface iMylist {
-  myList: iRoleList[]
-  myExperiences: iMyExperiences
+  roles: iRole[]
+  myLists: iRoleList[]
 }
 
 export interface iRoleList {
   title: string
-  roles: iRole[]
+  roles: number[]
 }
 
 export interface iRole {

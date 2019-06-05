@@ -6,14 +6,14 @@
 
         <ion-label color="light">{{role.name}}</ion-label>
 
-        <role-rating [rate]="role.ratting.average" [size]="'large'"></role-rating>
+        <ratting [rate]="role.ratting.average" [size]="'large'"></ratting>
     
-        <role-tag id="address" [icon]="'pin'" [color]="'medium'">{{role.address.split('-')[0]}}</role-tag>
+        <tag id="address" [icon]="'pin'" [color]="'danger'">{{role.address.split('-')[0]}}</tag>
 
         <div id="tags">
           <div>
             <div *ngFor="let tag of role.tags" class="tag">
-              <role-tag>{{tag}}</role-tag>
+              <tag>{{tag}}</tag>
             </div>
           </div>
         </div>
@@ -24,9 +24,9 @@
           </div>
         </div>
 
-        <div id="comment">
+        <div id="comments">
           <div *ngFor="let comment of role.comments" class="comment">
-            <role-tag [icon]="'contact'" [color]="'success'">"{{comment}}"</role-tag>
+            <tag [icon]="'contact'" [color]="'success'">"{{comment}}"</tag>
           </div>
         </div>
 

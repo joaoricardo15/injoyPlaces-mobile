@@ -1,6 +1,7 @@
 @import './../../../styles/sizes.scss';
 
 #main {
+  max-width: 100%;
   padding-left: $global-size-spacing-small;
   padding-right: $global-size-spacing-small;
 
@@ -10,9 +11,9 @@
 
   ion-label {
     overflow: hidden;
-    height: $global-size-font-default;
-    padding-left: $global-size-spacing-default;
-    padding-right: $global-size-spacing-default;
+    height: $global-size-font-default - 1px;
+    padding-left: $global-size-spacing-small/2;
+    padding-right: $global-size-spacing-small/2;
   }
 }
 

@@ -2,9 +2,9 @@
   <backgroundImageWrap [img]="role.pic | imageURI" [borderRadius]="true">
     <div id="content">
       <div id="name">{{role.name}}</div>
-      <role-rating [rate]="role.ratting.average"></role-rating>
+      <ratting [rate]="role.ratting.average"></ratting>
       <div id="tags">
-        <role-tag class="tag" *ngFor="let role of role.tags | slice:0:3" [size]="'small'">{{role}}</role-tag>
+        <tag class="tag" *ngFor="let role of role.tags | slice:0:3" [size]="'small'">{{role}}</tag>
       </div>     
     </div>
   </backgroundImageWrap>

@@ -6,16 +6,16 @@
 
         <ion-label color="light">{{experience.name}}</ion-label>
 
-        <role-rating [rate]="experience.ratting" [size]="'large'"></role-rating>
+        <ratting [rate]="experience.ratting" [size]="'large'"></ratting>
 
         <div class="tag" *ngIf="experience.tag">
-          <role-tag class="tag">{{experience.tag}}</role-tag>
+          <tag class="tag">{{experience.tag}}</tag>
         </div>
         <div class="tag">
-          <role-tag [icon]="'calendar'" [color]="'danger'">{{experience.date | date: 'short'}}</role-tag>
+          <tag [icon]="'calendar'" [color]="'medium'">{{experience.date | date: 'short'}}</tag>
         </div>
         <div class="tag" *ngIf="experience.comment">
-          <role-tag [icon]="'text'" [color]="'success'">{{experience.comment}}</role-tag>
+          <tag [icon]="'text'" [color]="'success'">{{experience.comment}}</tag>
         </div>
 
       </div>

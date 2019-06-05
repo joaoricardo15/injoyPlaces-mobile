@@ -21,7 +21,7 @@
   <div id="experiences" *ngIf="myExperiences">
     <experience class="experience" *ngFor="let experience of myExperiences.experiences" [experience]="experience"></experience>
     <div *ngIf="myExperiences.experiences.length == 0">
-      <role-tag [icon]="'sad'" [color]="'danger'">Você ainda não registrou nenhum experiência</role-tag>
+      <tag [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não registrou nenhum experiência</tag>
     </div>
   </div>
 </ion-content>

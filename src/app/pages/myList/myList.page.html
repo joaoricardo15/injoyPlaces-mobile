@@ -4,20 +4,23 @@
     <ion-toolbar>
       <div id="topBar">
         <ion-avatar><img src="./../../assets/icon/favicon.ico"></ion-avatar>
-        <ion-searchbar (ionInput)="onSearchInput($event)" (ionBlur)="onBlur($event)" (ionFocus)="onSearchInput($event)" color="light" autocomplete="true" placeholder="buscar rolê"></ion-searchbar>
+        <ion-searchbar *ngIf="myList" (ionInput)="onSearchInput($event)" (ionBlur)="onBlur($event)" (ionFocus)="onSearchInput($event)" color="light" autocomplete="true" placeholder="buscar rolê"></ion-searchbar>
       </div>
     </ion-toolbar>
 
     <div id="searchOptions" *ngIf="searchOptions.length > 0">
       <div id="options">
-        <role-tag class="option" *ngFor="let role of searchOptions | slice:0:10" [icon]="'pin'" [color]="'warning'" (click)="selectRole(role)">{{role.name}}</role-tag>
+        <tag class="option" *ngFor="let role of searchOptions | slice:0:10" [icon]="'pin'" [color]="'warning'" (click)="selectRole(role)">{{role.name}}</tag>
       </div>
     </div>
 
-    <div id="lists">
-      <div class="list" *ngFor="let list of myList">
-        <role-horizontalList [list]="list"></role-horizontalList>
+    <div *ngIf="myList" id="lists">
+      <div class="list" *ngFor="let list of myList.myLists">
+        <role-horizontalList [list]="list" [roles]="myList.roles"></role-horizontalList>
       </div>
     </div>
+    
+    <tag *ngIf="!myList && error" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Não foi possível estabelescer conexão com a internet</tag>
+
   </div>
 </ion-content>

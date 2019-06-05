@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../common/services/api.service';
-import { iRoleList, iRole } from '../../common/interfaces/injoyApi.interface';
+import { iRole, iMylist } from '../../common/interfaces/injoyApi.interface';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
 import { DataService } from 'src/app/common/services/data.service';
+import { LoadingService } from 'src/app/common/services/loading.service';
 
 @Component({
   selector: 'myList-page',
@@ -11,25 +10,32 @@ import { DataService } from 'src/app/common/services/data.service';
   styleUrls: ['myList.page.scss']
 })
 export class MyListPage implements OnInit {
-  myList: iRoleList[]
+  myList: iMylist
   searchOptions: iRole[] = []
+  error: boolean = false
 
   constructor(
-    private api: ApiService,
     private router: Router,
-    private apiDataService: DataService,
-    private loading: LoadingController) { }
+    private data: DataService,
+    private loading: LoadingService) { }
 
   ngOnInit() {
-    this.apiDataService.getAllData()
+    
+    this.loading.create('Carregando rolês pra você')
+      .subscribe(() => {
+        this.data.myListObserver
+          .subscribe(
+            (myList: iMylist) => {
+              this.myList = myList
+              this.loading.dismiss()
+            },
+            (error) => {
+              this.error = true
+              this.loading.dismiss()
+              //navigator['app'].exitApp();
+            })
 
-    this.triggerLoading()
-      .then(() => {
-        this.api.getRolesForMe()
-          .subscribe((lists: iRoleList[]) => {
-            this.myList = lists
-            this.loading.dismiss()
-          }) 
+        this.data.updateAllData()
       })
   }
 
@@ -42,8 +48,8 @@ export class MyListPage implements OnInit {
     this.searchOptions = []
     input = input.target.value.toLowerCase()
 
-    for (let i = 0; i < this.myList.length; i++) {
-      let roles = this.myList[i].roles.filter(x => x.name.toLowerCase().includes(input))
+    //for (let i = 0; i < this.myList.roles.length; i++) {
+      let roles = this.myList.roles.filter(x => x.name.toLowerCase().includes(input))
 
       for (let j = 0; j < roles.length; j++) {
         let role = this.searchOptions.find(x => x.name === roles[j].name)
@@ -51,19 +57,10 @@ export class MyListPage implements OnInit {
           this.searchOptions.push(roles[j])
         }
       }
-    }
+    //}
   }
 
   selectRole(role: iRole) {
     this.router.navigate(['tabs/role', role]);
-  }
-
-  async triggerLoading() {
-    let loadingInstance = await this.loading.create({
-      spinner: "crescent",
-      message: 'Carregando rolês pra você',
-      translucent: true
-    })
-    return await loadingInstance.present();
   }
 }

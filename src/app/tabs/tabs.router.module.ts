@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { CommonModule } from '../common/common.module';
-import { RolePageComponent } from '../pages/role/role.page';
+import { RolePage } from '../pages/role/role.page';
 import { ExperiencePage } from '../pages/experience/experience.page';
 import { CanDeactivateService } from '../common/services/canDeactivate';
 import { AddExperiencePage } from '../pages/addExperience/addExperience.page';
@@ -42,7 +42,7 @@ const routes: Routes = [
       },
       {
         path: 'role',
-        component: RolePageComponent,
+        component: RolePage,
       },
       {
         path: 'experience',
