@@ -23,7 +23,7 @@ export interface iRole {
   pic: string | Object
   pics: string[]
   comments: string[] 
-  tags?: string[]
+  tags: string[]
 }
 
 export interface iMyExperiences {
@@ -39,10 +39,11 @@ export interface iAchievement {
 export interface iExperience {
   user: string
   name: string
+  date: Date
   ratting: number
   location: iLocation
-  date: Date
-  pic: string | Object
-  tag: string
-  comment: string
+  address?: string
+  pic?: string | Object
+  tag?: string
+  comment?: string
 }

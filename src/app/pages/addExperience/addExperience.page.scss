@@ -1,10 +1,26 @@
 @import './../../styles/sizes.scss';
 
 #header {
-  text-align: center;
+  & > div {
+    display: flex;
 
-  ion-title {
-    font-weight: 300;
+    ion-avatar {
+    
+      height: 100%;
+      margin-top: $global-size-spacing-large + 1px;
+      margin-bottom: $global-size-spacing-large + 1px;
+      margin-right: -2px;
+      margin-left: $global-size-spacing-large + $global-size-spacing-default;
+  
+      img {
+        width: $global-size-spacing-extraLarge + $global-size-spacing-large;
+        height: $global-size-spacing-extraLarge + $global-size-spacing-large;
+      }
+    }
+  
+    ion-title {
+      font-weight: 300;
+    }
   }
 }
 
@@ -125,7 +141,7 @@
 
 #submitForm {
   width: 100%;
-  margin-top: $global-size-spacing-extraLarge;
+  margin-top: $global-size-spacing-large*2;
 
   & > div {
     width: 80px;

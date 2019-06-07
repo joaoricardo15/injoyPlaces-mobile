@@ -1,14 +1,27 @@
 @import './../../styles/sizes.scss';
 
-#content {
+#header {
+  & > div {
+    display: flex;
 
-  
-}
+    ion-avatar {
+    
+      height: 100%;
+      margin-top: $global-size-spacing-large + 1px;
+      margin-bottom: $global-size-spacing-large + 1px;
+      margin-right: -2px;
+      margin-left: $global-size-spacing-large + $global-size-spacing-default;
 
-ion-title {
-  font-weight: 300;
-  text-align: center;
-  padding-left: $global-size-spacing-large;
+      img {
+        width: $global-size-spacing-extraLarge + $global-size-spacing-large;
+        height: $global-size-spacing-extraLarge + $global-size-spacing-large;
+      }
+    }
+
+    ion-title {
+      font-weight: 300;
+    }
+  }
 }
 
 ion-list {

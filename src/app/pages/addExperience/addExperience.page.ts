@@ -188,7 +188,7 @@ export class AddExperiencePage {
 
       for (let i = 0; i < this.currentRoles.length; i++) {
         sheetObject.buttons.push({
-          text: this.currentRoles[i].name,
+          text: this.currentRoles[i].name + ' (' + this.currentRoles[i].ratting.rattings + ' avaliações)',
           role: 'destructive',
           icon: 'pin',
           handler: () => {
