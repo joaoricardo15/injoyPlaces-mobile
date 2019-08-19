@@ -1,8 +1,8 @@
 @import './../../../styles/sizes.scss';
 
 #main {
-  width: 150px;
-  height: 150px;
+  width: 90vw;
+  height: 30vh;
 }
 
 #content {
@@ -16,10 +16,26 @@
   font-size: $global-size-font-large;
 }
 
+#bottonLine {
+  position: absolute;
+  bottom: $global-size-spacing-large;
+  width: 85vw;
+}
+
+#address {
+  float: right;
+  margin-top: -2px;
+}
+
+#rattings {
+  float: right;
+  margin-top: -4px;
+}
+
 #tags {
-  display: grid;
+  overflow: scroll;
 }
 
 .tag {
-  margin-bottom: $global-size-spacing-small/2;
+  margin-right: $global-size-spacing-small;
 }

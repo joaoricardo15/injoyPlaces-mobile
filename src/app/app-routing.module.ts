@@ -4,7 +4,7 @@ import { SignUpPage } from './pages/signUp/signUp.page';
 
 const routes: Routes = [
   { path: 'signUp', component: SignUpPage },
-  { path: 'home', loadChildren: './tabs/tabs.module#TabsPageModule' }
+  { path: 'home', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule) }
 ];
 @NgModule({
   imports: [

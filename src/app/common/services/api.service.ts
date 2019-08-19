@@ -9,7 +9,8 @@ import { GeolocationService } from './geolocation.service';
 export class ApiService {
 
   InJoyServerURL = 'https://injoyserver.azurewebsites.net'
-  //InJoyServerURL = 'http://localhost:1000'
+  //InJoyServerURL = 'http://127.0.0.1:1000'
+  //InJoyServerURL = 'http://192.168.0.14:1000'
 
   constructor(
     private http: HttpClient, 
@@ -68,7 +69,7 @@ export class ApiService {
 
     for (let i = 0; i < locations.length; i++) {
       formatedLocations.push({
-        user: 'daozinho',
+        user: this.localStorage.getUser().user,
         lat: locations[i]['latitude'],
         lng: locations[i]['longitude'],
         timeStamp: locations[i]['time']

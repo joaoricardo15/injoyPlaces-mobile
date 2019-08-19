@@ -1,16 +1,16 @@
 @import './../../styles/sizes.scss';
 
+#content {
+}
+
 #header {
   & > div {
     display: flex;
 
     ion-avatar {
-    
-      height: 100%;
-      margin-top: $global-size-spacing-large + 1px;
-      margin-bottom: $global-size-spacing-large + 1px;
-      margin-right: -2px;
-      margin-left: $global-size-spacing-large + $global-size-spacing-default;
+      height: $global-size-spacing-extraLarge + $global-size-spacing-small*2;
+      width: $global-size-spacing-extraLarge + $global-size-spacing-large*2;
+      margin: $global-size-spacing-large + $global-size-spacing-small;
   
       img {
         width: $global-size-spacing-extraLarge + $global-size-spacing-large;
@@ -22,10 +22,6 @@
       font-weight: 300;
     }
   }
-}
-
-#content {
-  min-height: 83vh;
 }
 
 #nameForm, #rattingForm, #tagForm, #commentForm, #imageForm {

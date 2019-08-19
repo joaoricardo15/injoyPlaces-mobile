@@ -5,6 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core'
 })
 export class ImageURIPipe implements PipeTransform {
   transform(imgObject: Object): string {
-    return imgObject ? 'data:'+imgObject['contentType']+';base64,' + btoa(String.fromCharCode.apply(null, new Uint8Array(imgObject['data']['data']))) : 'assets/images/InJoyWoman.png'
+    return imgObject ? 'data:'+imgObject['contentType']+';base64,' +
+      btoa(new Uint8Array(imgObject['data']['data'])
+        .reduce((data, byte) => {
+          return data + String.fromCharCode(byte)
+        }, '')) : 'assets/images/InJoyWoman.png'
   }
 }

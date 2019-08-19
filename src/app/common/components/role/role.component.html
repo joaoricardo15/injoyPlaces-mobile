@@ -1,11 +1,28 @@
 <div id="main" (click)="navigate()">
   <backgroundImageWrap [img]="role.pic | imageURI" [borderRadius]="true">
     <div id="content">
-      <div id="name">{{role.name}}</div>
-      <ratting [rate]="role.ratting.average"></ratting>
-      <div id="tags">
-        <tag class="tag" *ngFor="let role of role.tags | slice:0:3" [size]="'small'">{{role}}</tag>
-      </div>     
+      <div style="display: flex;">
+        <div style="width: 50%; display: grid;">
+          <div id="name">{{role.name}}</div>
+          <ratting [rate]="role.ratting.average" [size]="'default'"></ratting>
+        </div>
+        <div style="width: 50%;">
+          <tag [icon]="'pin'" id="address" [color]="'danger'">{{role.address.split('-')[1].split(',')[0]}}</tag>
+          <tag *ngIf="role.ratting.rattings > 1" id="rattings" [icon]="'star'" [color]="'medium'" [size]="'small'">{{role.ratting.rattings}} Avaliações</tag>  
+          <tag *ngIf="role.ratting.rattings == 1" id="rattings" [icon]="'star'" [color]="'medium'" [size]="'small'">{{role.ratting.rattings}} Avaliação</tag>
+        </div>
+      </div>
+      
+      <div id="bottonLine">
+        <div id="tags">
+          <div style="display: flex;">
+            <div *ngFor="let tag of role.tags | slice:0:1" class="tag">
+              <tag [size]="'small'">{{tag}}</tag>
+            </div>
+          </div>
+        </div>
+      </div>
+        
     </div>
   </backgroundImageWrap>
 </div>

@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'tag',
   template: `
-    <ion-chip id="main" [ngClass]="size" color="{{color}}">
+    <ion-chip id="main" [ngClass]="size" [color]="color" [mode]="'ios'">
       <ion-icon name="{{icon}}"></ion-icon>
       <ion-label color="{{fontColor}}"><ng-content></ng-content></ion-label>
       <ion-icon *ngIf="close" name="close-circle" (click)="onClose.emit()"></ion-icon>

@@ -25,6 +25,7 @@ export class AddExperiencePage {
   submitted: boolean = false
   nameChip: string
   tagChip: string
+  locationSugestion: boolean = false
 
   name: FormControl
   location: FormControl
@@ -63,6 +64,7 @@ export class AddExperiencePage {
   }
 
   ionViewWillEnter() {
+    this.locationSugestion = false
     if(!this.location.value)
       this.location.setValue(this.data.location)
 
@@ -72,8 +74,15 @@ export class AddExperiencePage {
         this.currentRoles = result.roles
         if (result.roles.length > 0) {
           let choosedRole = result.roles.find(x => x.name == this.name.value)
-          if (!choosedRole && this.router.url == '/home/addExperience')
-            this.presentActionSheet('roles')
+          if (!choosedRole && this.router.url == '/home/addExperience') {
+            this.sheet.getTop()
+              .then(sheet => {
+                if (!sheet && !this.locationSugestion) {
+                  this.presentActionSheet('roles')
+                  this.locationSugestion = true
+                }
+              })
+          }
         }
       })
   }
@@ -149,8 +158,7 @@ export class AddExperiencePage {
                   this.api.postExperience(experience)
                     .subscribe(() => {
                       this.toast.create('Experiência salva com sucesso!!!', 'success')
-                      setTimeout(() => { this.data.updateAllData() }, 1000);
-                      this.router.navigate(['home/myExperiences']) 
+                      this.data.updateAllData()
                     })
                 })
             }
@@ -158,10 +166,11 @@ export class AddExperiencePage {
               this.api.postExperience(experience)
                 .subscribe(() => {
                   this.toast.create('Experiência salva com sucesso!!!', 'success')
-                  setTimeout(() => { this.data.updateAllData() }, 1000);
-                  this.router.navigate(['home/myExperiences']) 
+                  this.data.updateAllData()
+                  
                 })
             }
+            this.router.navigate(['home/myExperiences']) 
           }
         })
   }

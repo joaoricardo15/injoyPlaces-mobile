@@ -2,26 +2,24 @@
   <ion-toolbar id="header">
     <div>
       <ion-avatar><img src="./../../assets/icon/favicon.ico"></ion-avatar>
-      <ion-title>Adicionar Nova Experiência</ion-title>
+      <ion-title>Add Nova Experiência</ion-title>
     </div>
   </ion-toolbar>
 </ion-header>
-
-<form [formGroup]="form" (ngSubmit)="addExperience(form)">
-  <ion-content id="content">
-    <backgroundImageWrap [img]="currentPic">
+<ion-content id="content">
+  <backgroundImageWrap [img]="currentPic">
+    <form [formGroup]="form" (ngSubmit)="addExperience(form)">
       <ion-grid>
-
         <ion-row id="nameForm" justify-content-center>
           <tag *ngIf="nameChip" [icon]="'pin'" [size]="'large'" [close]="true" (onClose)="removeName()">{{name.value}}</tag>
           <div *ngIf="!nameChip">
             <div id="newRoleTitle">
-              <ion-icon name="trophy" size="large" color="warning"></ion-icon>
+              <ion-icon name="trophy" size="large" color="medium"></ion-icon>
               <ion-label color="light">Novo Rolê</ion-label>
             </div>
             <div class="formWarning" *ngIf="submitting && form.controls.name?.errors?.required">é necessário preencher o nome do rolê...</div>
             <display id="newRoleInput" [class.filledBackground]="form.controls.name?.valid">
-              <ion-icon id="pinIcon" name="pin" color="warning"></ion-icon>
+              <ion-icon id="pinIcon" name="pin" color="danger"></ion-icon>
               <ion-input id="nameInput" formControlName="name" (keyup.enter)="addName()" (focusout)="addName()" type="text" color="light" maxlength="30" spellcheck="false" placeholder="digite o nome rolê"></ion-input>
               <div id="formNameWarning" class="formWarning" *ngIf="submitting && form.controls.name?.errors?.minlength">mínimo 3 caracteres...</div>
               <ion-icon id="optionsIcon" *ngIf="currentRoles?.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('roles')"></ion-icon>
@@ -42,7 +40,7 @@
           <tag *ngIf="tagChip" [close]="true" (onClose)="removeTag()">{{tag.value}}</tag>
           
           <display *ngIf="!tagChip" [class.filledBackground]="form.controls.tag.value && form.controls.tag?.valid">
-            <ion-icon id="tagIcon" name="pricetag" color="warning"></ion-icon>
+            <ion-icon id="tagIcon" name="pricetag" color="medium"></ion-icon>
             <ion-input id="tagInput" formControlName="tag" (keyup.enter)="addTag()" (focusout)="addTag()" type="text" color="light" size="large" maxlength="30" spellcheck="false" placeholder="digite a tag do rolê"></ion-input>
             <div id="formTagWarning" class="formWarning" *ngIf="submitting && form.controls.tag?.errors?.minlength">mínimo 2 caracteres...</div>
             <ion-icon id="optionsIcon" *ngIf="currentRole?.tags[0]" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('tags')"></ion-icon>
@@ -51,7 +49,7 @@
 
         <ion-row id="imageForm" justify-content-center>
           <display id="imageDisplay" [class.filledBackground]="pic.value" (click)="addPicture()">
-            <ion-icon name="camera" color="warning"></ion-icon>
+            <ion-icon name="camera" color="medium"></ion-icon>
             <ion-label color="light">Adicionar foto</ion-label>
           </display>
         </ion-row>
@@ -60,7 +58,7 @@
           <display id="commentDisplay" [class.filledBackground]="form.controls.comment.value && form.controls.comment?.valid">
             <div id="commentInsideArea">
               <div>
-                <ion-icon name="text" color="warning" ></ion-icon>
+                <ion-icon name="text" color="medium" ></ion-icon>
                 <ion-label color="light">Comentário</ion-label>
               </div>
               <div id="formCommentWarning" class="formWarning" *ngIf="submitting && form.controls.comment?.invalid">mínimo 3 caracteres...</div>
@@ -70,13 +68,11 @@
         </ion-row>
 
       </ion-grid>
-
       <div id="submitForm">
-        <div (click)="addExperience(form)">
+        <div (click)="addExperience(form)" >
           <ion-icon name="checkmark" color="success" size="large"></ion-icon>
         </div>
       </div>
-
-    </backgroundImageWrap>
-  </ion-content>
-</form>
+    </form>
+  </backgroundImageWrap> 
+</ion-content>

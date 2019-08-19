@@ -6,6 +6,7 @@ import { RolePage } from '../pages/role/role.page';
 import { ExperiencePage } from '../pages/experience/experience.page';
 import { CanDeactivateService } from '../common/services/canDeactivate';
 import { AddExperiencePage } from '../pages/addExperience/addExperience.page';
+import { MyExperiencesPage } from '../pages/myExperiences/myExperiences.page';
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: './../pages/myList/myList.module#MyListModule'
+            loadChildren: () => import('./../pages/myList/myList.module').then(m => m.MyListModule)
           }
         ]
       },
@@ -36,7 +37,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: './../pages/myExperiences/myExperiences.module#MyExperiencesModule'
+            component: MyExperiencesPage,
           }
         ]
       },

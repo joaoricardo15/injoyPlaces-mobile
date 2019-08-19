@@ -7,8 +7,12 @@
         <ion-label color="light">{{role.name}}</ion-label>
 
         <ratting [rate]="role.ratting.average" [size]="'large'"></ratting>
+
+        <tag [icon]="'star'" [color]="'medium'" [size]="'small'">{{role.ratting.rattings}} avaliações</tag>
     
-        <tag id="address" [icon]="'pin'" [color]="'danger'">{{role.address.split('-')[0]}}</tag>
+        <div id="address">
+          <tag [icon]="'pin'" [color]="'danger'" [size]="'small'">{{role.address}}</tag>
+        </div>
 
         <div id="tags">
           <div>
@@ -24,20 +28,19 @@
           </div>
         </div>
 
-        <div id="comments">
+        <!-- <div id="comments">
           <div *ngFor="let comment of role.comments" class="comment">
-            <tag [icon]="'contact'" [color]="'success'">"{{comment}}"</tag>
+            <tag [icon]="'text'" [color]="'success'">{{comment}}</tag>
           </div>
-        </div>
+        </div> -->
 
       </div>
-
-      <ion-fab vertical="top" horizontal="start" slot="fixed">
+      <ion-fab vertical="top" horizontal="start" slot="fixed" matRipple>
         <ion-fab-button color="vmdl" size="small">
           <ion-icon id="backButton" name="arrow-back" color="light" size="large" (click)="back()"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-      
+
     </backgroundImageWrap>
   </ion-content>  
 </div>

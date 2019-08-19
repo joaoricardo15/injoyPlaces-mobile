@@ -12,11 +12,10 @@ export class CameraService {
       quality: 100,
       destinationType: camera.DestinationType.DATA_URL,
       encodingType: camera.EncodingType.PNG,
-      mediaType: camera.MediaType.PICTURE,
       saveToPhotoAlbum: false,
       correctOrientation: true,
-      targetWidth: 200,
-      targetHeight: 200
+      targetWidth: 426, // já tentei 512 x 288 e não deu :(
+      targetHeight: 240
     }
   }
 

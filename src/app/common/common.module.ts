@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule as AngularCommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { PortalModule } from '@angular/cdk/portal';
+import { PlatformModule } from '@angular/cdk/platform';
+
 import { RoleComponent } from './components/role/role.component';
 import { RolesHorizontalListComponent } from './components/rolesHorizontalList/rolesHorizontalList.component';
 import { RattingComponent } from './components/ratting/ratting.component';
@@ -28,10 +33,15 @@ import { DisplayComponent } from './components/display/display.component';
 import { ToastService } from './services/toast.service';
 import { LoadingService } from './services/loading.service';
 
+
 @NgModule({
   imports: [
     IonicModule,
-    AngularCommonModule
+    AngularCommonModule,
+    MatChipsModule,
+    MatIconModule,
+    PortalModule,
+    PlatformModule
   ],
   declarations: [
     ImageURIPipe,
@@ -75,6 +85,7 @@ import { LoadingService } from './services/loading.service';
     BackgroundGeolocation,
     BackgroundGeolocationService,
     LocalNotifications,
+
   ]
 })
 export class CommonModule {}

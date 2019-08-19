@@ -15,12 +15,12 @@
           <tag [icon]="'calendar'" [color]="'medium'">{{experience.date | date: 'short'}}</tag>
         </div>
         <div class="tag" *ngIf="experience.comment">
-          <tag [icon]="'text'" [color]="'success'">{{experience.comment}}</tag>
+          <tag [icon]="'text'" [color]="'medium'">{{experience.comment}}</tag>
         </div>
 
       </div>
 
-      <ion-fab vertical="top" horizontal="start" slot="fixed">
+      <ion-fab vertical="top" horizontal="start" slot="fixed" matRipple>
         <ion-fab-button color="vmdl" size="small">
           <ion-icon id="backButton" name="arrow-back" color="light" size="large" (click)="back()"></ion-icon>
         </ion-fab-button>

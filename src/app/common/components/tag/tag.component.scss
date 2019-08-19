@@ -1,9 +1,14 @@
 @import './../../../styles/sizes.scss';
 
+ion-chip.button-effect {
+  display:none !important;
+}
+
 #main {
   max-width: 100%;
-  padding-left: $global-size-spacing-small;
-  padding-right: $global-size-spacing-small;
+  width: max-content;
+  padding-left: $global-size-spacing-default;
+  padding-right: $global-size-spacing-default;
 
   ion-icon {
     min-width: $global-size-font-small*2;

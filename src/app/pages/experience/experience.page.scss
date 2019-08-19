@@ -6,7 +6,9 @@ ion-content {
 
 #content {
   min-height: 100%;
-  padding: $global-size-spacing-extraLarge*3;
+  padding-top: $global-size-spacing-extraLarge*2;
+  padding-left: $global-size-spacing-extraLarge;
+  padding-right: $global-size-spacing-extraLarge;
 }
 
 ion-label {

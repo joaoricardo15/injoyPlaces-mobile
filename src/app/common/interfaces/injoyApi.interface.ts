@@ -11,7 +11,8 @@ export interface iMylist {
 }
 
 export interface iRoleList {
-  title: string
+  title: string,
+  Icon: string,
   roles: number[]
 }
 

@@ -17,6 +17,6 @@ export class RoleComponent {
 
   public navigate() {
     this.roleService.setRole(this.role)
-    this.router.navigate(['home/role']);
+    this.router.navigate(['home/role'])
   }
 }

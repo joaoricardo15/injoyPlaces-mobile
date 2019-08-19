@@ -2,12 +2,16 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule as AngularCommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
 import { TabsPageRoutingModule } from './tabs.router.module';
 import { TabsPage } from './tabs.page';
-import { DataService } from '../common/services/data.service';
-import { RoleService } from '../common/components/role/roles.service';
-import { ExperienceService } from '../common/components/experience/experience.service';
-import { AddExperiencePage } from '../pages/addExperience/addExperience.page';
+import { DataService } from './../common/services/data.service';
+import { RoleService } from './../common/components/role/roles.service';
+import { ExperienceService } from './../common/components/experience/experience.service';
+import { AddExperiencePage } from './../pages/addExperience/addExperience.page';
+import { MyExperiencesPage } from './../pages/myExperiences/myExperiences.page';
 import { CommonModule } from '../common/common.module';
 
 @NgModule({
@@ -17,7 +21,10 @@ import { CommonModule } from '../common/common.module';
     CommonModule,
     AngularCommonModule,
     ReactiveFormsModule,
-    TabsPageRoutingModule
+    TabsPageRoutingModule,
+    MatGridListModule,
+    MatCardModule,
+    MatRippleModule
   ],
   providers: [
     DataService,
@@ -26,7 +33,8 @@ import { CommonModule } from '../common/common.module';
   ],
   declarations: [
     TabsPage,
-    AddExperiencePage
+    AddExperiencePage,
+    MyExperiencesPage
   ]
 })
 export class TabsPageModule {}

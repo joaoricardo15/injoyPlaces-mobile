@@ -5,12 +5,9 @@
     display: flex;
 
     ion-avatar {
-    
-      height: 100%;
-      margin-top: $global-size-spacing-large + 1px;
-      margin-bottom: $global-size-spacing-large + 1px;
-      margin-right: -2px;
-      margin-left: $global-size-spacing-large + $global-size-spacing-default;
+      height: $global-size-spacing-extraLarge + $global-size-spacing-small*2;
+      width: $global-size-spacing-extraLarge + $global-size-spacing-large*2;
+      margin: $global-size-spacing-large + $global-size-spacing-small;
 
       img {
         width: $global-size-spacing-extraLarge + $global-size-spacing-large;
@@ -24,27 +21,66 @@
   }
 }
 
-ion-list {
-  padding: $global-size-spacing-large;
+#content {
+  #achievements {
+    margin-left: $global-size-spacing-large;
+
+    .gridCell {
+      margin-top: $global-size-spacing-default;
+    }
+
+    ion-list {
+      padding: $global-size-spacing-large;
+    }
+
+    ion-icon {
+      zoom: 2;
+      width: 100%;
+      margin-top: 7px;
+    }
+    
+    .achievement {
+      width: 100%;
+      margin-right: $global-size-spacing-large;
+      border-radius: $global-size-spacing-small/2;
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+
+      .achievementTitle {
+        text-align: center;
+        font-weight: 200;
+        color: var(--ion-color-medium);
+        margin-top: $global-size-spacing-large;
+        margin-bottom: $global-size-spacing-large;
+      }
+  
+      ion-badge {
+        position: absolute;
+        bottom: 16px;
+        right: 10px;
+        padding: 5px;
+        border-radius: 8px;
+        background-color: var(--ion-color-danger-tint);
+      }
+    }
+  }
+
+  ion-toolbar {
+    text-align: center;
+  }
+
+  #experiences {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: calc(5vw - 10px);
+    margin: $global-size-spacing-large;
+  
+    .experience {
+      padding: 0 $global-size-spacing-default $global-size-spacing-default 0;
+    }
+  }
 }
 
-ion-badge {
-  padding: $global-size-spacing-small;
-  border-radius: $global-size-spacing-extraLarge;
-  background-color: var(--ion-color-danger-tint);
-}
-
-.achievementTitle {
-  margin-left: $global-size-spacing-extraLarge;
-}
-
-#experiences {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: calc(5vw - 10px);
-  padding: $global-size-spacing-large;
-}
-
-.experience {
-  padding: 0 $global-size-spacing-default $global-size-spacing-default 0;
+.mat-grid-tile .mat-figure {
+  display: block !important;
+  height: 88px;
 }

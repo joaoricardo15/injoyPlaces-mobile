@@ -19,7 +19,8 @@ ion-label {
 
 #address {
   zoom: 1.3;
-  margin-top: $global-size-spacing-default;
+  
+  margin-top: $global-size-spacing-extraLarge*2;
 }
 
 #tags, #pics, #comments {
@@ -28,7 +29,7 @@ ion-label {
 }
 
 #tags {
-  margin-top: $global-size-spacing-large;
+  margin-top: $global-size-spacing-default;
   padding-left: $global-size-spacing-default;
   padding-right: $global-size-spacing-default;
   
@@ -58,7 +59,7 @@ ion-label {
 }
 
 .pic {
-  height: 111px;
+  max-width: unset;
   margin-right: $global-size-spacing-default;
   border-radius: $global-size-spacing-small/2;
 }

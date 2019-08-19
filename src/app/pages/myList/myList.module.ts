@@ -6,13 +6,16 @@ import { FormsModule } from '@angular/forms';
 import { MyListPage } from './myList.page';
 import { CommonModule } from './../../common/common.module';
 
+import {MatTabsModule} from '@angular/material/tabs';
+
 @NgModule({
   imports: [
     FormsModule,
     IonicModule,
     CommonModule,
     AngularCommonModule,
-    RouterModule.forChild([{ path: '', component: MyListPage }])
+    RouterModule.forChild([{ path: '', component: MyListPage }]),
+    MatTabsModule,
   ],
   declarations: [MyListPage],
   providers: []

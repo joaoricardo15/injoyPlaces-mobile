@@ -1,54 +1,93 @@
 @import './../../styles/sizes.scss';
 
-#content {
-  height: 100%;
-  padding: $global-size-spacing-default;
-}
-
 #topBar {
   display: flex;
 
   ion-avatar {
-    
-    height: 100%;
-    margin-right: $global-size-spacing-large;
-    margin-left: $global-size-spacing-large;
+    height: $global-size-spacing-extraLarge + $global-size-spacing-small*2;
+    width: $global-size-spacing-extraLarge + $global-size-spacing-large*2;
+    margin: $global-size-spacing-large + $global-size-spacing-small;
 
     img {
+      position: absolute;
       width: $global-size-spacing-extraLarge + $global-size-spacing-large;
       height: $global-size-spacing-extraLarge + $global-size-spacing-large;
     }
   }
 
-  ion-searchbar {
-    padding: 0;
+  $animation-duration: 1s;
+
+  .onNotSearchIcon {
+    animation: onNotSearchIcon $animation-duration;
   }
-}
 
-#searchOptions {
-  z-index: 20;
-  margin-left: $global-size-spacing-extraLarge*2 + $global-size-spacing-large + $global-size-spacing-small;
-  border-radius: $global-size-spacing-small/2;
-  width: calc(100vw - 96px);
-  background-color: rgba(0,0,0,.7);
+  @keyframes onNotSearchIcon {
+    from {
+      margin-right: -60px;
+    }
+  }
 
-  #options {
-    display: grid;
-    padding-top: $global-size-spacing-large;
-    padding-bottom: $global-size-spacing-large*2;
-    padding-right: $global-size-spacing-large*2;
-    padding-left: $global-size-spacing-large*2;
+  .onSearchIcon {
+    animation: onSearchIcon $animation-duration;
+    animation-fill-mode: forwards;
+  }
 
-    .option {
-      margin-top: $global-size-spacing-large;
+  @keyframes onSearchIcon {
+    to {
+      margin-right: -60px;
     }
   }
 }
 
-#lists {
-  margin-top: $global-size-spacing-default*2;
+#content {
+  height: 100%;
+
+  #searchOptions {
+    z-index: 20;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--ion-color-light);
+  
+    #notFoundTitle {
+      margin: $global-size-spacing-extraLarge;
+    }
+  
+    #options {
+      display: grid;
+      padding-top: $global-size-spacing-large;
+      padding-bottom: $global-size-spacing-large;
+      padding-right: $global-size-spacing-large*2;
+      padding-left: $global-size-spacing-large*2;
+  
+      .option {
+        width: fit-content;
+        margin-top: $global-size-spacing-large;
+      }
+    }
+  }
+
+  .list {
+    display: block;
+    padding: $global-size-spacing-large + $global-size-spacing-default;
+  }
+  
+  .categoryTabTitle {
+    margin-left: $global-size-spacing-default;
+  }
+  
+  .role {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: calc(5vw - 10px);
+    padding: $global-size-spacing-large;
+  }
 }
 
-.list {
-  padding: $global-size-spacing-default;
+.swiper-zoom-container {
+  text-align: unset !important;
+}
+
+.onSearchContent {
+  overflow: hidden;
 }
