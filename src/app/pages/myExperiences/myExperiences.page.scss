@@ -22,65 +22,35 @@
 }
 
 #content {
-  #achievements {
-    margin-left: $global-size-spacing-large;
+  .panel {
+    border-radius: 0;
+    margin-bottom: 1px;
 
-    .gridCell {
-      margin-top: $global-size-spacing-default;
+    .panelHeader {
+      justify-content: space-between;
+      margin: 0;
     }
 
-    ion-list {
-      padding: $global-size-spacing-large;
+    .panelContent {
+      max-height: 50vh;
+      overflow: scroll;
     }
 
-    ion-icon {
-      zoom: 2;
-      width: 100%;
-      margin-top: 7px;
+    #hints {
+      display: grid;
+
+      .hint {
+        margin-bottom: $global-size-spacing-default;
+      }
     }
+
+    #experiences {
+      display: flex;
+      flex-wrap: wrap;
     
-    .achievement {
-      width: 100%;
-      margin-right: $global-size-spacing-large;
-      border-radius: $global-size-spacing-small/2;
-      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
-
-      .achievementTitle {
-        text-align: center;
-        font-weight: 200;
-        color: var(--ion-color-medium);
-        margin-top: $global-size-spacing-large;
-        margin-bottom: $global-size-spacing-large;
-      }
-  
-      ion-badge {
-        position: absolute;
-        bottom: 16px;
-        right: 10px;
-        padding: 5px;
-        border-radius: 8px;
-        background-color: var(--ion-color-danger-tint);
+      .experience {
+        margin-bottom: $global-size-spacing-default;
       }
     }
   }
-
-  ion-toolbar {
-    text-align: center;
-  }
-
-  #experiences {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: calc(5vw - 10px);
-    margin: $global-size-spacing-large;
-  
-    .experience {
-      padding: 0 $global-size-spacing-default $global-size-spacing-default 0;
-    }
-  }
-}
-
-.mat-grid-tile .mat-figure {
-  display: block !important;
-  height: 88px;
 }

@@ -32,7 +32,7 @@ import { AlertService } from './services/alert.service';
 import { DisplayComponent } from './components/display/display.component';
 import { ToastService } from './services/toast.service';
 import { LoadingService } from './services/loading.service';
-
+import { AchievementComponent } from './components/achievement/achievement.component';
 
 @NgModule({
   imports: [
@@ -54,6 +54,7 @@ import { LoadingService } from './services/loading.service';
     DisplayComponent,
     RolesHorizontalListComponent,
     BackgroundImageWrapComponent,
+    AchievementComponent
   ],
   exports: [
     ImageURIPipe,
@@ -66,6 +67,7 @@ import { LoadingService } from './services/loading.service';
     DisplayComponent,
     RolesHorizontalListComponent,
     BackgroundImageWrapComponent,
+    AchievementComponent
   ],
   entryComponents: [],
   providers: [

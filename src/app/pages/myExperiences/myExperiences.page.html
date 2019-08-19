@@ -7,56 +7,48 @@
   </ion-toolbar>
 </ion-header>
 <ion-content id="content">
-  <mat-grid-list id="achievements" cols="4" rowHeight="100px">
-    <mat-grid-tile class="gridCell" 
-      [colspan]="2"
-      [rowspan]="1">
-      <backgroundImageWrap style="height: 95px;" [img]="null | imageURI" class="achievement">
-        <ion-icon name="flame" color="medium"></ion-icon>
-        <div>
-          <div class="achievementTitle">Experiências</div>
-          <ion-badge>{{myExperiences.experiences.length}}</ion-badge>
-        </div>
-      </backgroundImageWrap>
-    </mat-grid-tile>
-    <mat-grid-tile class="gridCell" *ngFor="let achievement of myExperiences?.achievements"
-      [colspan]="2"
-      [rowspan]="1">
-      <backgroundImageWrap style="height: 95px;" [img]="null | imageURI" class="achievement">
-        <ion-icon name="{{achievement.icon}}" color="medium"></ion-icon>
-        <div>
-          <div class="achievementTitle">{{achievement.title}}</div>
-          <ion-badge>{{achievement.value}}</ion-badge>
-        </div>
-      </backgroundImageWrap>
-    </mat-grid-tile>
-  </mat-grid-list>
-
-  <!-- <ion-list>
-    <ion-item>
-      <ion-icon name="ribbon"></ion-icon>
-      <ion-label class="achievementTitle">Total de experiências</ion-label>
-      <ion-badge *ngIf="myExperiences">{{myExperiences.experiences.length}}</ion-badge>
-    </ion-item>
-    <ion-item *ngFor="let achievement of myExperiences?.achievements">
-      <ion-icon name="ribbon"></ion-icon>
-      <ion-label class="achievementTitle">{{achievement.title}}</ion-label>
-      <ion-badge *ngIf="myExperiences">{{achievement.value}}</ion-badge>
-    </ion-item>
-  </ion-list>-->
-
-  <!-- <ion-toolbar id="header">
-    <div>
-      <ion-title>Minhas Experiências</ion-title>
-    </div>
-  </ion-toolbar> -->
-
-  <ion-item-divider></ion-item-divider>
-
-  <div id="experiences" *ngIf="myExperiences">
-    <experience class="experience" *ngFor="let experience of myExperiences.experiences" [experience]="experience"></experience>
-    <div *ngIf="myExperiences.experiences.length == 0">
-      <tag [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não registrou nenhum experiência</tag>
-    </div>
-  </div> 
+  <mat-accordion>
+    <mat-expansion-panel class="panel" [expanded]="expandedTab === 0" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-description class="panelHeader">
+          Conquistas
+          <ion-icon name="trophy" color="medium"></ion-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-grid-list class="panelContent" cols="4" rowHeight="100px">
+        <mat-grid-tile *ngFor="let achievement of myExperiences?.achievements"
+          [colspan]="2"
+          [rowspan]="1">
+          <achievement
+            [achievement]="achievement">
+          </achievement>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <tag *ngIf="myExperiences?.achievements.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possui conquistas</tag>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="panel" [expanded]="expandedTab === 1" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-description class="panelHeader">
+          Sugestões
+          <ion-icon name="bulb" color="medium"></ion-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div id="hints" class="panelContent">
+        <tag class="hint" *ngFor="let hint of myExperiences?.hints" [icon]="'flash'" [color]="'danger'" [fontColor]="'dark'">{{hint.name}}</tag>
+      </div>
+      <tag *ngIf="myExperiences?.experiences.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possiu convites</tag>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="panel" [expanded]="expandedTab === 2" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-description class="panelHeader">
+          Atividades
+          <ion-icon name="pin" color="medium"></ion-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div id="experiences" class="panelContent">
+        <experience class="experience" *ngFor="let experience of myExperiences?.experiences" [experience]="experience"></experience>
+        <tag *ngIf="myExperiences?.experiences.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possui atividades</tag>
+      </div> 
+    </mat-expansion-panel>
+  </mat-accordion>
 </ion-content>

@@ -29,12 +29,16 @@ export interface iRole {
 
 export interface iMyExperiences {
   achievements: iAchievement[]
+  hints: iExperience[]
   experiences: iExperience[]
 }
 
 export interface iAchievement {
   title: string
+  img?: string
+  icon?: string
   value?: number
+  message?: string
 }
 
 export interface iExperience {

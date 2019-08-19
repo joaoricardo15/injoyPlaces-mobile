@@ -19,9 +19,9 @@ export class NavigationService {
     private localStorage: LocalStorageService) { }
 
   initControllers() {
-    this.splashScreenController()
-    this.backButtonControler()
     this.signUpController()
+    this.backButtonControler() 
+    this.splashScreenController()
   }
 
   signUpController() {
