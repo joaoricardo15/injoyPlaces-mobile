@@ -19,6 +19,7 @@ import { RolePage } from '../pages/role/role.page';
 import { ExperiencePage } from '../pages/experience/experience.page';
 import { BackgroundImageWrapComponent } from './components/backgroundImageWrap/backgroundImageWrap.component';
 import { ImageURIPipe } from './pipes/imageURI.pipe';
+import { ImageURISyncPipe } from './pipes/imageURI.pipe';
 import { GeolocationService } from './services/geolocation.service';
 import { ApiService } from './services/api.service';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -45,6 +46,7 @@ import { AchievementComponent } from './components/achievement/achievement.compo
   ],
   declarations: [
     ImageURIPipe,
+    ImageURISyncPipe,
     RoleComponent,
     RolePage,
     ExperienceComponent,
@@ -58,6 +60,7 @@ import { AchievementComponent } from './components/achievement/achievement.compo
   ],
   exports: [
     ImageURIPipe,
+    ImageURISyncPipe,
     RoleComponent,
     RolePage,
     ExperienceComponent,

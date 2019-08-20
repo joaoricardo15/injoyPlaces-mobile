@@ -24,21 +24,22 @@
   }
 }
 
-#nameForm, #rattingForm, #tagForm, #commentForm, #imageForm {
+#nameForm, #rattingForm, #occasionForm, #tagForm, #commentForm, #imageForm {
   margin-left: $global-size-spacing-extraLarge;
   margin-right: $global-size-spacing-extraLarge;
 }
 
-#nameForm, #rattingForm {
+#nameForm, #rattingForm, #occasionForm {
   margin-top: $global-size-spacing-extraLarge;
 }
 
-#tagForm, #commentForm, #imageForm {
+#tagForm, #imageForm, #commentForm {
   margin-top: $global-size-spacing-large;
 }
 
 #nameForm {
-  height: $global-size-spacing-extraLarge*3;
+  //height: $global-size-spacing-extraLarge*3;
+  height: $global-size-spacing-extraLarge*2 + $global-size-spacing-large;
 
   tag {
     max-width: 100%;
@@ -103,6 +104,25 @@
   }
 }
 
+#occasionForm {
+  height: $global-size-spacing-extraLarge + $global-size-spacing-large;
+
+  display {
+    width: 100%;
+    display: flex;
+
+    #occasionIcon {
+      height: 100%;
+      padding-left: $global-size-spacing-large;
+    }
+
+    #optionsIcon {
+      height: 100%;
+      padding-right: $global-size-spacing-default;
+    }
+  }
+}
+
 #imageDisplay {
   width: 100%;
 
@@ -142,15 +162,16 @@
   & > div {
     width: 80px;
     height: 80px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
     border-radius: 80px;
-    margin-left:  calc(50% - 40px);
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(var(--ion-color-light-rgb), 1);
 
     & > ion-icon {
-      zoom: 2;
-      width: 50px;
-      height: 50px;
-      margin-top: -10px;
+      zoom: 1.5;
+      margin-top: 10px;
+      margin-left: 13px;
     }
   }
 }
@@ -162,13 +183,13 @@
   margin-bottom:  $global-size-spacing-default;
 }
 
-#formNameWarning, #formTagWarning, #formCommentWarning {
+#formNameWarning, #formTagWarning, #formOccasionWarning, #formCommentWarning {
   position: absolute;
   left: 125px;
 
 }
 
-#formNameWarning, #formTagWarning {
+#formNameWarning, #formTagWarning, #formOccasionWarning {
   padding-top: $global-size-spacing-small;
 }
 
@@ -176,7 +197,33 @@
   padding-top: $global-size-spacing-large;
 }
 
+.filledNameBackground {
+  border-radius: $global-size-spacing-small;
+  background-color: rgba(var(--ion-color-danger-rgb), .1) !important;
+}
+
+.filledOccasionBackground {
+  border-radius: $global-size-spacing-small;
+  background-color: rgba(var(--ion-color-success-rgb), .1) !important;
+}
+
+.filledTagBackground {
+  border-radius: $global-size-spacing-small;
+  background-color: rgba(var(--ion-color-light-rgb), .1) !important;
+}
+
 .filledBackground {
   border-radius: $global-size-spacing-small;
-  background-color: rgba(255,206,0,0.1) !important;
+  background-color: rgba(var(--ion-color-light-rgb), .1) !important;
+}
+
+.onCurrentRole {
+  animation: onCurrentRole .5s;
+}
+
+@keyframes onCurrentRole {
+  from {
+    transform: rotate(360deg) translateX(10px);
+    
+  }
 }

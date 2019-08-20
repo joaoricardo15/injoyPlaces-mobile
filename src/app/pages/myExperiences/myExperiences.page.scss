@@ -29,6 +29,10 @@
     .panelHeader {
       justify-content: space-between;
       margin: 0;
+
+      .tabIcon {
+        zoom: 1.5;
+      }
     }
 
     .panelContent {
@@ -36,11 +40,12 @@
       overflow: scroll;
     }
 
-    #hints {
-      display: grid;
+    #statistics {
+      margin-bottom: $global-size-spacing-default;
 
-      .hint {
-        margin-bottom: $global-size-spacing-default;
+      .statisticValue {
+        padding: $global-size-spacing-small;
+        background-color: var(--ion-color-danger-tint);
       }
     }
 

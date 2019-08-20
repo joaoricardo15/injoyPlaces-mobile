@@ -8,31 +8,43 @@
 
         <ratting [rate]="role.ratting.average" [size]="'large'"></ratting>
 
-        <tag [icon]="'star'" [color]="'medium'" [size]="'small'">{{role.ratting.rattings}} avaliações</tag>
+        <tag [size]="'small'">{{role.ratting.rattings}} avaliações</tag>
     
-        <div id="address">
-          <tag [icon]="'pin'" [color]="'danger'" [size]="'small'">{{role.address}}</tag>
-        </div>
-
-        <div id="tags">
-          <div>
-            <div *ngFor="let tag of role.tags" class="tag">
-              <tag>{{tag}}</tag>
+        
+        <div id="bottomItems">
+          <div id="address">
+            <tag [icon]="'pin'" [color]="'danger'" [size]="'small'">{{role.address}}</tag>
+          </div>
+  
+          <div id="occasions" *ngIf="role.occasions.length > 0">
+            <div>
+              <div *ngFor="let occasion of role.occasions" class="occasion">
+                <tag [icon]="'walk'" [color]="'success'">{{occasion}}</tag>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div id="pics">
-          <div>
-            <img class="pic" *ngFor="let pic of role.pics" src="{{pic | imageURI}}">
+  
+          <div id="tags" *ngIf="role.tags.length > 0">
+            <div>
+              <div *ngFor="let tag of role.tags" class="tag">
+                <tag [icon]="'pricetag'" [color]="'light'">{{tag}}</tag>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <!-- <div id="comments">
-          <div *ngFor="let comment of role.comments" class="comment">
-            <tag [icon]="'text'" [color]="'success'">{{comment}}</tag>
+  
+          <div id="pics">
+            <div>
+              <!-- <backgroundImageWrap class="pic" *ngFor="let pic of role.pics" [img]="pic | imageURI"></backgroundImageWrap> -->
+              <img class="pic" *ngFor="let pic of role.pics" src="{{ pic | imageURISync }}">
+            </div>
           </div>
-        </div> -->
+  
+          <!-- <div id="comments">
+            <div *ngFor="let comment of role.comments" class="comment">
+              <tag [icon]="'text'" [color]="'success'">{{comment}}</tag>
+            </div>
+          </div> -->
+        </div>
 
       </div>
       <ion-fab vertical="top" horizontal="start" slot="fixed" matRipple>

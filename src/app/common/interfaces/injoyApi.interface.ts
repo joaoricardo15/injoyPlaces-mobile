@@ -25,6 +25,7 @@ export interface iRole {
   pics: string[]
   comments: string[] 
   tags: string[]
+  occasions: string[]
 }
 
 export interface iMyExperiences {
@@ -49,6 +50,7 @@ export interface iExperience {
   location: iLocation
   address?: string
   pic?: string | Object
+  occasion?: string
   tag?: string
   comment?: string
 }

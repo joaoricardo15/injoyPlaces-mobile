@@ -25,6 +25,7 @@ export class AddExperiencePage {
   submitted: boolean = false
   nameChip: string
   tagChip: string
+  occasionChip: string
   locationSugestion: boolean = false
 
   name: FormControl
@@ -32,6 +33,7 @@ export class AddExperiencePage {
   ratting: FormControl
   pic: FormControl
   tag: FormControl
+  occasion: FormControl
   comment: FormControl
   form: FormGroup
 
@@ -48,9 +50,10 @@ export class AddExperiencePage {
   ngOnInit() {
     this.name = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.location = new FormControl('', Validators.required);
-    this.ratting = new FormControl('' , Validators.required);
+    this.ratting = new FormControl('');
     this.pic = new FormControl('');
     this.tag = new FormControl('', Validators.minLength(2));
+    this.occasion = new FormControl('', Validators.minLength(2));
     this.comment = new FormControl('', Validators.minLength(3));
 
     this.form = new FormGroup({
@@ -59,6 +62,7 @@ export class AddExperiencePage {
       ratting: this.ratting,
       pic: this.pic,
       tag: this.tag,
+      occasion: this.occasion,
       comment: this.comment
     })
   }
@@ -73,16 +77,16 @@ export class AddExperiencePage {
         this.location.setValue(result.location)
         this.currentRoles = result.roles
         if (result.roles.length > 0) {
-          let choosedRole = result.roles.find(x => x.name == this.name.value)
-          if (!choosedRole && this.router.url == '/home/addExperience') {
-            this.sheet.getTop()
-              .then(sheet => {
-                if (!sheet && !this.locationSugestion) {
-                  this.presentActionSheet('roles')
-                  this.locationSugestion = true
-                }
-              })
-          }
+          // let choosedRole = result.roles.find(x => x.name == this.name.value)
+          // if (!choosedRole && this.router.url == '/home/addExperience') {
+          //   this.sheet.getTop()
+          //     .then(sheet => {
+          //       if (!sheet && !this.locationSugestion) {
+          //         this.presentActionSheet('roles')
+          //         this.locationSugestion = true
+          //       }
+          //     })
+          // }
         }
       })
   }
@@ -92,7 +96,7 @@ export class AddExperiencePage {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if(this.submitted != true && (this.ratting.value || this.pic.value || this.tag.value || this.comment.value))
+    if(this.submitted != true && (this.ratting.value || this.occasion.value|| this.tag.value || this.pic.value || this.comment.value))
       return this.alert.create()
     else 
       return true
@@ -105,6 +109,7 @@ export class AddExperiencePage {
 
   removeName() {
     this.name.setValue(null); 
+    this.occasion.setValue(null); 
     this.tag.setValue(null); 
     this.currentRole = null
     this.nameChip = null;
@@ -118,6 +123,16 @@ export class AddExperiencePage {
   removeTag() {
     this.tag.setValue(null)
     this.tagChip = null;
+  }
+
+  addOccasion()  {
+    if (this.occasion.valid)
+      this.occasionChip = this.occasion.value
+  }
+
+  removeOccasion() {
+    this.occasion.setValue(null)
+    this.occasionChip = null;
   }
 
   addPicture() {
@@ -147,6 +162,7 @@ export class AddExperiencePage {
               date: new Date(),
               pic: null,
               tag: this.tag.value,
+              occasion: this.occasion.value,
               comment: this.comment.value
             }
             if (this.pic.value) {
@@ -179,9 +195,11 @@ export class AddExperiencePage {
     this.ratting.setValue(null)
     this.pic.setValue(null)
     this.tag.setValue(null)
+    this.occasion.setValue(null)
     this.comment.setValue(null)
     this.currentPic = 'assets/images/InJoyWoman.png'
     this.tagChip = null
+    this.occasionChip = null
     this.submitted = false
     this.submitting = false
   }
@@ -193,7 +211,7 @@ export class AddExperiencePage {
     }
 
     if (type == 'roles') {
-      sheetObject.header = 'Em qual Rolê você está?'
+      sheetObject.header = 'rolês próximos de você'
 
       for (let i = 0; i < this.currentRoles.length; i++) {
         sheetObject.buttons.push({
@@ -215,8 +233,29 @@ export class AddExperiencePage {
         role: 'cancel'
       })
     }
+    else if (type == 'occasions') {
+      sheetObject.header = 'Ocasiões mais escolhidas'
+
+      for (let i = 0; i < this.currentRole.occasions.length; i++) {
+        sheetObject.buttons.push({
+          text: this.currentRole.occasions[i],
+          role: 'destructive',
+          icon: 'walk',
+          handler: () => {
+            this.occasion.setValue(this.currentRole.occasions[i])
+            this.occasionChip = this.currentRole.occasions[i]
+          }
+        })
+      }
+      
+      sheetObject.buttons.push({
+        text: 'cancelar',
+        icon: 'close',
+        role: 'cancel'
+      })
+    }
     else if (type == 'tags') {
-      sheetObject.header = 'Tags mais votadas do rolê'
+      sheetObject.header = 'Tags mais votadas'
 
       for (let i = 0; i < this.currentRole.tags.length; i++) {
         sheetObject.buttons.push({

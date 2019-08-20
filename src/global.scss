@@ -17,6 +17,11 @@
   line-height: 1;
 }
 
+.loading-wrapper.sc-ion-loading-md {
+  padding: 10px !important;
+  border-radius: 40px;
+}
+
 ion-spinner {
-  color: var(--ion-color-dark-tint) !important;
+  color: var(--ion-color-danger-tint) !important;
 }

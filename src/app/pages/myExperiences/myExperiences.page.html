@@ -12,7 +12,7 @@
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
           Conquistas
-          <ion-icon name="trophy" color="medium"></ion-icon>
+          <ion-icon class="tabIcon" name="trophy" color="medium"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-grid-list class="panelContent" cols="4" rowHeight="100px">
@@ -29,20 +29,24 @@
     <mat-expansion-panel class="panel" [expanded]="expandedTab === 1" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
-          Sugestões
-          <ion-icon name="bulb" color="medium"></ion-icon>
+          Estatísticas
+          <ion-icon class="tabIcon" name="bulb" color="medium"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div id="hints" class="panelContent">
-        <tag class="hint" *ngFor="let hint of myExperiences?.hints" [icon]="'flash'" [color]="'danger'" [fontColor]="'dark'">{{hint.name}}</tag>
-      </div>
-      <tag *ngIf="myExperiences?.experiences.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possiu convites</tag>
+      <ion-list id="statistics" class="panelContent">
+        <ion-item *ngFor="let statistic of myExperiences?.statistics">
+          <tag [icon]="statistic.icon" [color]="'danger'" [fontColor]="'dark'">{{statistic.name}}</tag>
+          <ion-badge slot="end" class="statisticValue">{{statistic.value}}</ion-badge>
+        </ion-item>
+      </ion-list>
+        
+      <tag *ngIf="myExperiences?.statistics.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possui estatísticas</tag>
     </mat-expansion-panel>
     <mat-expansion-panel class="panel" [expanded]="expandedTab === 2" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
           Atividades
-          <ion-icon name="pin" color="medium"></ion-icon>
+          <ion-icon class="tabIcon" name="pin" color="medium"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div id="experiences" class="panelContent">

@@ -4,7 +4,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   selector: 'tag',
   template: `
     <ion-chip id="main" [ngClass]="size" [color]="color" [mode]="'ios'">
-      <ion-icon name="{{icon}}"></ion-icon>
+      <ion-icon *ngIf="icon" name="{{icon}}"></ion-icon>
       <ion-label color="{{fontColor}}"><ng-content></ng-content></ion-label>
       <ion-icon *ngIf="close" name="close-circle" (click)="onClose.emit()"></ion-icon>
     </ion-chip>
@@ -13,9 +13,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TagComponent {
   @Input() size: string = 'default'
-  @Input() color: string = 'warning'
+  @Input() color: string = 'medium'
   @Input() fontColor: string = 'light'
-  @Input() icon: string = 'pricetag'
-  @Input() close: boolean = false
+  @Input() icon: string
+  @Input() close: boolean
   @Output() onClose = new EventEmitter
 }

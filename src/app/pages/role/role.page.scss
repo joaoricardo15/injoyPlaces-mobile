@@ -23,54 +23,56 @@ ion-label {
   margin-top: $global-size-spacing-extraLarge*2;
 }
 
-#tags, #pics, #comments {
+#pics, #comments {
   border-radius: $global-size-spacing-small;
   background-color: rgba(0,0,0,0.2);
 }
 
-#tags {
-  margin-top: $global-size-spacing-default;
-  padding-left: $global-size-spacing-default;
-  padding-right: $global-size-spacing-default;
+#occasions, #tags {
   
   & > div {
     display: flex;
     overflow: scroll;
     padding-top: $global-size-spacing-default;
-    padding-bottom: $global-size-spacing-default;
   }
 }
 
-.tag {
-  margin-right: $global-size-spacing-small;
-}
+#bottomItems {
+  position: absolute;
+  width: calc(100vw - #{$global-size-spacing-extraLarge*2});
+  bottom: $global-size-spacing-extraLarge;
 
-#pics {
-  margin-top: $global-size-spacing-large;
-  padding-left: $global-size-spacing-default;
-  padding-right: $global-size-spacing-default;
-
-  & > div {
-    display: flex;
+  .occasion, .tag {
+    margin-right: $global-size-spacing-small;
+  }
+  
+  #pics {
+    margin-top: $global-size-spacing-large;
+    padding-left: $global-size-spacing-default;
+    padding-right: $global-size-spacing-default;
+  
+    & > div {
+      display: flex;
+      overflow: scroll;
+      padding-top: $global-size-spacing-default;
+      padding-bottom: $global-size-spacing-default;
+    }
+  }
+  
+  .pic {
+    max-width: unset;
+    margin-right: $global-size-spacing-default;
+    border-radius: $global-size-spacing-small/2;
+  }
+  
+  #comments {
+    height: 28vh;
     overflow: scroll;
-    padding-top: $global-size-spacing-default;
-    padding-bottom: $global-size-spacing-default;
+    padding: $global-size-spacing-default;
+    margin-top: $global-size-spacing-large;
   }
-}
-
-.pic {
-  max-width: unset;
-  margin-right: $global-size-spacing-default;
-  border-radius: $global-size-spacing-small/2;
-}
-
-#comments {
-  height: 28vh;
-  overflow: scroll;
-  padding: $global-size-spacing-default;
-  margin-top: $global-size-spacing-large;
-}
-
-.comment {
-  margin-top: $global-size-spacing-small;
+  
+  .comment {
+    margin-top: $global-size-spacing-small;
+  }
 }

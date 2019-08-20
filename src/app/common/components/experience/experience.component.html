@@ -3,7 +3,7 @@
     <div id="content">
       <div id="name">{{experience.name}}</div>
       <ratting [rate]="experience.ratting"></ratting>
-      <tag *ngIf="experience.tag" [size]="'small'">{{experience.tag}}</tag>
+      <tag *ngIf="experience.date" [icon]="'calendar'">{{experience.date | date: 'short'}}</tag>
     </div>
   </backgroundImageWrap>
 </div>

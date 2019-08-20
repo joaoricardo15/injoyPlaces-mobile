@@ -55,12 +55,12 @@ export class MyListPage implements OnInit {
           this.loading.dismiss()
         })
     this.data.updateAllData()
-    this.loading.create('Carregando rolês pra você').subscribe(() => {})
+    this.loading.create(null, 1000).subscribe(() => {})
   }
 
   refresh() {
     this.data.getMyList()
-    this.loading.create('Carregando rolês pra você', 1000).subscribe(() => {})
+    this.loading.create(null, 1000).subscribe(() => {})
   }
 
   onBlur(input) { 
