@@ -8,11 +8,11 @@
 </ion-header>
 <ion-content id="content">
   <mat-accordion>
-    <mat-expansion-panel class="panel" [expanded]="expandedTab === 0" hideToggle>
+    <mat-expansion-panel class="panel" [(expanded)]="achievementsOpened" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
           Conquistas
-          <ion-icon class="tabIcon" name="trophy" color="medium"></ion-icon>
+          <ion-icon class="tabIcon" name="trophy" color="{{achievementsOpened ? 'danger' : 'medium'}}"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-grid-list class="panelContent" cols="4" rowHeight="100px">
@@ -26,27 +26,26 @@
       </mat-grid-list>
       <tag *ngIf="myExperiences?.achievements.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possui conquistas</tag>
     </mat-expansion-panel>
-    <mat-expansion-panel class="panel" [expanded]="expandedTab === 1" hideToggle>
+    <mat-expansion-panel class="panel" [(expanded)]="statisticsOpened" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
           Estatísticas
-          <ion-icon class="tabIcon" name="bulb" color="medium"></ion-icon>
+          <ion-icon class="tabIcon" name="bulb" color="{{statisticsOpened ? 'danger' : 'medium'}}"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <ion-list id="statistics" class="panelContent">
         <ion-item *ngFor="let statistic of myExperiences?.statistics">
           <tag [icon]="statistic.icon" [color]="'danger'" [fontColor]="'dark'">{{statistic.name}}</tag>
-          <ion-badge slot="end" class="statisticValue">{{statistic.value}}</ion-badge>
+          <tag class="statisticValue" [color]="'danger'" [fontColor]="'dark'">{{statistic.value}}</tag>
         </ion-item>
       </ion-list>
-        
       <tag *ngIf="myExperiences?.statistics.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possui estatísticas</tag>
     </mat-expansion-panel>
-    <mat-expansion-panel class="panel" [expanded]="expandedTab === 2" hideToggle>
+    <mat-expansion-panel class="panel" [(expanded)]="experiencesOpened" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
           Atividades
-          <ion-icon class="tabIcon" name="pin" color="medium"></ion-icon>
+          <ion-icon class="tabIcon" name="pin" color="{{experiencesOpened ? 'danger' : 'medium'}}"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div id="experiences" class="panelContent">

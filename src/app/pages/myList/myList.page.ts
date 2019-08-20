@@ -30,15 +30,6 @@ export class MyListPage implements OnInit {
     private roleService: RoleService,
     private loading: LoadingService) { }
 
-  onTabChange(event) {
-    if (this.selectedTabIndex !== event.index)
-      this.slides.slideTo(event.index)
-  }
-
-  onSlideChange() {
-    this.slides.getActiveIndex().then(index => { this.selectedTabIndex = index })
-  }
-
   ngOnInit() {
     this.data.myListObserver
       .subscribe(
@@ -46,21 +37,22 @@ export class MyListPage implements OnInit {
           if (!this.myList)
             this.loading.dismiss()
           else if (this.router.url == '/home/myList')
-            this.toast.create('rolês atualizados ; )', 'success')
+            this.toast.create('dados atualizados ; )', 'success')
 
           this.myList = myList
         },
         (error) => {
           this.error = true
           this.loading.dismiss()
+          this.toast.create('não foi possível conectar-se à internet : (', 'danger')
         })
     this.data.updateAllData()
-    this.loading.create(null, 1000).subscribe(() => {})
+    this.loading.create().subscribe(() => {})
   }
 
   refresh() {
     this.data.getMyList()
-    this.loading.create(null, 1000).subscribe(() => {})
+    this.loading.create(null, 500).subscribe(() => {})
   }
 
   onBlur(input) { 

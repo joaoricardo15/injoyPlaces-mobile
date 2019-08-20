@@ -34,6 +34,7 @@ import { DisplayComponent } from './components/display/display.component';
 import { ToastService } from './services/toast.service';
 import { LoadingService } from './services/loading.service';
 import { AchievementComponent } from './components/achievement/achievement.component';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { AchievementComponent } from './components/achievement/achievement.compo
     MatChipsModule,
     MatIconModule,
     PortalModule,
-    PlatformModule
+    PlatformModule,
+    MatRippleModule
   ],
   declarations: [
     ImageURIPipe,

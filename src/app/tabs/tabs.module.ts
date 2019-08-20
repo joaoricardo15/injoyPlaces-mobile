@@ -3,10 +3,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule as AngularCommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatIconModule } from '@angular/material/icon';
 import { TabsPageRoutingModule } from './tabs.router.module';
 import { TabsPage } from './tabs.page';
 import { DataService } from './../common/services/data.service';
@@ -26,10 +24,8 @@ import { MyListPage } from '../pages/myList/myList.page';
     ReactiveFormsModule,
     TabsPageRoutingModule,
     MatGridListModule,
-    MatCardModule,
     MatRippleModule,
-    MatExpansionModule,
-    MatIconModule
+    MatExpansionModule
   ],
   providers: [
     DataService,

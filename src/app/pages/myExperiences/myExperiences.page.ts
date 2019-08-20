@@ -10,7 +10,9 @@ import { DataService } from 'src/app/common/services/data.service';
 export class MyExperiencesPage implements OnInit {
 
   myExperiences: iMyExperiences
-  expandedTab: number = 0
+  achievementsOpened: boolean = true
+  statisticsOpened: boolean = false
+  experiencesOpened: boolean = false
 
   constructor(private data: DataService) { }
 
@@ -18,7 +20,7 @@ export class MyExperiencesPage implements OnInit {
     this.myExperiences = this.data.myExperiences
     this.data.myExperiencesObserver.subscribe(myExperiences => {
       this.myExperiences = myExperiences
-      this.expandedTab = 2
+      this.experiencesOpened = true
     })
   }
 }

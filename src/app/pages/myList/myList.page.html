@@ -9,14 +9,12 @@
 <ion-content>
   <div id="content" [class.onSearchContent]="onSearch">
     <div id="searchOptions" *ngIf="onSearch">
-      <div id="searchOptionsPanel">
-        <div id="notFoundTitle" *ngIf="searchOptions.length === 0">
-          <ion-title color="dark">nenhum role encontrado : (</ion-title>
-        </div>
-        <div id="options" *ngIf="searchOptions.length > 0">
-          <tag class="option" [icon]="'locate'" [color]="'medium'" [fontColor]="'dark'" (click)="onSearch = false">rolês próximos de você agora</tag>
-          <tag class="option" *ngFor="let role of searchOptions" [icon]="'pin'" [color]="'danger'" [fontColor]="'dark'" (click)="selectRole(role)">{{role.name}}</tag>
-        </div>
+      <div id="notFoundTitle" *ngIf="searchOptions.length === 0">
+        <ion-title color="dark">nenhum role encontrado : (</ion-title>
+      </div>
+      <div id="options" [class.onSearchOptions]="onSearch" *ngIf="searchOptions.length > 0">
+        <tag class="option" [icon]="'locate'" [color]="'medium'" [fontColor]="'dark'" (click)="onSearch = false">rolês próximos de você agora</tag>
+        <tag class="option" *ngFor="let role of searchOptions" [icon]="'pin'" [color]="'danger'" [fontColor]="'dark'" (click)="selectRole(role)">{{role.name}}</tag>
       </div>
     </div>
     <div *ngIf="myList">
@@ -25,19 +23,6 @@
         [roles]="myList.roles">
       </role-horizontalList>
     </div>
-    <!-- <mat-tab-group *ngIf="myList" [color]="'accent'" [animationDuration]="0" [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
-      <mat-tab class="list" *ngFor="let list of myList.myLists" >
-        <ng-template mat-tab-label>
-          <ion-icon name="{{list.icon}}"></ion-icon>
-          <ion-label class="categoryTabTitle" color="'dark'">{{list.title}}</ion-label>
-        </ng-template>
-      </mat-tab>
-    </mat-tab-group>
-    <ion-slides #slides *ngIf="myList"  (ionSlideWillChange)="onSlideChange()" [options]="{initialSlide: 0, speed: 200}">
-      <ion-slide class="list" *ngFor="let list of myList.myLists">
-        <role *ngFor="let rolesIndex of list.roles" class="role" [role]="myList.roles[rolesIndex]"></role>
-      </ion-slide>
-    </ion-slides> -->
     <tag *ngIf="!myList && error" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Não foi possível estabelescer conexão com a internet</tag>
   </div>
 </ion-content>

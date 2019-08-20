@@ -1,4 +1,4 @@
-<div id="main" (click)="navigate()">
+<div id="main" (click)="navigate()" matRipple [matRippleCentered]="true">
   <backgroundImageWrap [img]="experience.pic | imageURI" [borderRadius]="true">
     <div id="content">
       <div id="name">{{experience.name}}</div>

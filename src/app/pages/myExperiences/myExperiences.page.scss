@@ -36,16 +36,14 @@
     }
 
     .panelContent {
-      max-height: 50vh;
-      overflow: scroll;
+      max-height: calc(100vh - 321px);
+      overflow: auto;
     }
 
     #statistics {
-      margin-bottom: $global-size-spacing-default;
 
       .statisticValue {
-        padding: $global-size-spacing-small;
-        background-color: var(--ion-color-danger-tint);
+        margin-left: auto;
       }
     }
 

@@ -38,7 +38,6 @@
 }
 
 #nameForm {
-  //height: $global-size-spacing-extraLarge*3;
   height: $global-size-spacing-extraLarge*2 + $global-size-spacing-large;
 
   tag {
@@ -160,18 +159,18 @@
   margin-top: $global-size-spacing-large*2;
 
   & > div {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     position: absolute;
-    bottom: 20px;
-    right: 20px;
-    border-radius: 80px;
+    bottom: $global-size-spacing-extraLarge;
+    right: $global-size-spacing-extraLarge;
+    border-radius: 35px;
     background-color: rgba(var(--ion-color-light-rgb), 1);
 
     & > ion-icon {
-      zoom: 1.5;
-      margin-top: 10px;
-      margin-left: 13px;
+      zoom: 1.3;
+      margin-top: 11px;
+      margin-left: 14px;
     }
   }
 }
@@ -221,9 +220,13 @@
   animation: onCurrentRole .5s;
 }
 
+.onCurrentRoleTag {
+  animation: onCurrentRole .5s;
+  animation-delay: .3s;
+}
+
 @keyframes onCurrentRole {
-  from {
-    transform: rotate(360deg) translateX(10px);
-    
+  from { 
+    transform: rotate(720deg);
   }
 }

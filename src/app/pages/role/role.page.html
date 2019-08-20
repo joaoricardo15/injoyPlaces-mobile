@@ -1,21 +1,12 @@
 <div *ngIf="role">
   <ion-content>
     <backgroundImageWrap [img]="role.pic | imageURI">
-
       <div id="content">
-
         <ion-label color="light">{{role.name}}</ion-label>
-
         <ratting [rate]="role.ratting.average" [size]="'large'"></ratting>
-
-        <tag [size]="'small'">{{role.ratting.rattings}} avaliações</tag>
-    
-        
+        <tag [size]="'small'">{{role.ratting.rattings}} {{role.ratting.rattings === 1 ? 'avaliação' : 'avaliações'}}</tag>
         <div id="bottomItems">
-          <div id="address">
-            <tag [icon]="'pin'" [color]="'danger'" [size]="'small'">{{role.address}}</tag>
-          </div>
-  
+          <tag id="address" [icon]="'pin'" [color]="'danger'" [size]="'small'">{{role.address}}</tag>
           <div id="occasions" *ngIf="role.occasions.length > 0">
             <div>
               <div *ngFor="let occasion of role.occasions" class="occasion">
@@ -23,7 +14,6 @@
               </div>
             </div>
           </div>
-  
           <div id="tags" *ngIf="role.tags.length > 0">
             <div>
               <div *ngFor="let tag of role.tags" class="tag">
@@ -31,28 +21,18 @@
               </div>
             </div>
           </div>
-  
           <div id="pics">
             <div>
-              <!-- <backgroundImageWrap class="pic" *ngFor="let pic of role.pics" [img]="pic | imageURI"></backgroundImageWrap> -->
               <img class="pic" *ngFor="let pic of role.pics" src="{{ pic | imageURISync }}">
             </div>
           </div>
-  
-          <!-- <div id="comments">
-            <div *ngFor="let comment of role.comments" class="comment">
-              <tag [icon]="'text'" [color]="'success'">{{comment}}</tag>
-            </div>
-          </div> -->
         </div>
-
       </div>
-      <ion-fab vertical="top" horizontal="start" slot="fixed" matRipple>
+      <ion-fab vertical="top" horizontal="start" slot="fixed">
         <ion-fab-button color="vmdl" size="small">
           <ion-icon id="backButton" name="arrow-back" color="light" size="large" (click)="back()"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-
     </backgroundImageWrap>
   </ion-content>  
 </div>

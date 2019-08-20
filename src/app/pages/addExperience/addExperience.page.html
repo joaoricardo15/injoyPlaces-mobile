@@ -13,10 +13,6 @@
         <ion-row id="nameForm" justify-content-center>
           <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [size]="'large'" [close]="true" (onClose)="removeName()">{{name.value}}</tag>
           <div *ngIf="!nameChip">
-            <!-- <div id="newRoleTitle">
-              <ion-icon name="trophy" size="large" color="medium"></ion-icon>
-              <ion-label color="light">Novo Rolê</ion-label>
-            </div> -->
             <div class="formWarning" [style.visibility]="(submitting && form.controls.name?.errors?.required) ? 'visible' : 'hidden'">é necessário preencher o nome do rolê...</div>
             <display id="newRoleInput" [class.filledNameBackground]="form.controls.name?.valid">
               <ion-icon id="pinIcon" name="pin" color="danger"></ion-icon>
@@ -26,7 +22,6 @@
             </display>
           </div> 
         </ion-row>
-
         <ion-row id="rattingForm" justify-content-center>
           <div class="formWarning" *ngIf="submitting && form.controls.ratting?.invalid">é necessário avaliar o rolê...</div>
           <ratting
@@ -35,7 +30,6 @@
             (onRate)="ratting.setValue($event)">
           </ratting>
         </ion-row>
-
         <ion-row id="occasionForm" justify-content-center>
           <tag *ngIf="occasionChip" [icon]="'walk'" [color]="'success'" [close]="true" [close]="true" (onClose)="removeOccasion()">{{occasion.value}}</tag>
           <display *ngIf="!occasionChip" [class.filledOccasionBackground]="form.controls.occasion.value && form.controls.occasion?.valid">
@@ -45,17 +39,15 @@
             <ion-icon id="optionsIcon" *ngIf="currentRole?.occasions[0]" [class.onCurrentRole]="currentRole?.occasions[0]" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('occasions')"></ion-icon>
           </display>
         </ion-row>
-
         <ion-row id="tagForm" justify-content-center>
           <tag *ngIf="tagChip" [close]="true" [color]="'light'" (onClose)="removeTag()">{{tag.value}}</tag>
           <display *ngIf="!tagChip" [class.filledTagBackground]="form.controls.tag.value && form.controls.tag?.valid">
             <ion-icon id="tagIcon" name="pricetag" color="medium"></ion-icon>
             <ion-input id="tagInput" formControlName="tag" (keyup.enter)="addTag()" (focusout)="addTag()" type="text" color="light" size="large" maxlength="30" spellcheck="false" placeholder="#hashtag"></ion-input>
             <div id="formTagWarning" class="formWarning" *ngIf="submitting && form.controls.tag?.errors?.minlength">mínimo 2 caracteres...</div>
-            <ion-icon id="optionsIcon" *ngIf="currentRole?.tags[0]" [class.onCurrentRole]="currentRole?.tags[0]" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('tags')"></ion-icon>
+            <ion-icon id="optionsIcon" *ngIf="currentRole?.tags[0]" [class.onCurrentRoleTag]="currentRole?.tags[0]" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('tags')"></ion-icon>
           </display>
         </ion-row>
-
         <ion-row id="imageForm" justify-content-center>
           <display id="imageDisplay" [class.filledBackground]="pic.value" (click)="addPicture()">
             <ion-icon name="camera" color="medium"></ion-icon>

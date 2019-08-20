@@ -1,5 +1,7 @@
 @import './../../styles/sizes.scss';
 
+$animation-duration: .5s;
+
 #topBar {
   display: flex;
 
@@ -15,12 +17,8 @@
     }
   }
 
-  $animation-duration: 1s;
-
   .onNotSearchIcon {
     animation: onNotSearchIcon $animation-duration;
-    animation-delay: $animation-duration/4;
-    animation-fill-mode: backwards;
   }
 
   @keyframes onNotSearchIcon {
@@ -31,7 +29,6 @@
 
   .onSearchIcon {
     animation: onSearchIcon $animation-duration;
-    animation-delay: $animation-duration/4;
     animation-fill-mode: forwards;
   }
 
@@ -68,6 +65,16 @@
         margin-top: $global-size-spacing-large;
       }
     }
+
+    .onSearchOptions {
+      animation: onSearchOptions $animation-duration/2;
+    }
+  
+    @keyframes onSearchOptions {
+      from {
+        transform: translateY(100px);
+      }
+    }
   }
 
   .list {
@@ -76,21 +83,6 @@
     padding-left: $global-size-spacing-large + $global-size-spacing-default;
     padding-right: $global-size-spacing-large + $global-size-spacing-default;
   }
-  
-  .categoryTabTitle {
-    margin-left: $global-size-spacing-default;
-  }
-  
-  .role {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: calc(5vw - 10px);
-    padding: $global-size-spacing-large;
-  }
-}
-
-.swiper-zoom-container {
-  text-align: unset !important;
 }
 
 .onSearchContent {

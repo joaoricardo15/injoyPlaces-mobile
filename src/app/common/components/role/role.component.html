@@ -1,4 +1,4 @@
-<div id="main" (click)="navigate()">
+<div id="main" *ngIf="role" (click)="navigate()" matRipple [matRippleCentered]="true">
   <backgroundImageWrap [img]="role.pics[role.pic] | imageURI" [borderRadius]="true">
     <div id="content">
       <div style="display: flex;">
