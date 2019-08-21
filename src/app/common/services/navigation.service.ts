@@ -19,19 +19,19 @@ export class NavigationService {
     private localStorage: LocalStorageService) { }
 
   initControllers() {
-    this.signUpController()
-    this.backButtonControler() 
     this.splashScreenController()
-  }
-
-  signUpController() {
-    this.localStorage.getUser() ? this.router.navigate(['/home']) : this.router.navigate(['/signUp'])
+    this.backButtonControler() 
+    this.signUpController()
   }
 
   splashScreenController() {
     this.platform.ready().then((device) => {
       this.splashScreen.hide()
     })
+  }
+
+  signUpController() {
+    this.localStorage.getUser() ? this.router.navigate(['/home']) : this.router.navigate(['/signUp'])
   }
 
   backButtonControler() {

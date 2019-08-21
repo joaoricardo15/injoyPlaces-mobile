@@ -60,7 +60,8 @@ ion-label {
   }
   
   .pic {
-    max-width: unset;
+    height: 200px;
+    min-width: max-content;
     margin-right: $global-size-spacing-default;
     border-radius: $global-size-spacing-small/2;
   }

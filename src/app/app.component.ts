@@ -3,7 +3,11 @@ import { NavigationService } from './common/services/navigation.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  template: `
+    <ion-app>
+      <ion-router-outlet></ion-router-outlet>
+    </ion-app>
+  `
 })
 export class AppComponent implements OnInit {
 

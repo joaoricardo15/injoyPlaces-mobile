@@ -6,6 +6,7 @@ import { DataService } from './../../common/services/data.service';
 import { RoleService } from './../../common/components/role/roles.service';
 import { LoadingService } from './../../common/services/loading.service';
 import { ToastService } from 'src/app/common/services/toast.service';
+import { LocalStorageService } from 'src/app/common/services/localStorage.service';
 
 @Component({
   selector: 'myList-page',
@@ -16,7 +17,6 @@ export class MyListPage implements OnInit {
   myList: iMylist
   searchOptions: iRole[] = []
   onSearch: boolean = false
-  onStartSearch: boolean = false
   onRefresh: boolean = false
   error: boolean = false
 
@@ -27,29 +27,25 @@ export class MyListPage implements OnInit {
   constructor(
     private router: Router,
     private data: DataService,
-    private toast: ToastService,
+    private loading: LoadingService,
     private roleService: RoleService,
-    private loading: LoadingService) { }
+    private localStorage: LocalStorageService) { }
 
   ngOnInit() {
-    this.data.getMyList()    
-    this.data.myListObserver
-      .subscribe(
-        (myList: iMylist) => {
-          if (!this.myList)
-            this.loading.dismiss()
+    this.myList = this.localStorage.getMyList()
 
-          this.myList = myList
-          this.onRefresh = false
-        },
-        (error) => {
-          this.error = true
-          this.loading.dismiss()
-          this.toast.create('não foi possível conectar-se à internet : (', 'danger')
-        })
-    this.data.getMyLocation()
+    this.data.getMyList()    
+    this.data.myListObserver.subscribe(myList => {
+      this.myList = myList
+      this.localStorage.setMyList(myList)
+
+      if (!this.myList)
+        this.loading.dismiss()
+
+      this.onRefresh = false
+    })
+    this.data.getRolesAround()
     this.data.getMyExperiences()
-    this.loading.create().subscribe(() => {})
   }
 
   refresh() {
@@ -66,12 +62,10 @@ export class MyListPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.onStartSearch = false
     this.onSearch = false
   }
 
   onSearchInput(input: string) {
-    this.onStartSearch = true
     this.onSearch = true
     this.searchOptions = []
     input = input.toLowerCase()

@@ -18,7 +18,7 @@ import { ToastService } from 'src/app/common/services/toast.service';
 })
 export class AddExperiencePage {
 
-  currentRoles: iRole[]
+  rolesAround: iRole[]
   currentRole: iRole
   currentPic: string = 'assets/images/InJoyWoman.png'
   submitting: boolean = false
@@ -26,7 +26,6 @@ export class AddExperiencePage {
   nameChip: string
   tagChip: string
   occasionChip: string
-  locationSugestion: boolean = false
 
   name: FormControl
   location: FormControl
@@ -65,30 +64,20 @@ export class AddExperiencePage {
       occasion: this.occasion,
       comment: this.comment
     })
+
+    this.location.setValue(this.data.location)
+    this.rolesAround = this.data.rolesAround
+
+    this.data.rolesAroundObserver
+      .subscribe(result => {
+        this.location.setValue(result['location'])
+        this.rolesAround = result['roles']
+      })
+    this.data.getRolesAround()
   }
 
   ionViewWillEnter() {
-    this.locationSugestion = false
-    if(!this.location.value)
-      this.location.setValue(this.data.location)
-
-    this.api.getRolesAround()
-      .subscribe(result => {
-        this.location.setValue(result.location)
-        this.currentRoles = result.roles
-        if (result.roles.length > 0) {
-          // let choosedRole = result.roles.find(x => x.name == this.name.value)
-          // if (!choosedRole && this.router.url == '/home/addExperience') {
-          //   this.sheet.getTop()
-          //     .then(sheet => {
-          //       if (!sheet && !this.locationSugestion) {
-          //         this.presentActionSheet('roles')
-          //         this.locationSugestion = true
-          //       }
-          //     })
-          // }
-        }
-      })
+    this.data.getRolesAround()
   }
 
   ionViewWillLeave() {
@@ -152,7 +141,7 @@ export class AddExperiencePage {
   addExperience(form) {
     this.submitting = true; 
     if (form.valid)
-      this.alert.create('Vamo dale?')
+      this.alert.create('Publicar experiência?')
         .subscribe( async result => {
           if (result) {
             this.submitted = true; 
@@ -168,29 +157,27 @@ export class AddExperiencePage {
               comment: this.comment.value
             }
             if (this.pic.value) {
-              let img = await this.camera.getBase64ImageFromURL(this.pic.value)
-
               this.camera.getBase64ImageFromURL(this.pic.value)
                 .subscribe(imgObject => {
                   experience.pic = { data: imgObject, contentType: 'image/png' }
-                  this.api.postExperience(experience)
-                    .subscribe(() => {
-                      this.toast.create('Experiência salva com sucesso!!!', 'success')
-                      this.data.updateAllData()
-                    })
+                  this.postExperience(experience)
                 })
             }
             else {
-              this.api.postExperience(experience)
-                .subscribe(() => {
-                  this.toast.create('Experiência salva com sucesso!!!', 'success')
-                  this.data.updateAllData()
-                  
-                })
+              this.postExperience(experience)
             }
             this.router.navigate(['home/myExperiences']) 
           }
         })
+  }
+
+  postExperience(experience: iExperience) {
+    this.api.postExperience(experience)
+      .subscribe(() => {
+        this.toast.create('Experiência salva com sucesso!!!', 'success')
+        this.data.getMyExperiences()
+        this.data.getMyList()
+      })
   }
 
   resetForm() {
@@ -215,15 +202,15 @@ export class AddExperiencePage {
     if (type == 'roles') {
       sheetObject.header = 'rolês próximos de você'
 
-      for (let i = 0; i < this.currentRoles.length; i++) {
+      for (let i = 0; i < this.rolesAround.length; i++) {
         sheetObject.buttons.push({
-          text: this.currentRoles[i].name + ' (' + this.currentRoles[i].ratting.rattings + ' avaliações)',
+          text: this.rolesAround[i].name + ' (' + this.rolesAround[i].ratting.rattings + ' avaliações)',
           role: 'destructive',
           icon: 'pin',
           handler: () => {
-            this.currentRole = this.currentRoles[i]
-            this.name.setValue(this.currentRoles[i].name)
-            this.nameChip = this.currentRoles[i].name
+            this.currentRole = this.rolesAround[i]
+            this.name.setValue(this.rolesAround[i].name)
+            this.nameChip = this.rolesAround[i].name
             this.tag.setValue(null)
           }
         })

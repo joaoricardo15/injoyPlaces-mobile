@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar [class.onSearchToolBar]="onSearch">
     <div id="topBar">
-      <ion-avatar [class.onSearchIcon]="onSearch" [class.onNotSearchIcon]="!onSearch && onStartSearch" [class.onRefresh]="onRefresh" (click)="refresh()"><img src="./../../assets/icon/favicon.ico"></ion-avatar>
+      <ion-avatar [class.onSearchIcon]="onSearch" [class.onRefresh]="onRefresh" (click)="refresh()"><img src="./../../assets/icon/favicon.ico"></ion-avatar>
       <ion-searchbar *ngIf="myList" (ionInput)="onSearchInput($event.target.value)" (ionFocus)="onSearchInput($event.target.value)" (ionCancel)="onSearch = false" (ionBlur)="onBlur($event)" showCancelButton="{{onSearch ? 'always' : false}}" color="light" autocomplete="true" placeholder="buscar rolê"></ion-searchbar>
     </div>
   </ion-toolbar>

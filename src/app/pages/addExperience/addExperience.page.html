@@ -9,6 +9,7 @@
 <ion-content id="content">
   <backgroundImageWrap [img]="currentPic">
     <form [formGroup]="form" (ngSubmit)="addExperience(form)">
+      <div id="form">
       <ion-grid>
         <ion-row id="nameForm" justify-content-center>
           <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [size]="'large'" [close]="true" (onClose)="removeName()">{{name.value}}</tag>
@@ -18,7 +19,7 @@
               <ion-icon id="pinIcon" name="pin" color="danger"></ion-icon>
               <ion-input id="nameInput" formControlName="name" (keyup.enter)="addName()" (focusout)="addName()" type="text" color="light" maxlength="30" spellcheck="false" placeholder="digite o nome rolê"></ion-input>
               <div id="formNameWarning" class="formWarning" *ngIf="submitting && form.controls.name?.errors?.minlength">mínimo 3 caracteres...</div>
-              <ion-icon id="optionsIcon" *ngIf="currentRoles?.length > 0" [class.onCurrentRole]="currentRoles?.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('roles')"></ion-icon>
+              <ion-icon id="optionsIcon" *ngIf="rolesAround?.length > 0" [class.onCurrentRole]="rolesAround?.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('roles')"></ion-icon>
             </display>
           </div> 
         </ion-row>
@@ -57,21 +58,22 @@
         <ion-row id="commentForm" justify-content-center>
           <display id="commentDisplay" [class.filledBackground]="form.controls.comment.value && form.controls.comment?.valid">
             <div id="commentInsideArea">
-              <div>
+              <div id="commentInsideAreaHeader">
                 <ion-icon name="text" color="medium" ></ion-icon>
                 <ion-label color="medium">Comentário</ion-label>
               </div>
               <div id="formCommentWarning" class="formWarning" *ngIf="submitting && form.controls.comment?.invalid">mínimo 3 caracteres...</div>
-              <ion-textarea id="commentInput" formControlName="comment" color="light" size="large" rows="2" maxlength="140" spellcheck="false"></ion-textarea>
+              <ion-textarea id="commentInput" formControlName="comment" color="light" size="large" rows="1" maxlength="140" spellcheck="false"></ion-textarea>
             </div>
           </display>
         </ion-row>
       </ion-grid>
+      </div>
       <div id="submitForm">
-        <div (click)="addExperience(form)" matRipple [matRippleCentered]="true">
+        <div id="submitButton" (click)="addExperience(form)" matRipple [matRippleCentered]="true">
           <ion-icon name="send" color="medium" size="large"></ion-icon>
         </div>
       </div>
     </form>
-  </backgroundImageWrap> 
+  </backgroundImageWrap>
 </ion-content>

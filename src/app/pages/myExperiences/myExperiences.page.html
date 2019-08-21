@@ -12,7 +12,7 @@
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
           Conquistas
-          <ion-icon class="tabIcon" name="trophy" color="{{achievementsOpened ? 'danger' : 'medium'}}"></ion-icon>
+          <ion-icon class="tabIcon" [class.tabOpened]="achievementsOpened" name="trophy"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-grid-list class="panelContent" cols="4" rowHeight="100px">
@@ -30,7 +30,7 @@
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
           Estatísticas
-          <ion-icon class="tabIcon" name="bulb" color="{{statisticsOpened ? 'danger' : 'medium'}}"></ion-icon>
+          <ion-icon class="tabIcon" [class.tabOpened]="statisticsOpened" name="bulb"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <ion-list id="statistics" class="panelContent">
@@ -45,7 +45,7 @@
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
           Atividades
-          <ion-icon class="tabIcon" name="pin" color="{{experiencesOpened ? 'danger' : 'medium'}}"></ion-icon>
+          <ion-icon class="tabIcon" [class.tabOpened]="experiencesOpened" name="pin"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div id="experiences" class="panelContent">

@@ -1,9 +1,5 @@
 @import './../../styles/sizes.scss';
 
-#content {
-
-}
-
 #header {
   & > div {
     display: flex;
@@ -25,13 +21,26 @@
   }
 }
 
+#content {
+  min-height: 500px;
+  position: relative;
+}
+
+#form {
+  
+}
+
 #nameForm, #rattingForm, #occasionForm, #tagForm, #commentForm, #imageForm {
   margin-left: $global-size-spacing-extraLarge;
   margin-right: $global-size-spacing-extraLarge;
 }
 
-#nameForm, #rattingForm, #occasionForm {
+#nameForm, #rattingForm {
   margin-top: $global-size-spacing-extraLarge;
+}
+
+#occasionForm {
+  margin-top: $global-size-spacing-large*2;
 }
 
 #tagForm, #imageForm, #commentForm {
@@ -137,35 +146,41 @@
   }
 }
 
-#commentDisplay {
-  width: 100%;
+#commentForm {
+  margin-bottom: $global-size-spacing-large;
 
-  #commentInsideArea {
+  #commentDisplay {
     width: 100%;
-    padding: $global-size-spacing-large;
-
-    & > div {
-      display: flex;
-      
-      & > ion-label {
-        vertical-align: top;
-        margin-left: $global-size-spacing-large;
+  
+    #commentInsideArea {
+      width: 100%;
+      padding: $global-size-spacing-large;
+  
+      #commentInsideAreaHeader {
+        display: flex;
+        
+        & > ion-label {
+          vertical-align: top;
+          margin-left: $global-size-spacing-large;
+        }
+      }
+  
+      #commentInput {
+        width: calc(100% - 70x);
       }
     }
   }
 }
 
 #submitForm {
-  height: $global-size-spacing-extraLarge*2;
-  width: 100%;
   position: absolute;
 
-  & > div {
+  #submitButton {
     width: 70px;
     height: 70px;
-    float: right;
-    top: -$global-size-spacing-large - $global-size-spacing-extraLarge;
+    position: fixed;
     right: $global-size-spacing-extraLarge;
+    bottom: $global-size-spacing-extraLarge;
     border-radius: 35px;
     background-color: rgba(var(--ion-color-light-rgb), 1);
 

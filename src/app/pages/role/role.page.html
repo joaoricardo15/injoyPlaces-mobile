@@ -21,7 +21,7 @@
               </div>
             </div>
           </div>
-          <div id="pics">
+          <div id="pics" *ngIf="role.pics.length > 0">
             <div>
               <img class="pic" *ngFor="let pic of role.pics" src="{{ pic | imageURISync }}">
             </div>

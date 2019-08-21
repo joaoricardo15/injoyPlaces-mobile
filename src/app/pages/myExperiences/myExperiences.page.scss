@@ -46,8 +46,12 @@
       }
     }
 
+    .tabOpened {
+      color: var(--ion-color-danger-tint);
+    }
+
     .panelContent {
-      max-height: calc(100vh - 321px);
+      height: calc(100vh - 321px);
       overflow: auto;
     }
 

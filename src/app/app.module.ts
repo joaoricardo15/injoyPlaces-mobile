@@ -1,15 +1,15 @@
-import 'hammerjs';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { SignUpPage } from './pages/signUp/signUp.page';
-import { AppRoutingModule } from './app-routing.module';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { CommonModule } from './common/common.module';
+import { TabsPageModule } from './tabs/tabs.module';
+import { AppRoutes } from './app.routes';
 
 @NgModule({
   declarations: [
@@ -22,13 +22,11 @@ import { CommonModule } from './common/common.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
+    TabsPageModule,
+    IonicModule.forRoot({ scrollAssist: false }),
+    RouterModule.forRoot(AppRoutes),
   ],
-  entryComponents: [ ],
-  providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
-  ],
+  exports: [RouterModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -30,7 +30,7 @@ export interface iRole {
 
 export interface iMyExperiences {
   achievements: iAchievement[]
-  hints: iExperience[]
+  statistics: iExperience[]
   experiences: iExperience[]
 }
 

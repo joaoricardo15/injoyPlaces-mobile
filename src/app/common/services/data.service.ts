@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { ApiService } from './api.service';
-import { iMyExperiences, iMylist } from '../interfaces/injoyApi.interface';
+import { iMyExperiences, iMylist, iRole } from '../interfaces/injoyApi.interface';
 import { iLocation } from '../interfaces/location.interface';
 import { Subject } from 'rxjs';
 
@@ -8,18 +8,14 @@ import { Subject } from 'rxjs';
 export class DataService {
 
   location: iLocation
+  rolesAround: iRole[]
   myExperiences: iMyExperiences
 
   myListObserver = new Subject<iMylist>() 
+  rolesAroundObserver = new Subject<object>() 
   myExperiencesObserver = new Subject<iMyExperiences>()
 
   constructor(private api: ApiService) {}
-
-  updateAllData() {
-    this.getMyList()
-    this.getMyLocation()
-    this.getMyExperiences()
-  }
 
   getMyList() {
     this.api.getRolesForMe()
@@ -27,11 +23,13 @@ export class DataService {
         this.myListObserver.next(lists)
       })
   }
-
-  getMyLocation() {
-    this.api.getMyLocation()
-      .subscribe((location: iLocation) => {
-        this.location = location
+  
+  getRolesAround() {
+    this.api.getRolesAround()
+      .subscribe(result => {
+        this.location = result.location
+        this.rolesAround = result.roles
+        this.rolesAroundObserver.next(result)
       })
   }
 
