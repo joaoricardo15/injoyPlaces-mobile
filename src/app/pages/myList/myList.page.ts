@@ -17,6 +17,7 @@ export class MyListPage implements OnInit {
   searchOptions: iRole[] = []
   onSearch: boolean = false
   onStartSearch: boolean = false
+  onRefresh: boolean = false
   error: boolean = false
 
   selectedTabIndex: number = 0
@@ -31,28 +32,32 @@ export class MyListPage implements OnInit {
     private loading: LoadingService) { }
 
   ngOnInit() {
+    this.data.getMyList()    
     this.data.myListObserver
       .subscribe(
         (myList: iMylist) => {
           if (!this.myList)
             this.loading.dismiss()
-          else if (this.router.url == '/home/myList')
-            this.toast.create('dados atualizados ; )', 'success')
 
           this.myList = myList
+          this.onRefresh = false
         },
         (error) => {
           this.error = true
           this.loading.dismiss()
           this.toast.create('não foi possível conectar-se à internet : (', 'danger')
         })
-    this.data.updateAllData()
+    this.data.getMyLocation()
+    this.data.getMyExperiences()
     this.loading.create().subscribe(() => {})
   }
 
   refresh() {
-    this.data.getMyList()
-    this.loading.create(null, 500).subscribe(() => {})
+    if (!this.onRefresh) {
+      this.onRefresh = true
+      this.data.getMyList()
+      this.loading.create(null, 500).subscribe(() => {})
+    }
   }
 
   onBlur(input) { 

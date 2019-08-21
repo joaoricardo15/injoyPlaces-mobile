@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar id="header">
     <div>
-      <ion-avatar><img src="./../../assets/icon/favicon.ico"></ion-avatar>
+      <ion-avatar [class.onRefresh]="onRefresh" (click)="refresh()"><img src="./../../assets/icon/favicon.ico"></ion-avatar>
       <ion-title>Minhas Experiências</ion-title>
     </div>
   </ion-toolbar>

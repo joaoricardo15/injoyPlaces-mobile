@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { iMyExperiences } from './../../common/interfaces/injoyApi.interface';
-import { DataService } from 'src/app/common/services/data.service';
+import { DataService } from './../../common/services/data.service';
+import { LoadingService } from './../../common/services/loading.service';
 
 @Component({
   selector: 'myExperiences-page',
@@ -13,14 +14,24 @@ export class MyExperiencesPage implements OnInit {
   achievementsOpened: boolean = true
   statisticsOpened: boolean = false
   experiencesOpened: boolean = false
+  onRefresh: boolean = false
 
-  constructor(private data: DataService) { }
+  constructor(private data: DataService, private loading: LoadingService) { }
 
   ngOnInit() {
     this.myExperiences = this.data.myExperiences
     this.data.myExperiencesObserver.subscribe(myExperiences => {
+      this.onRefresh = false
       this.myExperiences = myExperiences
       this.experiencesOpened = true
     })
+  }
+
+  refresh() {
+    if (!this.onRefresh) {
+      this.onRefresh = true
+      this.data.getMyExperiences()
+      this.loading.create(null, 500).subscribe(() => {})
+    }
   }
 }

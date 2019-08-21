@@ -15,6 +15,16 @@
       }
     }
 
+    .onRefresh {
+      animation: onRefresh 1.5s;
+    }
+  
+    @keyframes onRefresh {
+      from {
+        transform: scale(.8);
+      }
+    }
+
     ion-title {
       font-weight: 300;
     }
@@ -28,6 +38,7 @@
 
     .panelHeader {
       justify-content: space-between;
+      align-items: center;
       margin: 0;
 
       .tabIcon {

@@ -113,6 +113,8 @@ export class AddExperiencePage {
     this.tag.setValue(null); 
     this.currentRole = null
     this.nameChip = null;
+    this.occasionChip = null;
+    this.tagChip = null;
   }
 
   addTag()  {
