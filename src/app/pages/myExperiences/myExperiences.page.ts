@@ -11,7 +11,7 @@ import { LoadingService } from './../../common/services/loading.service';
 export class MyExperiencesPage implements OnInit {
 
   myExperiences: iMyExperiences
-  achievementsOpened: boolean = true
+  achievementsOpened: boolean = false
   statisticsOpened: boolean = false
   experiencesOpened: boolean = false
   onRefresh: boolean = false
@@ -23,8 +23,15 @@ export class MyExperiencesPage implements OnInit {
     this.data.myExperiencesObserver.subscribe(myExperiences => {
       this.onRefresh = false
       this.myExperiences = myExperiences
-      this.experiencesOpened = true
     })
+  }
+
+  ionViewWillEnter() {
+    this.experiencesOpened = true
+  }
+
+  ionViewWillLeave() {
+    this.experiencesOpened = false
   }
 
   refresh() {

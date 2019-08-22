@@ -40,6 +40,7 @@ $animation-duration: .5s;
     width: 100%;
     min-height: 100%;
     position: absolute;
+    visibility: hidden;
     background-color: var(--ion-color-light);
   
     #notFoundTitle {
@@ -60,12 +61,19 @@ $animation-duration: .5s;
     }
 
     .onSearchOptions {
+      visibility: hidden;
       animation: onSearchOptions $animation-duration/2;
+      animation-delay: $animation-duration/2;
+      animation-fill-mode: forwards;
     }
   
     @keyframes onSearchOptions {
       from {
+        visibility: hidden;
         transform: translateY(100px);
+      }
+      to {
+        visibility: visible;
       }
     }
   }

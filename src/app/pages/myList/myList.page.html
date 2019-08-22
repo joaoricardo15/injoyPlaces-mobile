@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
   <div id="content" [class.onSearchContent]="onSearch">
-    <div id="searchOptions" *ngIf="onSearch">
+    <div id="searchOptions" [style.visibility]="onSearch ? 'visible' : 'hidden'">
       <div id="notFoundTitle" *ngIf="searchOptions.length === 0">
         <ion-title color="dark">nenhum role encontrado : (</ion-title>
       </div>

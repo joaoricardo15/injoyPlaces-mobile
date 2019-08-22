@@ -6,10 +6,10 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content id="content">
-  <backgroundImageWrap [img]="currentPic">
+<ion-content>
+  <div id="backgroundImage"><img src="{{currentPic}}"></div>
+  <div id="content" >
     <form [formGroup]="form" (ngSubmit)="addExperience(form)">
-      <div id="form">
       <ion-grid>
         <ion-row id="nameForm" justify-content-center>
           <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [size]="'large'" [close]="true" (onClose)="removeName()">{{name.value}}</tag>
@@ -68,12 +68,11 @@
           </display>
         </ion-row>
       </ion-grid>
-      </div>
       <div id="submitForm">
         <div id="submitButton" (click)="addExperience(form)" matRipple [matRippleCentered]="true">
           <ion-icon name="send" color="medium" size="large"></ion-icon>
         </div>
       </div>
     </form>
-  </backgroundImageWrap>
+  </div>
 </ion-content>

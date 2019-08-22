@@ -21,13 +21,26 @@
   }
 }
 
-#content {
-  min-height: 500px;
-  position: relative;
+#backgroundImage {
+  height: 100%;
+  min-height: 450px;
+  position: absolute;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+
+  img {
+    max-width: unset;
+    height: 700px;
+    opacity: .1;
+  }
 }
 
-#form {
-  
+#content {
+  height: 100%;
+  min-height: 450px;
+  position: absolute;
+  overflow: auto;
+  width: 100%;
 }
 
 #nameForm, #rattingForm, #occasionForm, #tagForm, #commentForm, #imageForm {
@@ -173,14 +186,13 @@
 }
 
 #submitForm {
-  position: absolute;
+  position: relative;
+  right: $global-size-spacing-large;
+  bottom: $global-size-spacing-large;
 
   #submitButton {
     width: 70px;
     height: 70px;
-    position: fixed;
-    right: $global-size-spacing-extraLarge;
-    bottom: $global-size-spacing-extraLarge;
     border-radius: 35px;
     background-color: rgba(var(--ion-color-light-rgb), 1);
 
