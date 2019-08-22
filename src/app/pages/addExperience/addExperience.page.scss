@@ -185,22 +185,21 @@
   }
 }
 
-#submitForm {
+#submitButton {
+  z-index: 4;
   position: absolute;
-  right: $global-size-spacing-large;
-  bottom: $global-size-spacing-large;
+  $submitButton-size: 70px;
+  width: $submitButton-size;
+  height: $submitButton-size;
+  top: calc(100% - #{$submitButton-size + $global-size-spacing-extraLarge});
+  right: $global-size-spacing-extraLarge;
+  border-radius: $submitButton-size/2;
+  background-color: var(--ion-color-light);
 
-  #submitButton {
-    width: 70px;
-    height: 70px;
-    border-radius: 35px;
-    background-color: rgba(var(--ion-color-light-rgb), 1);
-
-    & > ion-icon {
-      zoom: 1.3;
-      margin-top: 11px;
-      margin-left: 14px;
-    }
+  & > ion-icon {
+    zoom: 1.3;
+    margin-top: 11px;
+    margin-left: 14px;
   }
 }
 
@@ -251,11 +250,11 @@
 
 .onCurrentRoleTag {
   animation: onCurrentRole .5s;
-  animation-delay: .3s;
+  animation-delay: .5s;
 }
 
 @keyframes onCurrentRole {
   from { 
-    transform: rotate(720deg);
+    transform: rotate(1080deg);
   }
 }

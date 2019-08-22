@@ -21,8 +21,21 @@ export class MyExperiencesPage implements OnInit {
   ngOnInit() {
     this.myExperiences = this.data.myExperiences
     this.data.myExperiencesObserver.subscribe(myExperiences => {
-      this.onRefresh = false
+      if (this.myExperiences.achievements.length !== myExperiences.achievements.length)
+        this.myExperiences.achievements !== myExperiences.achievements
+
+      if (this.myExperiences.statistics.length !== myExperiences.statistics.length)
+        this.myExperiences.statistics !== myExperiences.statistics
+
+      if (this.myExperiences.experiences.length !== myExperiences.experiences.length)
+        this.myExperiences.experiences !== myExperiences.experiences
+
       this.myExperiences = myExperiences
+      
+      if (this.loading.isOpened)
+        this.loading.dismiss()
+      
+      this.onRefresh = false
     })
   }
 

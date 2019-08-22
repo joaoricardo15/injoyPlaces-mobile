@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Platform, AlertController, LoadingController, ActionSheetController } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { LocalStorageService } from './localStorage.service';
 
 @Injectable()
@@ -12,22 +11,14 @@ export class NavigationService {
     private router: Router,
     private location: Location,
     private platform: Platform,
-    private splashScreen: SplashScreen,
     private alert: AlertController,
     private loading: LoadingController,
     private sheet: ActionSheetController,
     private localStorage: LocalStorageService) { }
 
   initControllers() {
-    this.splashScreenController()
     this.backButtonControler() 
     this.signUpController()
-  }
-
-  splashScreenController() {
-    this.platform.ready().then((device) => {
-      this.splashScreen.hide()
-    })
   }
 
   signUpController() {

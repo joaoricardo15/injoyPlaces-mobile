@@ -13,13 +13,16 @@
     <allow-intent href="geo:*" />
     <preference name="ScrollEnabled" value="true" />
     <preference name="android-minSdkVersion" value="19" />
-    <preference name="BackupWebStorage" value="none" />
+    <preference name="fullscreen" value="false" />
     <preference name="Orientation" value="portrait" />
-    <preference name="BackgroundColor" value="#00000000" />
+    <preference name="BackupWebStorage" value="none" />
     <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="FadeSplashScreen" value="true" />
+    <preference name="FadeSplashScreenDuration" value="500" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="ShowSplashScreenSpinner" value="true" />
     <preference name="SplashScreenSpinnerColor" value="#f25454" />
+    <preference name="SplashScreenBackgroundColor" value="0x00000000" />
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:networkSecurityConfig="@xml/network_security_config" />

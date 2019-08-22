@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { iRole } from '../../common/interfaces/injoyApi.interface';
 import { RoleService } from '../../common/components/role/roles.service';
 

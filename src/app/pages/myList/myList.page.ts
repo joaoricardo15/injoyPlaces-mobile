@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { iRole, iMylist } from './../../common/interfaces/injoyApi.interface';
-import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { DataService } from './../../common/services/data.service';
-import { RoleService } from './../../common/components/role/roles.service';
 import { LoadingService } from './../../common/services/loading.service';
-import { ToastService } from 'src/app/common/services/toast.service';
 import { LocalStorageService } from 'src/app/common/services/localStorage.service';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 @Component({
   selector: 'myList-page',
@@ -16,6 +14,7 @@ import { LocalStorageService } from 'src/app/common/services/localStorage.servic
 export class MyListPage implements OnInit {
   myList: iMylist
   searchOptions: iRole[] = []
+  onInit: boolean = true
   onSearch: boolean = false
   onRefresh: boolean = false
   error: boolean = false
@@ -25,10 +24,9 @@ export class MyListPage implements OnInit {
   @ViewChild('slides', null) slides: IonSlides;
 
   constructor(
-    private router: Router,
     private data: DataService,
     private loading: LoadingService,
-    private roleService: RoleService,
+    private splashScreen: SplashScreen,
     private localStorage: LocalStorageService) { }
 
   ngOnInit() {
@@ -36,10 +34,14 @@ export class MyListPage implements OnInit {
 
     this.data.getMyList()    
     this.data.myListObserver.subscribe(myList => {
-      this.myList = myList
-      this.localStorage.setMyList(myList)
+      
+      if (this.myList.roles.length !== myList.roles.length)
+        this.myList.roles = myList.roles
 
-      if (!this.myList)
+      if (this.myList.myLists !== myList.myLists)
+        this.myList.myLists = myList.myLists
+
+      if (this.loading.isOpened)
         this.loading.dismiss()
 
       this.onRefresh = false
@@ -62,6 +64,10 @@ export class MyListPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    if (this.onInit) {
+      this.splashScreen.hide()
+      this.onInit = false
+    }
     this.onSearch = false
   }
 
@@ -77,10 +83,5 @@ export class MyListPage implements OnInit {
         this.searchOptions.push(roles[j])
       }
     }
-  }
-
-  selectRole(role: iRole) {
-    this.roleService.setRole(role)
-    this.router.navigate(['home/role'])
   }
 }

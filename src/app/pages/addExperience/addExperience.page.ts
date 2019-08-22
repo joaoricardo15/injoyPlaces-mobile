@@ -133,42 +133,41 @@ export class AddExperiencePage {
         this.currentPic = pic
         this.pic.setValue(pic) 
       })
-      .catch(error => { 
-        this.toast.create('não foi possível acessar a sua câmera', 'danger')
-      })
   }
 
   addExperience(form) {
-    this.submitting = true; 
-    if (form.valid)
-      this.alert.create('Publicar experiência?')
-        .subscribe( async result => {
-          if (result) {
-            this.submitted = true; 
-            var experience: iExperience = {
-              user: this.localStorage.getUser().user,
-              name: this.name.value,
-              ratting: this.ratting.value,
-              location: this.location.value,
-              date: new Date(),
-              pic: null,
-              tag: this.tag.value,
-              occasion: this.occasion.value,
-              comment: this.comment.value
+    setTimeout(() => { 
+      this.submitting = true; 
+      if (form.valid)
+        this.alert.create('Publicar experiência?')
+          .subscribe( async result => {
+            if (result) {
+              this.submitted = true; 
+              var experience: iExperience = {
+                user: this.localStorage.getUser().user,
+                name: this.name.value,
+                ratting: this.ratting.value,
+                location: this.location.value,
+                date: new Date(),
+                pic: null,
+                tag: this.tag.value,
+                occasion: this.occasion.value,
+                comment: this.comment.value
+              }
+              if (this.pic.value) {
+                this.camera.getBase64ImageFromURL(this.pic.value)
+                  .subscribe(imgObject => {
+                    experience.pic = { data: imgObject, contentType: 'image/png' }
+                    this.postExperience(experience)
+                  })
+              }
+              else {
+                this.postExperience(experience)
+              }
+              this.router.navigate(['home/myExperiences']) 
             }
-            if (this.pic.value) {
-              this.camera.getBase64ImageFromURL(this.pic.value)
-                .subscribe(imgObject => {
-                  experience.pic = { data: imgObject, contentType: 'image/png' }
-                  this.postExperience(experience)
-                })
-            }
-            else {
-              this.postExperience(experience)
-            }
-            this.router.navigate(['home/myExperiences']) 
-          }
-        })
+          })
+    }, 100)
   }
 
   postExperience(experience: iExperience) {
