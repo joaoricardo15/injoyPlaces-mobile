@@ -11,6 +11,10 @@ import { CommonModule } from './common/common.module';
 import { TabsPageModule } from './tabs/tabs.module';
 import { AppRoutes } from './app.routes';
 
+import { MatRippleModule } from '@angular/material/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +29,8 @@ import { AppRoutes } from './app.routes';
     TabsPageModule,
     IonicModule.forRoot({ scrollAssist: false }),
     RouterModule.forRoot(AppRoutes),
+    MatRippleModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   exports: [RouterModule],
   bootstrap: [AppComponent]

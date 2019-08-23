@@ -10,7 +10,7 @@ export class ApiService {
 
   InJoyServerURL = 'https://injoyserver.azurewebsites.net'
   //InJoyServerURL = 'http://127.0.0.1:1000'
-  //InJoyServerURL = 'http://192.168.0.14:1000'
+  InJoyServerLocationsURL = '/positions'
 
   constructor(
     private http: HttpClient, 
@@ -52,6 +52,19 @@ export class ApiService {
   getMyExperiences(): Observable<any> {
     return this.http.get(this.InJoyServerURL + '/myExperiences', {
       params: { user: this.localStorage.getUser().user }
+    })
+  }
+
+  getAddress(location: object) {
+    return new Promise(resolve => {
+      this.http.get('http://nominatim.openstreetmap.org/reverse?lat='+location['lat']+'&lon='+location['lng']+'&format=json')
+        .subscribe(response => {
+					resolve(
+            (response['address'].road ? response['address'].road + ', ' : '') +
+            (response['address'].house_number ? response['address'].house_number + ' - ' : '') + 
+            (response['address'].suburb ? response['address'].suburb + ', ' : '') + 
+            (response['address'].city ? response['address'].city : ''))
+        })
     })
   }
 

@@ -10,6 +10,7 @@ import { DataService } from 'src/app/common/services/data.service';
 import { Observable } from 'rxjs';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { ToastService } from 'src/app/common/services/toast.service';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
 @Component({
   selector: 'addExperience-page',
@@ -29,12 +30,15 @@ export class AddExperiencePage {
 
   name: FormControl
   location: FormControl
+  address: FormControl
   ratting: FormControl
   pic: FormControl
   tag: FormControl
   occasion: FormControl
   comment: FormControl
   form: FormGroup
+
+  isLocationAvailable: boolean = false
 
   constructor(
     private router: Router,
@@ -44,11 +48,13 @@ export class AddExperiencePage {
     private toast: ToastService,
     private camera: CameraService,
     private sheet: ActionSheetController,
+    private diagnostic: Diagnostic,
     private localStorage: LocalStorageService) {  }
 
   ngOnInit() {
     this.name = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.location = new FormControl('', Validators.required);
+    this.address = new FormControl('', Validators.required);
     this.ratting = new FormControl('');
     this.pic = new FormControl('');
     this.tag = new FormControl('', Validators.minLength(2));
@@ -65,29 +71,51 @@ export class AddExperiencePage {
       comment: this.comment
     })
 
-    this.location.setValue(this.data.location)
-    this.rolesAround = this.data.rolesAround
-
     this.data.rolesAroundObserver
       .subscribe(result => {
         this.location.setValue(result['location'])
+        this.setAddress(result['location'])
         this.rolesAround = result['roles']
       })
-    this.data.getRolesAround()
+  }
+
+  setAddress(location: object) {
+    this.api.getAddress(location)
+    .then(address => { this.address.setValue(address) })
   }
 
   ionViewWillEnter() {
-    this.data.getRolesAround()
+    this.confirmLocationAvailable()
   }
 
-  ionViewWillLeave() {
-    this.resetForm()
+  confirmLocationAvailable() {
+    return new Promise(resolve => {
+      this.diagnostic.isLocationAvailable()
+        .then(isLocationAvailable => {
+          this.isLocationAvailable = isLocationAvailable
+          if (!isLocationAvailable)
+            this.alert.create('Você precisa ativar a localização do dispositivo')
+              .subscribe( async () => {
+                this.diagnostic.switchToLocationSettings()
+            })
+          else {
+            resolve()
+            if (!this.rolesAround)
+              this.data.getRolesAround()
+          }
+        }).catch(error => {
+          navigator.geolocation.getCurrentPosition(
+            () => { resolve(); if (!this.rolesAround) this.data.getRolesAround() },
+            () => { alert('é necessário habilitar a localização') 
+          })
+        })
+    })
   }
 
   canDeactivate(): Observable<boolean> | boolean {
     if(this.submitted != true && (this.ratting.value || this.occasion.value|| this.tag.value || this.pic.value || this.comment.value))
       return this.alert.create()
-    else 
+    else
       return true
   }
 
@@ -97,9 +125,9 @@ export class AddExperiencePage {
   }
 
   removeName() {
-    this.name.setValue(null); 
-    this.occasion.setValue(null); 
-    this.tag.setValue(null); 
+    this.name.setValue(null);
+    this.occasion.setValue(null);
+    this.tag.setValue(null);
     this.currentRole = null
     this.nameChip = null;
     this.occasionChip = null;
@@ -128,21 +156,21 @@ export class AddExperiencePage {
 
   addPicture() {
     this.camera.getPicture()
-      .then(imageData => { 
+      .then(imageData => {
         let pic = 'data:image/png;base64,' + imageData
         this.currentPic = pic
-        this.pic.setValue(pic) 
+        this.pic.setValue(pic)
       })
   }
 
   addExperience(form) {
-    setTimeout(() => { 
-      this.submitting = true; 
+    this.confirmLocationAvailable().then(() => {
+      this.submitting = true;
       if (form.valid)
         this.alert.create('Publicar experiência?')
           .subscribe( async result => {
             if (result) {
-              this.submitted = true; 
+              this.submitted = true;
               var experience: iExperience = {
                 user: this.localStorage.getUser().user,
                 name: this.name.value,
@@ -164,10 +192,10 @@ export class AddExperiencePage {
               else {
                 this.postExperience(experience)
               }
-              this.router.navigate(['home/myExperiences']) 
+              this.router.navigate(['home/myExperiences'])
             }
           })
-    }, 100)
+    })
   }
 
   postExperience(experience: iExperience) {
@@ -235,7 +263,7 @@ export class AddExperiencePage {
           }
         })
       }
-      
+
       sheetObject.buttons.push({
         text: 'cancelar',
         icon: 'close',
@@ -256,7 +284,7 @@ export class AddExperiencePage {
           }
         })
       }
-      
+
       sheetObject.buttons.push({
         text: 'cancelar',
         icon: 'close',

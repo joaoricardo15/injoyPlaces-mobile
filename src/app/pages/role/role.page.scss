@@ -32,7 +32,7 @@ ion-label {
   
   & > div {
     display: flex;
-    overflow: scroll;
+    overflow: auto;
     padding-top: $global-size-spacing-default;
   }
 }

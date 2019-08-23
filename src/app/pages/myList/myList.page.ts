@@ -5,6 +5,9 @@ import { DataService } from './../../common/services/data.service';
 import { LoadingService } from './../../common/services/loading.service';
 import { LocalStorageService } from 'src/app/common/services/localStorage.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { RoleService } from 'src/app/common/components/role/roles.service';
+import { Router } from '@angular/router';
+import { BackgroundGeolocationService } from 'src/app/common/services/backgroundGeolocation.service';
 
 @Component({
   selector: 'myList-page',
@@ -17,7 +20,6 @@ export class MyListPage implements OnInit {
   onInit: boolean = true
   onSearch: boolean = false
   onRefresh: boolean = false
-  error: boolean = false
 
   selectedTabIndex: number = 0
 
@@ -25,29 +27,36 @@ export class MyListPage implements OnInit {
 
   constructor(
     private data: DataService,
+    private router: Router,
     private loading: LoadingService,
+    private roleService: RoleService,
     private splashScreen: SplashScreen,
-    private localStorage: LocalStorageService) { }
+    private localStorage: LocalStorageService,
+    private geolocation: BackgroundGeolocationService) { }
 
   ngOnInit() {
     this.myList = this.localStorage.getMyList()
-
     this.data.getMyList()    
     this.data.myListObserver.subscribe(myList => {
-      
-      if (this.myList.roles.length !== myList.roles.length)
-        this.myList.roles = myList.roles
+      if (this.myList) {
+        if (this.myList.roles.length !== myList.roles.length)
+          this.myList.roles = myList.roles
 
-      if (this.myList.myLists !== myList.myLists)
-        this.myList.myLists = myList.myLists
+        if (this.myList.myLists !== myList.myLists)
+          this.myList.myLists = myList.myLists
+      }
+      else
+        this.myList = myList
+      
+      this.localStorage.setMyList(myList)
 
       if (this.loading.isOpened)
         this.loading.dismiss()
-
+      
       this.onRefresh = false
     })
     this.data.getRolesAround()
-    this.data.getMyExperiences()
+    this.geolocation.startBackgroundGeolocationTracker(this.localStorage.getUser().user);
   }
 
   refresh() {
@@ -69,6 +78,11 @@ export class MyListPage implements OnInit {
       this.onInit = false
     }
     this.onSearch = false
+  }
+
+  navigate(role: iRole) {
+    this.roleService.setRole(role)
+    this.router.navigate(['home/role'])
   }
 
   onSearchInput(input: string) {

@@ -1,7 +1,9 @@
 @import './../../../styles/sizes.scss';
 
+$width: 300px;
+
 #main {
-  width: 90vw;
+  width: $width;
   height: 180px;
 }
 
@@ -19,7 +21,7 @@
 #bottonLine {
   position: absolute;
   bottom: $global-size-spacing-large;
-  width: 85vw;
+  max-width: $width - $global-size-spacing-default*2;
 }
 
 #rattings {
@@ -28,7 +30,7 @@
 }
 
 #tags {
-  overflow: scroll;
+  overflow: auto;
 }
 
 .tag {

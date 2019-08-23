@@ -13,8 +13,8 @@
         <ion-title color="dark">nenhum role encontrado : (</ion-title>
       </div>
       <div id="options" [class.onSearchOptions]="onSearch" *ngIf="searchOptions.length > 0">
-        <tag class="option" [icon]="'locate'" [color]="'medium'" [fontColor]="'dark'" (click)="onSearch = false">rolês próximos de você agora</tag>
-        <tag class="option" *ngFor="let role of searchOptions" [icon]="'pin'" [color]="'danger'" [fontColor]="'dark'" (click)="selectRole(role)">{{role.name}}</tag>
+        <!-- <tag class="option" [icon]="'locate'" [color]="'medium'" [fontColor]="'dark'" (click)="onSearch = false">rolês próximos de você agora</tag> -->
+        <tag class="option" *ngFor="let role of searchOptions" [icon]="'pin'" [color]="'danger'" [fontColor]="'dark'" (click)="navigate(role)">{{role.name}}</tag>
       </div>
     </div>
     <div *ngIf="myList">
@@ -23,6 +23,5 @@
         [roles]="myList.roles">
       </role-horizontalList>
     </div>
-    <tag *ngIf="!myList && error" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Não foi possível estabelescer conexão com a internet</tag>
   </div>
 </ion-content>

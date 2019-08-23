@@ -16,8 +16,10 @@
     <preference name="fullscreen" value="false" />
     <preference name="Orientation" value="portrait" />
     <preference name="BackupWebStorage" value="none" />
+    <preference name="BackgroundColor" value="#ffffff" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="FadeSplashScreen" value="true" />
+    <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="FadeSplashScreenDuration" value="500" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="ShowSplashScreenSpinner" value="true" />

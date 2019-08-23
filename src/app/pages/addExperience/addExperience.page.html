@@ -12,7 +12,8 @@
     <form [formGroup]="form" (ngSubmit)="addExperience(form)">
       <ion-grid>
         <ion-row id="nameForm" justify-content-center>
-          <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [size]="'large'" [close]="true" (onClose)="removeName()">{{name.value}}</tag>
+          <tag *ngIf="nameChip" [color]="'light'" [size]="'large'" [close]="true" (onClose)="removeName()">{{name.value}}</tag>
+          <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [size]="'small'" style="margin-top: 8px">{{address.value}}</tag>
           <div *ngIf="!nameChip">
             <div class="formWarning" [style.visibility]="(submitting && form.controls.name?.errors?.required) ? 'visible' : 'hidden'">é necessário preencher o nome do rolê...</div>
             <display id="newRoleInput" [class.filledNameBackground]="form.controls.name?.valid">

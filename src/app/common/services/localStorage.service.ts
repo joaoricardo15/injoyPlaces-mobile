@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { iUser, iMylist } from './../interfaces/injoyApi.interface';
+import { iUser, iMylist, iMyExperiences } from './../interfaces/injoyApi.interface';
 
 @Injectable()
 export class LocalStorageService {
@@ -18,5 +18,13 @@ export class LocalStorageService {
 
   setMyList(mylist: iMylist) {
     localStorage.setItem('myList', JSON.stringify(mylist))
+  }
+
+  getMyExperiences(): iMyExperiences {
+    return JSON.parse(localStorage.getItem('myExperiences'))
+  }
+
+  setMyExperiences(myExperiences: iMyExperiences) {
+    localStorage.setItem('iMyExperiences', JSON.stringify(myExperiences))
   }
 }
