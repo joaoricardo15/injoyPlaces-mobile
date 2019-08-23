@@ -30,7 +30,7 @@ import { environment } from '../environments/environment';
     IonicModule.forRoot({ scrollAssist: false }),
     RouterModule.forRoot(AppRoutes),
     MatRippleModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    //ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   exports: [RouterModule],
   bootstrap: [AppComponent]
