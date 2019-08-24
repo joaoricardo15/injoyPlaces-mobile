@@ -9,10 +9,8 @@ import { PlatformModule } from '@angular/cdk/platform';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
 import { RolePage } from '../pages/role/role.page';
@@ -81,7 +79,6 @@ import { ImageURISyncPipe } from './pipes/imageURI.pipe';
   ],
   entryComponents: [],
   providers: [
-    StatusBar,
     SplashScreen,
     AlertService,
     ToastService,
@@ -96,7 +93,6 @@ import { ImageURISyncPipe } from './pipes/imageURI.pipe';
     LocalStorageService,
     BackgroundGeolocation,
     BackgroundGeolocationService,
-    LocalNotifications,
     Diagnostic
   ]
 })

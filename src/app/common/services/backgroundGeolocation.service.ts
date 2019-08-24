@@ -25,8 +25,8 @@ export class BackgroundGeolocationService {
       stopOnStillActivity: true, // DEPRECATED segundo a documentacao
     
       maxLocations: 100,
-      notificationTitle: '',
-      notificationText: '',
+      notificationTitle: null,
+      notificationText: null,
       url: this.api.InJoyServerURL + this.api.InJoyServerLocationsURL,
       httpHeaders: {
         'Content-Type': 'application/json; charset=utf-8'

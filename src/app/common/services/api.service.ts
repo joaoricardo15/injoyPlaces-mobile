@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { iUser } from '../interfaces/injoyApi.interface';
 import { LocalStorageService } from './localStorage.service';
 import { GeolocationService } from './geolocation.service';
+import { iLocation } from '../interfaces/location.interface';
 
 @Injectable()
 export class ApiService {
@@ -35,17 +36,16 @@ export class ApiService {
 
   getRolesAround(): Observable<any> {
     return new Observable(observer => {
-      this.getMyLocation()
-        .subscribe(
-          location => {
-            this.http.get(this.InJoyServerURL + '/rolesAround', {
-              params: { location: JSON.stringify(location) }
-            })
-            .subscribe(
-              roles => { observer.next({ location: location, roles: roles}) },
-              error => { observer.error() })
-          },
-          error => { observer.error() })
+      navigator.geolocation.getCurrentPosition(location => {
+          let locationFormated: iLocation = { lat: location.coords.latitude, lng: location.coords.longitude }
+          this.http.get(this.InJoyServerURL + '/rolesAround', {
+            params: { location: JSON.stringify(locationFormated) }
+          })
+          .subscribe(
+            roles => { observer.next({ location: locationFormated, roles: roles}) },
+            error => { observer.error(error) })
+        },
+        error => { observer.error(error) })
     })
   }
 
