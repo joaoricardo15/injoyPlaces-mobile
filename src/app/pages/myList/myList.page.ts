@@ -51,8 +51,12 @@ export class MyListPage implements OnInit {
               this.myList.roles[i].comments.length !== myList.roles[i].comments.length)
               this.myList.roles[i] = myList.roles[i]
 
-        if (this.myList.myLists !== myList.myLists)
+        if (this.myList.myLists.length !== myList.myLists.length)
           this.myList.myLists = myList.myLists
+        else
+          for (let i = 0; i < this.myList.myLists.length; i++)
+            if (this.myList.myLists[i].roles.length !== myList.myLists[i].roles.length)
+              this.myList.myLists[i] = myList.myLists[i]
       }
       else
         this.myList = myList
