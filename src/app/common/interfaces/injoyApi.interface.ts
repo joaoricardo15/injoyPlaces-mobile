@@ -1,5 +1,3 @@
-import { iLocation } from './location.interface';
-
 export interface iUser {
   user: string
   email: string
@@ -20,7 +18,7 @@ export interface iRole {
   name: string
   ratting: { rattings: number, average: number }
   location: iLocation
-  address: string
+  address: iAddress
   pic: string | Object
   pics: string[]
   comments: string[] 
@@ -36,10 +34,11 @@ export interface iMyExperiences {
 
 export interface iAchievement {
   title: string
+  subtitle: string
   img?: string
   icon?: string
   value?: number
-  message?: string
+  message: string
 }
 
 export interface iExperience {
@@ -48,9 +47,24 @@ export interface iExperience {
   date: Date
   ratting: number
   location: iLocation
-  address?: string
+  address?: iAddress
   pic?: string | Object
   occasion?: string
   tag?: string
   comment?: string
+}
+
+export interface iLocation {
+  lat: number
+  lng: number
+}
+
+export interface iAddress {
+  street: string
+  number: string
+  complement?: string
+  suburb: string
+  city: string
+  state: string,
+  country: string
 }

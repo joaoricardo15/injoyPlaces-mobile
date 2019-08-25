@@ -61,7 +61,7 @@ ion-label {
   
   .pic {
     height: 200px;
-    min-width: max-content;
+    max-width: max-content;
     margin-right: $global-size-spacing-default;
     border-radius: $global-size-spacing-small/2;
   }

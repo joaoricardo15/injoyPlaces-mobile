@@ -15,7 +15,7 @@ export class CameraService {
       saveToPhotoAlbum: false,
       correctOrientation: true,
       targetWidth: 426, // já tentei 512 x 288 e não deu :(
-      targetHeight: 240
+      targetHeight: 240,
     }
   }
 
@@ -60,4 +60,3 @@ export class CameraService {
     return dataURI
   }
 }
-

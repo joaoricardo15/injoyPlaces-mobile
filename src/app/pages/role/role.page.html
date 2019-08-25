@@ -6,7 +6,7 @@
         <ratting [rate]="role.ratting.average" [size]="'large'"></ratting>
         <tag [size]="'small'">{{role.ratting.rattings}} {{role.ratting.rattings === 1 ? 'avaliação' : 'avaliações'}}</tag>
         <div id="bottomItems">
-          <tag id="address" [icon]="'pin'" [color]="'danger'" [size]="'small'">{{role.address}}</tag>
+          <tag id="address" [icon]="'pin'" [color]="'danger'" [size]="'small'">{{role.address | addressComplete}}</tag>
           <div id="occasions" *ngIf="role.occasions.length > 0">
             <div>
               <div *ngFor="let occasion of role.occasions" class="occasion">

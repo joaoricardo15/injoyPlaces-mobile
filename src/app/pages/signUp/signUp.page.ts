@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/common/services/api.service';
 import { ToastController } from '@ionic/angular';
 import { LoadingService } from 'src/app/common/services/loading.service';
-import { BackgroundGeolocationService } from 'src/app/common/services/backgroundGeolocation.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 @Component({
@@ -20,8 +19,7 @@ export class SignUpPage implements OnInit {
     private toast: ToastController,
     private loading: LoadingService,
     private splashScreen: SplashScreen, 
-    private localStorage: LocalStorageService,
-    private geolocation: BackgroundGeolocationService) {}
+    private localStorage: LocalStorageService) {}
 
   user: any
   email: any
@@ -37,22 +35,24 @@ export class SignUpPage implements OnInit {
     this.submitted = true
 
     if (form.valid) {
-      this.api.getUser(form.value.user)
-        .subscribe(users => {
-          if (users.length == 0) {
-            this.api.postUser(form.value)
-              .subscribe(() => {
-                this.localStorage.setUser(form.value)
-                this.triggerToast('Inscrição realizada com sucesso!!!')
-                this.router.navigate(['/home'])
-                this.loading.create().subscribe(() => {})
-              })
-          }
-          else {
-            this.alreadyInUse = true
-            this.alreadyInUseName = users[0].user
-          }
-        })
+      setTimeout(() => {
+        this.api.getUser(form.value.user)
+          .subscribe(users => {
+            if (users.length == 0) {
+              this.api.postUser(form.value)
+                .subscribe(() => {
+                  this.localStorage.setUser(form.value)
+                  this.triggerToast('Inscrição realizada com sucesso!!!')
+                  this.router.navigate(['/home'])
+                  this.loading.create().subscribe(() => {})
+                })
+            }
+            else {
+              this.alreadyInUse = true
+              this.alreadyInUseName = users[0].user
+            }
+          })
+        }, 100)
     }
   }
 

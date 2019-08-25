@@ -11,7 +11,8 @@ export class BackgroundGeolocationService {
     let config: BackgroundGeolocationConfig = {
       locationProvider: 2,
       desiredAccuracy: 0,
-      fastestInterval: 60000,
+      interval: 10000,
+      fastestInterval: 10000,
       stationaryRadius: 1,
       distanceFilter: 1,
       debug: false,

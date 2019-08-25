@@ -16,6 +16,8 @@ ion-chip.button-effect {
 
   ion-label {
     overflow: hidden;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
     height: $global-size-font-default - 1px;
     padding-left: $global-size-spacing-small/2;
     padding-right: $global-size-spacing-small/2;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Platform, AlertController, LoadingController, ActionSheetController } from '@ionic/angular';
+import { Platform, AlertController, ActionSheetController } from '@ionic/angular';
 import { LocalStorageService } from './localStorage.service';
 
 @Injectable()
@@ -12,7 +12,6 @@ export class NavigationService {
     private location: Location,
     private platform: Platform,
     private alert: AlertController,
-    private loading: LoadingController,
     private sheet: ActionSheetController,
     private localStorage: LocalStorageService) { }
 
@@ -37,20 +36,7 @@ export class NavigationService {
         alert.dismiss()
         return
       }
-      if (this.router.url == '/home/myExperiences' || this.router.url == '/home/addExperience') {
-        const loading = await this.loading.getTop()
-        if (loading) { 
-          loading.dismiss().then(() => {
-            this.router.navigate(['/home/myList'])
-          })
-          return
-        }
-        else {
-          this.router.navigate(['/home/myList'])
-          return
-        }
-      }
-      if (this.router.url != '/' && this.router.url != '/home' && this.router.url != '/home/myList' && this.router.url != '/signUp') {
+      if (this.router.url != '' && this.router.url != '/' && this.router.url != '/home' && this.router.url != '/home/myList' && this.router.url != '/signUp') {
         this.location.back()
       }
     })

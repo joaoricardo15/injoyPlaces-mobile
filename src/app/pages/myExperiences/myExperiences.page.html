@@ -15,30 +15,34 @@
           <ion-icon class="tabIcon" [class.tabOpened]="achievementsOpened" name="trophy"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-grid-list class="panelContent" cols="4" rowHeight="100px">
-        <mat-grid-tile *ngFor="let achievement of myExperiences?.achievements"
-          [colspan]="2"
-          [rowspan]="1">
-          <achievement
-            [achievement]="achievement">
-          </achievement>
-        </mat-grid-tile>
-      </mat-grid-list>
+      <div class="panelContent">
+        <mat-grid-list  cols="4" rowHeight="100px" gutterSize="8px">
+          <mat-grid-tile *ngFor="let achievement of myExperiences?.achievements"
+            [colspan]="2"
+            [rowspan]="1">
+            <achievement
+              [achievement]="achievement">
+            </achievement>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
       <tag *ngIf="myExperiences?.achievements.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possui conquistas</tag>
     </mat-expansion-panel>
     <mat-expansion-panel class="panel" [(expanded)]="statisticsOpened" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-description class="panelHeader">
           Estatísticas
-          <ion-icon class="tabIcon" [class.tabOpened]="statisticsOpened" name="bulb"></ion-icon>
+          <ion-icon class="tabIcon" [class.tabOpened]="statisticsOpened" name="stats"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <ion-list id="statistics" class="panelContent">
-        <ion-item *ngFor="let statistic of myExperiences?.statistics">
-          <tag [icon]="statistic.icon" [color]="'danger'" [fontColor]="'dark'">{{statistic.name}}</tag>
-          <tag class="statisticValue" [color]="'danger'" [fontColor]="'dark'">{{statistic.value}}</tag>
-        </ion-item>
-      </ion-list>
+      <mat-list class="panelContent">
+        <mat-list-item *ngFor="let statistic of myExperiences?.statistics">
+          <img src="{{statistic.img | imageURISync}}" matListAvatar>
+          <h3 matLine>{{statistic.name}}</h3>
+          <tag class="floatRight" [color]="'danger'" [fontColor]="'dark'">{{statistic.value}}</tag>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
       <tag *ngIf="myExperiences?.statistics.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possui estatísticas</tag>
     </mat-expansion-panel>
     <mat-expansion-panel class="panel" [(expanded)]="experiencesOpened" hideToggle>
@@ -48,10 +52,17 @@
           <ion-icon class="tabIcon" [class.tabOpened]="experiencesOpened" name="pin"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div id="experiences" class="panelContent">
-        <experience class="experience" *ngFor="let experience of myExperiences?.experiences" [experience]="experience"></experience>
+      <div class="panelContent">
         <tag *ngIf="myExperiences?.experiences.length == 0" [icon]="'sad'" [color]="'danger'" [fontColor]="'dark'">Você ainda não possui atividades</tag>
-      </div> 
+        <mat-list >
+          <mat-list-item *ngFor="let experience of myExperiences?.experiences" (click)="navigate(experience)">
+            <img src="{{experience.pic | imageURISync}}"matListAvatar>
+            <h3 matLine>{{experience.name}}</h3>
+            <tag class="floatRight" *ngIf="experience.date" [icon]="'calendar'" [size]="'small'" [fontColor]="'dark'">{{experience.date | date: 'short'}}</tag>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
 </ion-content>

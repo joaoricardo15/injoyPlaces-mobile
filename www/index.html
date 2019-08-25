@@ -10,7 +10,7 @@
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="format-detection" content="telephone=no"/>
   <meta name="msapplication-tap-highlight" content="no"/>
-  <link rel="icon" type="image/png" href="assets/icon/favicon.png"/>
+  <link rel="icon" type="image/png" href="assets/icon/favicon.ico"/>
 
   <!-- add to homescreen for ios -->
   <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -22,35 +22,6 @@
 <body>
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
-  <script>
-
-    let CACHE_NAME = 'sw-v1'
-    self.addEventListener('install', (event) => {
-      event.waitUntil(
-        caches.open(CACHE_NAME)
-        .then(cache => cache.addAll('./404.html'))
-      )
-    })
-    self.addEventListener('fetch', (event) => {
-      if (event.request.method === 'GET') {
-        event.respondWith(
-          caches.match(event.request)
-          .then((cached) => {
-            var networked = fetch(event.request)
-              .then((response) => {
-                let cacheCopy = response.clone()
-                caches.open(CACHE_NAME)
-                  .then(cache => cache.put(event.request, cacheCopy))
-                return response;
-              })
-              .catch(() => caches.match(offlinePage));
-            return cached || networked;
-          })
-        )
-      }
-      return;
-    });
-  </script>
 <script src="runtime-es2015.js" type="module"></script><script src="polyfills-es2015.js" type="module"></script><script src="runtime-es5.js" nomodule></script><script src="polyfills-es5.js" nomodule></script><script src="styles-es2015.js" type="module"></script><script src="styles-es5.js" nomodule></script><script src="cordova.js"></script><script src="vendor-es2015.js" type="module"></script><script src="main-es2015.js" type="module"></script><script src="vendor-es5.js" nomodule></script><script src="main-es5.js" nomodule></script></body>
 
 </html>

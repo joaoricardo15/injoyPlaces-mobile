@@ -13,7 +13,9 @@
       <ion-grid>
         <ion-row id="nameForm" justify-content-center>
           <tag *ngIf="nameChip" [color]="'light'" [size]="'large'" [close]="true" (onClose)="removeName()">{{name.value}}</tag>
-          <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [size]="'small'" style="margin-top: 8px">{{address.value}}</tag>
+          <div id="addressChip">
+            <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [fontColor]="address.value ? 'light' : 'danger'" [size]="'small'" [close]="godMode" (onClose)="setAddressManualy()">{{address.value ? (address.value.suburb) : 'carergando a sua localização...' }}</tag>
+          </div>
           <div *ngIf="!nameChip">
             <div class="formWarning" [style.visibility]="(submitting && form.controls.name?.errors?.required) ? 'visible' : 'hidden'">é necessário preencher o nome do rolê...</div>
             <display id="newRoleInput" [class.filledNameBackground]="form.controls.name?.valid">
@@ -64,7 +66,7 @@
                 <ion-label color="medium">Comentário</ion-label>
               </div>
               <div id="formCommentWarning" class="formWarning" *ngIf="submitting && form.controls.comment?.invalid">mínimo 3 caracteres...</div>
-              <ion-textarea id="commentInput" formControlName="comment" color="light" size="large" rows="1" maxlength="140" spellcheck="false"></ion-textarea>
+              <ion-textarea id="commentInput" formControlName="comment" color="light" size="large" rows="2" maxlength="140" spellcheck="false"></ion-textarea>
             </div>
           </display>
         </ion-row>

@@ -44,5 +44,10 @@ export const AppRoutes: Routes = [
   {
     path: 'signUp',
     component: SignUpPage
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   }
 ]

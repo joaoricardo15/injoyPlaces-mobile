@@ -31,7 +31,6 @@
                 "output": "./svg"
               },
               "src/manifest.webmanifest",
-              "src/manifest.webmanifest"
             ],
             "styles": [
               {
@@ -116,6 +115,7 @@
                 "input": "src/assets",
                 "output": "/assets"
               },
+              "src/manifest.webmanifest",
               "src/manifest.webmanifest",
               "src/manifest.webmanifest"
             ]

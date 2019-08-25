@@ -3,14 +3,15 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../common/services/api.service';
 import { CameraService } from '../../common/services/camera.service';
 import { ActionSheetController } from '@ionic/angular';
-import { iRole, iExperience } from '../../common/interfaces/injoyApi.interface';
+import { iRole, iExperience, iAddress, iLocation } from '../../common/interfaces/injoyApi.interface';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LocalStorageService } from 'src/app/common/services/localStorage.service';
 import { DataService } from 'src/app/common/services/data.service';
-import { Observable } from 'rxjs';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { ToastService } from 'src/app/common/services/toast.service';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+import { LoadingService } from 'src/app/common/services/loading.service';
+import { NavigationService } from 'src/app/common/services/navigation.service';
 
 @Component({
   selector: 'addExperience-page',
@@ -27,6 +28,7 @@ export class AddExperiencePage {
   nameChip: string
   tagChip: string
   occasionChip: string
+  localAddress: iAddress
 
   name: FormControl
   location: FormControl
@@ -39,6 +41,7 @@ export class AddExperiencePage {
   form: FormGroup
 
   isLocationAvailable: boolean = false
+  godMode: boolean = false
 
   constructor(
     private router: Router,
@@ -47,11 +50,16 @@ export class AddExperiencePage {
     private alert: AlertService,
     private toast: ToastService,
     private camera: CameraService,
-    private sheet: ActionSheetController,
     private diagnostic: Diagnostic,
+    private loading: LoadingService,
+    private sheet: ActionSheetController,
     private localStorage: LocalStorageService) {  }
 
   ngOnInit() {
+
+    if (this.localStorage.getUser().email === 'god@injoy.com')
+      this.godMode = true
+
     this.name = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.location = new FormControl('', Validators.required);
     this.address = new FormControl('', Validators.required);
@@ -64,6 +72,7 @@ export class AddExperiencePage {
     this.form = new FormGroup({
       name: this.name,
       location: this.location,
+      address: this.address,
       ratting: this.ratting,
       pic: this.pic,
       tag: this.tag,
@@ -74,18 +83,37 @@ export class AddExperiencePage {
     this.data.rolesAroundObserver
       .subscribe(result => {
         this.location.setValue(result['location'])
-        this.setAddress(result['location'])
         this.rolesAround = result['roles']
+        this.setAddress(result['location'])
       })
   }
 
-  setAddress(location: object) {
+  setAddressManualy() {
+    this.alert.createAddressForm()
+      .then(address => {
+        this.address.setValue(address)
+        this.api.getLocationFromAddress(address)
+          .then(location => {
+            this.location.setValue(location)
+          })
+      })
+  }
+
+  setAddress(location: iLocation ) {
     this.api.getAddress(location)
-    .then(address => { this.address.setValue(address) })
+      .then(address => { 
+        this.localAddress = address 
+        if (!this.address.value) 
+          this.address.setValue(address) 
+        })
   }
 
   ionViewWillEnter() {
     this.confirmLocationAvailable()
+  }
+
+  ionViewWillLeave() {
+    this.resetForm()
   }
 
   confirmLocationAvailable() {
@@ -94,81 +122,29 @@ export class AddExperiencePage {
         .then(isLocationAvailable => {
           this.isLocationAvailable = isLocationAvailable
           if (!isLocationAvailable)
-            this.alert.create('Você precisa ativar a localização do dispositivo')
-              .subscribe( async () => {
+            this.alert.createInformation('Você precisa ativar a localização do dispositivo')
+              .then( async () => {
                 this.diagnostic.switchToLocationSettings()
             })
           else {
             resolve()
-            if (!this.rolesAround)
-              this.data.getRolesAround()
+            this.data.getRolesAround()
           }
         }).catch(error => {
           navigator.geolocation.getCurrentPosition(
-            () => { resolve(); if (!this.rolesAround) this.data.getRolesAround() },
+            () => { resolve(); this.data.getRolesAround() },
             () => { alert('é necessário habilitar a localização') 
           })
         })
     })
   }
 
-  canDeactivate(): Observable<boolean> | boolean {
-    if(this.submitted != true && (this.ratting.value || this.occasion.value|| this.tag.value || this.pic.value || this.comment.value))
-      return this.alert.create()
-    else
-      return true
-  }
-
-  addName()  {
-     if (this.name.valid)
-      this.nameChip = this.name.value
-  }
-
-  removeName() {
-    this.name.setValue(null);
-    this.occasion.setValue(null);
-    this.tag.setValue(null);
-    this.currentRole = null
-    this.nameChip = null;
-    this.occasionChip = null;
-    this.tagChip = null;
-  }
-
-  addTag()  {
-    if (this.tag.valid)
-      this.tagChip = this.tag.value
-  }
-
-  removeTag() {
-    this.tag.setValue(null)
-    this.tagChip = null;
-  }
-
-  addOccasion()  {
-    if (this.occasion.valid)
-      this.occasionChip = this.occasion.value
-  }
-
-  removeOccasion() {
-    this.occasion.setValue(null)
-    this.occasionChip = null;
-  }
-
-  addPicture() {
-    this.camera.getPicture()
-      .then(imageData => {
-        let pic = 'data:image/png;base64,' + imageData
-        this.currentPic = pic
-        this.pic.setValue(pic)
-      })
-  }
-
   addExperience(form) {
-    this.confirmLocationAvailable().then(() => {
+    setTimeout(() => {
       this.submitting = true;
       if (form.valid)
-        this.alert.create('Publicar experiência?')
-          .subscribe( async result => {
+        this.alert.createConfirmation('Publicar experiência?')
+          .then( async result => {
             if (result) {
               this.submitted = true;
               var experience: iExperience = {
@@ -176,6 +152,7 @@ export class AddExperiencePage {
                 name: this.name.value,
                 ratting: this.ratting.value,
                 location: this.location.value,
+                address: this.address.value,
                 date: new Date(),
                 pic: null,
                 tag: this.tag.value,
@@ -192,32 +169,23 @@ export class AddExperiencePage {
               else {
                 this.postExperience(experience)
               }
-              this.router.navigate(['home/myExperiences'])
             }
           })
-    })
+      else
+        this.confirmLocationAvailable().then(() => {})
+    }, 100)
   }
 
   postExperience(experience: iExperience) {
+    this.loading.create(null, 500).subscribe(() => {})
+    this.router.navigate(['home/myExperiences'])
+
     this.api.postExperience(experience)
       .subscribe(() => {
         this.toast.create('Experiência salva com sucesso!!!', 'success')
         this.data.getMyExperiences()
         this.data.getMyList()
       })
-  }
-
-  resetForm() {
-    this.ratting.setValue(null)
-    this.pic.setValue(null)
-    this.tag.setValue(null)
-    this.occasion.setValue(null)
-    this.comment.setValue(null)
-    this.currentPic = 'assets/images/InJoyWoman.png'
-    this.tagChip = null
-    this.occasionChip = null
-    this.submitted = false
-    this.submitting = false
   }
 
   async presentActionSheet(type: string) {
@@ -237,7 +205,10 @@ export class AddExperiencePage {
           handler: () => {
             this.currentRole = this.rolesAround[i]
             this.name.setValue(this.rolesAround[i].name)
+            this.address.setValue(this.rolesAround[i].address)
+
             this.nameChip = this.rolesAround[i].name
+            this.occasion.setValue(null)
             this.tag.setValue(null)
           }
         })
@@ -293,5 +264,71 @@ export class AddExperiencePage {
     }
     const actionSheet = await this.sheet.create(sheetObject);
     await actionSheet.present()
+  }
+
+  canDeactivate(): Promise<boolean> | boolean {
+    if(this.submitted != true && (this.ratting.value || this.occasion.value|| this.tag.value || this.pic.value || this.comment.value))
+      return this.alert.createConfirmation()
+    else
+      return true
+  }
+
+  addName()  {
+     if (this.name.valid)
+      this.nameChip = this.name.value
+  }
+
+  removeName() {
+    this.name.setValue(null)
+    this.address.setValue(this.localAddress)
+    this.occasion.setValue(null)
+    this.tag.setValue(null)
+    this.currentRole = null
+    this.nameChip = null
+    this.occasionChip = null
+    this.tagChip = null
+  }
+
+  addTag()  {
+    if (this.tag.valid)
+      this.tagChip = this.tag.value
+  }
+
+  removeTag() {
+    this.tag.setValue(null)
+    this.tagChip = null;
+  }
+
+  addOccasion()  {
+    if (this.occasion.valid)
+      this.occasionChip = this.occasion.value
+  }
+
+  removeOccasion() {
+    this.occasion.setValue(null)
+    this.occasionChip = null;
+  }
+
+  addPicture() {
+    this.camera.getPicture()
+      .then(imageData => {
+        let pic = 'data:image/png;base64,' + imageData
+        this.currentPic = pic
+        this.pic.setValue(pic)
+      })
+  }
+
+  resetForm() {
+    this.location.setValue(null)
+    this.ratting.setValue(null)
+    this.occasion.setValue(null)
+    this.tag.setValue(null)
+    this.pic.setValue(null)
+    this.comment.setValue(null)
+    this.currentPic = 'assets/images/InJoyWoman.png'
+    this.tagChip = null
+    this.occasionChip = null
+    this.submitted = false
+    this.submitting = false
   }
 }

@@ -62,7 +62,7 @@
 }
 
 #nameForm {
-  height: $global-size-spacing-extraLarge*2 + $global-size-spacing-large;
+  height: $global-size-spacing-extraLarge*3;
 
   tag {
     max-width: 100%;
@@ -99,6 +99,11 @@
       }
     }
   }
+}
+
+#addressChip {
+  text-align: center;
+  margin-top: $global-size-spacing-default;
 }
 
 #rattingForm {

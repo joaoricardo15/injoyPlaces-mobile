@@ -39,8 +39,17 @@ export class MyListPage implements OnInit {
     this.data.getMyList()    
     this.data.myListObserver.subscribe(myList => {
       if (this.myList) {
+
         if (this.myList.roles.length !== myList.roles.length)
           this.myList.roles = myList.roles
+        else
+          for (let i = 0; i < this.myList.roles.length; i++)
+            if (this.myList.roles[i].ratting.rattings !== myList.roles[i].ratting.rattings ||
+              this.myList.roles[i].occasions.length !== myList.roles[i].occasions.length ||
+              this.myList.roles[i].tags.length !== myList.roles[i].tags.length ||
+              this.myList.roles[i].pics.length !== myList.roles[i].pics.length || 
+              this.myList.roles[i].comments.length !== myList.roles[i].comments.length)
+              this.myList.roles[i] = myList.roles[i]
 
         if (this.myList.myLists !== myList.myLists)
           this.myList.myLists = myList.myLists

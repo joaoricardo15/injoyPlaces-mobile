@@ -55,20 +55,8 @@
       overflow: auto;
     }
 
-    #statistics {
-
-      .statisticValue {
-        margin-left: auto;
-      }
-    }
-
-    #experiences {
-      display: flex;
-      flex-wrap: wrap;
-    
-      .experience {
-        margin-bottom: $global-size-spacing-default;
-      }
+    .floatRight {
+      margin-left: auto;
     }
   }
 }

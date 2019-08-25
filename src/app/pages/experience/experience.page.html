@@ -9,16 +9,16 @@
         <ratting [rate]="experience.ratting" [size]="'large'"></ratting>
 
         <div class="address" *ngIf="experience.address">
-          <tag class="tag" [icon]="'pin'" [color]="'danger'">{{experience.address}}</tag>
+          <tag class="tag" [icon]="'pin'" [color]="'danger'">{{experience.address | addressComplete}}</tag>
+        </div>
+        <div class="tag">
+          <tag [icon]="'calendar'">{{experience.date | date: 'short'}}</tag>
         </div>
         <div class="tag" *ngIf="experience.occasion">
           <tag class="tag" [icon]="'walk'" [color]="'success'">{{experience.occasion}}</tag>
         </div>
         <div class="tag" *ngIf="experience.tag">
           <tag class="tag" [icon]="'pricetag'" [color]="'light'">{{experience.tag}}</tag>
-        </div>
-        <div class="tag">
-          <tag [icon]="'calendar'">{{experience.date | date: 'short'}}</tag>
         </div>
         <div class="tag" *ngIf="experience.comment">
           <tag [icon]="'text'">{{experience.comment}}</tag>

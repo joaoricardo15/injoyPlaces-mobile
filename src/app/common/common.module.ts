@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule as AngularCommonModule } from '@angular/common';
+
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { PortalModule } from '@angular/cdk/portal';
 import { PlatformModule } from '@angular/cdk/platform';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { Camera } from '@ionic-native/camera/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
@@ -25,7 +28,6 @@ import { BackgroundImageWrapComponent } from './components/backgroundImageWrap/b
 import { DisplayComponent } from './components/display/display.component';
 import { AchievementComponent } from './components/achievement/achievement.component';
 
-import { GeolocationService } from './services/geolocation.service';
 import { ApiService } from './services/api.service';
 import { NavigationService } from './services/navigation.service';
 import { LocalStorageService } from './services/localStorage.service';
@@ -38,6 +40,10 @@ import { LoadingService } from './services/loading.service';
 
 import { ImageURIPipe } from './pipes/imageURI.pipe';
 import { ImageURISyncPipe } from './pipes/imageURI.pipe';
+import { AddressPipe } from './pipes/address.pipe';
+import { DataService } from './services/data.service';
+import { RoleService } from './components/role/roles.service';
+import { ExperienceService } from './components/experience/experience.service';
 
 @NgModule({
   imports: [
@@ -47,11 +53,13 @@ import { ImageURISyncPipe } from './pipes/imageURI.pipe';
     MatIconModule,
     PortalModule,
     PlatformModule,
-    MatRippleModule
+    MatRippleModule,
+    MatListModule,
   ],
   declarations: [
     ImageURIPipe,
     ImageURISyncPipe,
+    AddressPipe,
     RoleComponent,
     RolePage,
     ExperienceComponent,
@@ -61,11 +69,12 @@ import { ImageURISyncPipe } from './pipes/imageURI.pipe';
     DisplayComponent,
     RolesHorizontalListComponent,
     BackgroundImageWrapComponent,
-    AchievementComponent
+    AchievementComponent,
   ],
   exports: [
     ImageURIPipe,
     ImageURISyncPipe,
+    AddressPipe,
     RoleComponent,
     RolePage,
     ExperienceComponent,
@@ -75,7 +84,13 @@ import { ImageURISyncPipe } from './pipes/imageURI.pipe';
     DisplayComponent,
     RolesHorizontalListComponent,
     BackgroundImageWrapComponent,
-    AchievementComponent
+    AchievementComponent,
+
+    MatRippleModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatListModule,
+    MatGridListModule
   ],
   entryComponents: [],
   providers: [
@@ -88,12 +103,13 @@ import { ImageURISyncPipe } from './pipes/imageURI.pipe';
     CanDeactivateService,
     Camera,
     CameraService,
-    Geolocation,
-    GeolocationService,
     LocalStorageService,
     BackgroundGeolocation,
     BackgroundGeolocationService,
-    Diagnostic
+    Diagnostic,
+    DataService,
+    RoleService,
+    ExperienceService
   ]
 })
 export class CommonModule {}
