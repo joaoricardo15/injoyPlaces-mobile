@@ -2,7 +2,7 @@
   <ion-toolbar [class.onSearchToolBar]="onSearch">
     <div id="topBar">
       <ion-avatar [class.onSearchIcon]="onSearch" [class.onRefresh]="onRefresh" (click)="refresh()"><img src="./../../assets/icon/favicon.ico"></ion-avatar>
-      <ion-searchbar *ngIf="myList" (ionInput)="onSearchInput($event.target.value)" (ionFocus)="onSearchInput($event.target.value)" (ionCancel)="onSearch = false" (ionBlur)="onBlur($event)" showCancelButton="{{onSearch ? 'always' : false}}" color="light" autocomplete="true" placeholder="buscar rolê"></ion-searchbar>
+      <ion-searchbar *ngIf="myList" (ionInput)="onSearchInput($event.target.value)" (ionFocus)="onSearchInput($event.target.value)" (ionCancel)="onSearch = false" (ionBlur)="onBlur($event)" showCancelButton="{{onSearch ? 'always' : false}}" color="light" autocomplete="true" placeholder="buscar local"></ion-searchbar>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -10,10 +10,10 @@
   <div id="content" [class.onSearchContent]="onSearch">
     <div id="searchOptions" [style.visibility]="onSearch ? 'visible' : 'hidden'">
       <div id="notFoundTitle" *ngIf="searchOptions.length === 0">
-        <ion-title color="dark">nenhum role encontrado : (</ion-title>
+        <ion-title color="dark">nenhum local encontrado : (</ion-title>
       </div>
       <div id="options" [class.onSearchOptions]="onSearch" *ngIf="searchOptions.length > 0">
-        <!-- <tag class="option" [icon]="'locate'" [color]="'medium'" [fontColor]="'dark'" (click)="onSearch = false">rolês próximos de você agora</tag> -->
+        <!-- <tag class="option" [icon]="'locate'" [color]="'medium'" [fontColor]="'dark'" (click)="onSearch = false">locais próximos de você agora</tag> -->
         <tag class="option" *ngFor="let role of searchOptions" [icon]="'pin'" [color]="'danger'" [fontColor]="'dark'" (click)="navigate(role)">{{role.name}}</tag>
       </div>
     </div>

@@ -2,7 +2,7 @@
   <ion-toolbar id="header">
     <div>
       <ion-avatar><img src="./../../assets/icon/favicon.ico"></ion-avatar>
-      <ion-title>Add Nova Experiência</ion-title>
+      <ion-title>Adicionar nova experiência</ion-title>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -14,13 +14,13 @@
         <ion-row id="nameForm" justify-content-center>
           <tag *ngIf="nameChip" [color]="'light'" [size]="'large'" [close]="true" (onClose)="removeName()">{{name.value}}</tag>
           <div id="addressChip">
-            <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [fontColor]="address.value ? 'light' : 'danger'" [size]="'small'" [close]="godMode" (onClose)="setAddressManualy()">{{address.value ? (address.value.suburb) : 'carergando a sua localização...' }}</tag>
+            <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [fontColor]="address.value ? 'light' : 'danger'" [size]="'small'" [close]="godMode" (onClose)="setAddressManualy()">{{address.value ? (address.value.suburb) : 'carregando a sua localização...' }}</tag>
           </div>
           <div *ngIf="!nameChip">
-            <div class="formWarning" [style.visibility]="(submitting && form.controls.name?.errors?.required) ? 'visible' : 'hidden'">é necessário preencher o nome do rolê...</div>
+            <div class="formWarning" [style.visibility]="(submitting && form.controls.name?.errors?.required) ? 'visible' : 'hidden'">é necessário preencher o nome do local...</div>
             <display id="newRoleInput" [class.filledNameBackground]="form.controls.name?.valid">
               <ion-icon id="pinIcon" name="pin" color="danger"></ion-icon>
-              <ion-input id="nameInput" formControlName="name" (keyup.enter)="addName()" (focusout)="addName()" type="text" color="light" maxlength="30" spellcheck="false" placeholder="digite o nome rolê"></ion-input>
+              <ion-input id="nameInput" formControlName="name" (keyup.enter)="addName()" (focusout)="addName()" type="text" color="light" maxlength="30" spellcheck="false" placeholder="digite o nome do local"></ion-input>
               <div id="formNameWarning" class="formWarning" *ngIf="submitting && form.controls.name?.errors?.minlength">mínimo 3 caracteres...</div>
               <ion-icon id="optionsIcon" *ngIf="rolesAround?.length > 0" [class.onCurrentRole]="rolesAround?.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('roles')"></ion-icon>
             </display>
@@ -63,7 +63,7 @@
             <div id="commentInsideArea">
               <div id="commentInsideAreaHeader">
                 <ion-icon name="text" color="medium" ></ion-icon>
-                <ion-label color="medium">Comentário</ion-label>
+                <ion-label color="medium">comentário</ion-label>
               </div>
               <div id="formCommentWarning" class="formWarning" *ngIf="submitting && form.controls.comment?.invalid">mínimo 3 caracteres...</div>
               <ion-textarea id="commentInput" formControlName="comment" color="light" size="large" rows="2" maxlength="140" spellcheck="false"></ion-textarea>

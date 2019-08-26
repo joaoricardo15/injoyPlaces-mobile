@@ -25,6 +25,6 @@ export class LocalStorageService {
   }
 
   setMyExperiences(myExperiences: iMyExperiences) {
-    localStorage.setItem('iMyExperiences', JSON.stringify(myExperiences))
+    localStorage.setItem('myExperiences', JSON.stringify(myExperiences))
   }
 }
