@@ -15,17 +15,24 @@ export class CameraService {
       mediaType: camera.MediaType.PICTURE,
       saveToPhotoAlbum: true,
       correctOrientation: true,
-      targetWidth: 426, // já tentei 512 x 288 e não deu :(
+      targetWidth: 420, // já tentei 512 e não deu :(
     }
   }
 
-  getPicture(camera: boolean) {   
-    if (!camera)
+  getPicture(camera: boolean): Promise<any> {
+    return new Promise(resolve => {
+      if (camera === true)
       this.options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY
-    else
+    else if (camera === false)
       this.options.sourceType = this.camera.PictureSourceType.CAMERA
 
-    return this.camera.getPicture(this.options) 
+      return this.camera.getPicture(this.options)
+      .then(dataImg => {
+        resolve(dataImg)
+      }).catch(() => {
+        console.log('erro na camera')
+      })
+    })
   }
 
   getBase64ImageFromURL(url: string) {

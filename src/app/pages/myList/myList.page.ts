@@ -68,7 +68,6 @@ export class MyListPage implements OnInit {
       
       this.onRefresh = false
     })
-    this.data.getRolesAround()
     this.loading.create().subscribe(() => {})
     this.geolocation.startBackgroundGeolocationTracker(this.localStorage.getUser().user);
   }
