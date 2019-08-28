@@ -22,9 +22,9 @@ export class CameraService {
   getPicture(camera: boolean): Promise<any> {
     return new Promise(resolve => {
       if (camera === true)
-      this.options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY
-    else if (camera === false)
       this.options.sourceType = this.camera.PictureSourceType.CAMERA
+    else if (camera === false)
+      this.options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY
 
       return this.camera.getPicture(this.options)
       .then(dataImg => {

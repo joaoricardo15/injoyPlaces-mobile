@@ -44,7 +44,7 @@
           </display>
         </ion-row>
         <ion-row id="tagForm" justify-content-center>
-          <tag *ngIf="tagChip" [close]="true" [color]="'light'" [icon]="pricetag" (onClose)="removeTag()">{{tag.value}}</tag>
+          <tag *ngIf="tagChip" [close]="true" [color]="'light'" [icon]="'pricetag'" (onClose)="removeTag()">{{tag.value}}</tag>
           <display *ngIf="!tagChip" [class.filledTagBackground]="form.controls.tag.value && form.controls.tag?.valid">
             <ion-icon id="tagIcon" name="pricetag" color="medium"></ion-icon>
             <ion-input id="tagInput" formControlName="tag" (keyup.enter)="addTag()" (focusout)="addTag()" type="text" color="light" size="large" maxlength="30" spellcheck="false" placeholder="#Hashtag"></ion-input>

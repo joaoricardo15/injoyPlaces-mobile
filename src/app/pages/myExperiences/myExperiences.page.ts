@@ -45,14 +45,14 @@ export class MyExperiencesPage implements OnInit {
       this.onRefresh = false
     })
 
-    this.loading.create().subscribe(() => {})
+    this.loading.create()
   }
   
-  refresh(event) {
+  refresh() {
     if (!this.onRefresh) {
       this.onRefresh = true
       this.data.getMyExperiences()
-      this.loading.create(null, 500).subscribe(() => {})
+      this.loading.create(null, 500)
       //setTimeout(() => { event.target.complete() }, 500)
     }
   }

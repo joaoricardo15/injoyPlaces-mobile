@@ -10,13 +10,14 @@ export class LoadingService {
   constructor(private loading: LoadingController) {}
 
   create(message?: string, duration?: number) {
-    return new Observable(observer => {
+    
+    return new Promise(resolve => {
       this.loading.create({
         spinner: "crescent",
         message: message ? message : null,
         duration: duration ? duration : null,
         translucent: true
-      }).then(loadingObject => { loadingObject.present().then(() => { observer.next(); this.isOpened = true }) })
+      }).then(loadingObject => { this.isOpened = true; loadingObject.present().then(() => {  resolve() }) })
     })
   }
 

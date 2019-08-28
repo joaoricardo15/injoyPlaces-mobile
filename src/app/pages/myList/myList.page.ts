@@ -55,11 +55,6 @@ export class MyListPage implements OnInit {
       }
       else
         this.myList = myList
-        
-      // for (let i = 0; i < myList.roles.length; i++) {
-      //   myList.roles[i].pic = null
-      //   myList.roles[i].pics = []
-      // }
 
       //this.localStorage.setMyList(myList)
 
@@ -68,15 +63,15 @@ export class MyListPage implements OnInit {
       
       this.onRefresh = false
     })
-    this.loading.create().subscribe(() => {})
+    this.loading.create()
     this.geolocation.startBackgroundGeolocationTracker(this.localStorage.getUser().user);
   }
 
-  refresh(event) {
+  refresh() {
     if (!this.onRefresh) {
       this.onRefresh = true
       this.data.getMyList()
-      this.loading.create(null, 500).subscribe(() => { event.target.complete() })
+      this.loading.create(null, 500)
       //setTimeout(() => { event.target.complete() }, 500)
     }
   }

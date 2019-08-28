@@ -183,7 +183,7 @@ export class AddExperiencePage {
   }
 
   postExperience(experience: iExperience) {
-    this.loading.create(null, 500).subscribe(() => {})
+    this.loading.create(null, 500)
     this.router.navigate(['home/myExperiences'])
 
     this.api.postExperience(experience)
