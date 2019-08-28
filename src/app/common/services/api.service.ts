@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { iUser, iLocation, iAddress } from '../interfaces/injoyApi.interface';
 import { LocalStorageService } from './localStorage.service';
+import { AlertService } from './alert.service';
 
 @Injectable()
 export class ApiService {
@@ -13,40 +14,57 @@ export class ApiService {
   InJoyServerLocationsURL = '/positions'
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
+    private alert: AlertService,
     private localStorage: LocalStorageService) { }
 
-  getUser(user: string): Observable<any> {
-    return this.http.get(this.InJoyServerURL + '/user', {
-      params: { user: user }
+  get(url: string, params): Promise<any> {
+    return new Promise(resolve => {
+      this.http.get(this.InJoyServerURL + url, { params: params }).subscribe(
+        result => {
+          resolve(result)
+        }, error => {
+          this.errorHandler('não foi possível atualizar os dados : (')
+        })
     })
   }
 
-  getRolesForMe(): Observable<any> {
-    return this.http.get(this.InJoyServerURL + '/rolesForMe', {
-      params: { user: this.localStorage.getUser().user }
+  post(url: string, body): Promise<any> {
+    return new Promise(resolve => {
+      this.http.post(this.InJoyServerURL + url, body).subscribe(
+        result => {
+          resolve(result)
+        }, error => {
+          //this.errorHandler('não foi possível postar os dados : (')
+        })
     })
   }
 
-  getRolesAround(): Observable<any> {
-    return new Observable(observer => {
+  errorHandler(message: string) {
+    this.alert.createInformation(message)
+  }
+
+  getUser(user: string): Promise<any> {
+    return this.get('/user', { user: user })
+  }
+
+  getRolesForMe(): Promise<any> {
+    return this.get('/rolesForMe', { user: this.localStorage.getUser().user })
+  }
+
+  getRolesAround(): Promise<any> {
+    return new Promise(resolve => {
       navigator.geolocation.getCurrentPosition(location => {
           let locationFormated: iLocation = { lat: location.coords.latitude, lng: location.coords.longitude }
-          this.http.get(this.InJoyServerURL + '/rolesAround', {
-            params: { location: JSON.stringify(locationFormated) }
-          })
-          .subscribe(
-            roles => { observer.next({ location: locationFormated, roles: roles}) },
-            error => { observer.error(error) })
+          this.get('/rolesAround', { location: JSON.stringify(locationFormated) })
+          .then(roles => { resolve({ location: locationFormated, roles: roles}) })
         },
-        error => { observer.error(error) })
+        error => { this.errorHandler('não foi possível obter a sua localização : (') })
     })
   }
 
-  getMyExperiences(): Observable<any> {
-    return this.http.get(this.InJoyServerURL + '/myExperiences', {
-      params: { user: this.localStorage.getUser().user }
-    })
+  getMyExperiences(): Promise<any> {
+    return this.get('/myExperiences', { user: this.localStorage.getUser().user })
   }
 
   getAddressFromLocation(location: iLocation): Promise<iAddress> {
@@ -61,6 +79,9 @@ export class ApiService {
             state: response['address'].state ? response['address'].state : null,
             country: response['address'].country ? response['address'].country : null
           })
+        },
+        error => {
+          //this.errorHandler('não foi possível determinar o seu endereço : (')
         })
     })
   }
@@ -75,6 +96,8 @@ export class ApiService {
         address.country.replace(' ', '+'))
         .subscribe(response => {
           resolve({lat: response[0].lat, lng: response[0].lon })
+        }, error => {
+          this.errorHandler('não foi possível determinar a localização a partir do endereço solicitado : (')
         })
     })
   }
@@ -83,12 +106,12 @@ export class ApiService {
     return this.getAddressFromLocation(location)
   }
 
-  postUser(user: iUser): Observable<any> {
-    return this.http.post(this.InJoyServerURL + '/user', user)
+  postUser(user: iUser): Promise<any> {
+    return this.post('/user', user)
   }
 
-  postExperience(experience: any): Observable<any> {
-    return this.http.post(this.InJoyServerURL + '/experience', experience)
+  postExperience(experience: any): Promise<any> {
+    return this.post('/experience', experience)
   }
 
   postLocations(locations: object[]): Observable<any> {

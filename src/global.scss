@@ -25,6 +25,10 @@
   border-radius: 40px;
 }
 
+.alert-wrapper.sc-ion-alert-md {
+  min-width: unset;
+}
+
 ion-spinner {
   color: var(--ion-color-danger-tint) !important;
 }

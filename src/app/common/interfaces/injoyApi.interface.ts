@@ -19,7 +19,7 @@ export interface iRole {
   ratting: { rattings: number, average: number }
   location: iLocation
   address: iAddress
-  pic: string | Object
+  pic: number
   pics: string[]
   comments: string[] 
   tags: string[]
@@ -44,9 +44,11 @@ export interface iAchievement {
 export interface iExperience {
   user: string
   name: string
-  date: Date
-  ratting: number
   location: iLocation
+  date?: Date
+  arrival?: Date
+  departure?: Date
+  ratting?: number
   address?: iAddress
   pic?: string | Object
   occasion?: string

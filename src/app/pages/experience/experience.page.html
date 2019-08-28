@@ -1,6 +1,6 @@
 <div *ngIf="experience">
   <ion-content>
-    <backgroundImageWrap [img]="experience.pic | imageURI">
+    <backgroundImageWrap [img]="experience.pic | imageURISync">
 
       <div id="content">
 
@@ -12,7 +12,7 @@
           <tag class="tag" [icon]="'pin'" [color]="'danger'">{{experience.address | addressComplete}}</tag>
         </div>
         <div class="tag">
-          <tag [icon]="'calendar'">{{experience.date | date: 'short'}}</tag>
+          <tag [icon]="'calendar'">{{experience.date ? (experience.date | date: 'short') : (experience.arrival | date: 'short') + ' - ' + (experience.departure | date: 'shortTime')}}</tag>
         </div>
         <div class="tag" *ngIf="experience.occasion">
           <tag class="tag" [icon]="'walk'" [color]="'success'">{{experience.occasion}}</tag>

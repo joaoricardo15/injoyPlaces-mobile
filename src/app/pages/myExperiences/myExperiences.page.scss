@@ -15,48 +15,37 @@
       }
     }
 
-    .onRefresh {
-      animation: onRefresh 1.5s;
-    }
-  
-    @keyframes onRefresh {
-      from {
-        transform: scale(.8);
-      }
-    }
-
     ion-title {
       font-weight: 300;
     }
   }
 }
 
-#content {
-  .panel {
-    border-radius: 0;
-    margin-bottom: 1px;
+.panel {
+  border-radius: 0;
+  margin-bottom: 1px;
 
-    .panelHeader {
-      justify-content: space-between;
-      align-items: center;
-      margin: 0;
+  .panelHeader {
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
 
-      .tabIcon {
-        zoom: 1.5;
-      }
+    .tabIcon {
+      zoom: 1.5;
     }
+  }
 
-    .tabOpened {
-      color: var(--ion-color-danger-tint);
-    }
+  .tabOpened {
+    color: var(--ion-color-danger-tint);
+  }
 
-    .panelContent {
-      height: calc(100vh - 321px);
-      overflow: auto;
-    }
+  .panelContent {
+    height: calc(100vh - 321px);
+    overflow: auto;
+  }
 
-    .floatRight {
-      margin-left: auto;
-    }
+  .floatRight {
+    margin-left: auto;
+    font-size: 12px;
   }
 }

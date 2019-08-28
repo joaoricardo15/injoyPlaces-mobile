@@ -1,12 +1,15 @@
 <ion-header>
   <ion-toolbar [class.onSearchToolBar]="onSearch">
     <div id="topBar">
-      <ion-avatar [class.onSearchIcon]="onSearch" [class.onRefresh]="onRefresh" (click)="refresh()"><img src="./../../assets/icon/favicon.ico"></ion-avatar>
+      <ion-avatar [class.onSearchIcon]="onSearch" (click)="refresh()"><img src="./../../assets/icon/favicon.ico"></ion-avatar>
       <ion-searchbar *ngIf="myList" (ionInput)="onSearchInput($event.target.value)" (ionFocus)="onSearchInput($event.target.value)" (ionCancel)="onSearch = false" (ionBlur)="onBlur($event)" showCancelButton="{{onSearch ? 'always' : false}}" color="light" autocomplete="true" placeholder="buscar local"></ion-searchbar>
     </div>
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <!-- <ion-refresher pullingIcon="globe" (ionRefresh)="refresh($event)">
+    <div style="margin-top: 8px; width: 100%; text-align:center"><tag [icon]="'globe'" [fontColor]="'dark'">{{ onRefresh ? 'carregando dados...' : 'carregar dados'}}</tag></div>
+  </ion-refresher> -->
   <div id="content" [class.onSearchContent]="onSearch">
     <div id="searchOptions" [style.visibility]="onSearch ? 'visible' : 'hidden'">
       <div id="notFoundTitle" *ngIf="searchOptions.length === 0">

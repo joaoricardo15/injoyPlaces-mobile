@@ -37,14 +37,13 @@ export class SignUpPage implements OnInit {
     if (form.valid) {
       setTimeout(() => {
         this.api.getUser(form.value.user)
-          .subscribe(users => {
+          .then(users => {
             if (users.length == 0) {
               this.api.postUser(form.value)
-                .subscribe(() => {
+                .then(() => {
                   this.localStorage.setUser(form.value)
                   this.triggerToast('Inscrição realizada com sucesso!!!')
                   this.router.navigate(['/home'])
-                  this.loading.create().subscribe(() => {})
                 })
             }
             else {

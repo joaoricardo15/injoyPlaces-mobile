@@ -12,14 +12,19 @@ export class CameraService {
       quality: 100,
       destinationType: camera.DestinationType.DATA_URL,
       encodingType: camera.EncodingType.PNG,
-      saveToPhotoAlbum: false,
+      mediaType: camera.MediaType.PICTURE,
+      saveToPhotoAlbum: true,
       correctOrientation: true,
       targetWidth: 426, // já tentei 512 x 288 e não deu :(
-      targetHeight: 240,
     }
   }
 
-  getPicture() {   
+  getPicture(camera: boolean) {   
+    if (!camera)
+      this.options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY
+    else
+      this.options.sourceType = this.camera.PictureSourceType.CAMERA
+
     return this.camera.getPicture(this.options) 
   }
 

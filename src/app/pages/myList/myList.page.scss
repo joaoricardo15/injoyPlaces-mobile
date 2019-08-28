@@ -20,16 +20,6 @@ $animation-duration: .5s;
   .onSearchIcon {
     margin-right: -60px;
   }
-
-  .onRefresh {
-    animation: onRefresh $animation-duration*3;
-  }
-
-  @keyframes onRefresh {
-    from {
-      transform: scale(.8);
-    }
-  }
 }
 
 #content {

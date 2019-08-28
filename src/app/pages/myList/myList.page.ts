@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { iRole, iMylist } from './../../common/interfaces/injoyApi.interface';
-import { IonSlides } from '@ionic/angular';
 import { DataService } from './../../common/services/data.service';
 import { LoadingService } from './../../common/services/loading.service';
 import { LocalStorageService } from 'src/app/common/services/localStorage.service';
@@ -21,10 +20,6 @@ export class MyListPage implements OnInit {
   onSearch: boolean = false
   onRefresh: boolean = false
 
-  selectedTabIndex: number = 0
-
-  @ViewChild('slides', null) slides: IonSlides;
-
   constructor(
     private data: DataService,
     private router: Router,
@@ -35,7 +30,7 @@ export class MyListPage implements OnInit {
     private geolocation: BackgroundGeolocationService) { }
 
   ngOnInit() {
-    this.myList = this.localStorage.getMyList()
+    //this.myList = this.localStorage.getMyList()
     this.data.getMyList()    
     this.data.myListObserver.subscribe(myList => {
       if (this.myList) {
@@ -60,8 +55,13 @@ export class MyListPage implements OnInit {
       }
       else
         this.myList = myList
-      
-      this.localStorage.setMyList(myList)
+        
+      // for (let i = 0; i < myList.roles.length; i++) {
+      //   myList.roles[i].pic = null
+      //   myList.roles[i].pics = []
+      // }
+
+      //this.localStorage.setMyList(myList)
 
       if (this.loading.isOpened)
         this.loading.dismiss()
@@ -69,14 +69,16 @@ export class MyListPage implements OnInit {
       this.onRefresh = false
     })
     this.data.getRolesAround()
+    this.loading.create().subscribe(() => {})
     this.geolocation.startBackgroundGeolocationTracker(this.localStorage.getUser().user);
   }
 
-  refresh() {
+  refresh(event) {
     if (!this.onRefresh) {
       this.onRefresh = true
       this.data.getMyList()
-      this.loading.create(null, 500).subscribe(() => {})
+      this.loading.create(null, 500).subscribe(() => { event.target.complete() })
+      //setTimeout(() => { event.target.complete() }, 500)
     }
   }
 

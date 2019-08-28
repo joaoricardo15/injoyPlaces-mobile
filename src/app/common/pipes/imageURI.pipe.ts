@@ -1,4 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core'
+import { iRole } from '../interfaces/injoyApi.interface';
+import { LocalStorageService } from '../services/localStorage.service';
 
 @Pipe({
   name: 'imageURI'

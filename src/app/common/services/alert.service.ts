@@ -7,16 +7,16 @@ export class AlertService {
 
   constructor(private alert: AlertController) {}
 
-  createConfirmation(message?: string): Promise<boolean> {
+  createConfirmation(message: string, confirmText?: string, cancelText?: string): Promise<boolean> {
     return new Promise(resolve => {
       this.alert.create({
-        header: message? message : 'Abortar a missão?',
+        header: message,
         buttons: [{
-            text: 'Cancelar',
+            text: cancelText ? cancelText : 'Cancelar',
             role: 'cancel',
             handler: () => { resolve(false) }
           }, {
-            text: 'Confirmar',
+            text: confirmText ? confirmText : 'Confirmar',
             handler: () => { resolve(true) }
           }]
       }).then(alertObject => { alertObject.present() })

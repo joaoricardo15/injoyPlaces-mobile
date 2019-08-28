@@ -10,7 +10,7 @@
       <div id="bottonLine">
         <div id="tags">
           <div style="display: flex;">
-            <tag class="tag" [icon]="'pin'" [size]="'small'" [color]="'danger'">{{role.address.suburb}}</tag>
+            <tag class="tag" [icon]="'pin'" [size]="'small'" [color]="'danger'">{{role.address | addressShort}}</tag>
             <tag *ngIf="role.occasions?.length > 0" class="tag" [icon]="'walk'" [size]="'small'" [color]="'success'">{{role.occasions[0]}}</tag>
             <tag *ngIf="role.tags?.length > 0" class="tag" [icon]="'pricetag'" [size]="'small'" [color]="'light'">{{role.tags[0]}}</tag>
           </div>

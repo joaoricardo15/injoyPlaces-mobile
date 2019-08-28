@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { iMyExperiences, iExperience } from './../../common/interfaces/injoyApi.interface';
+import { iMyExperiences, iExperience, iRole } from './../../common/interfaces/injoyApi.interface';
 import { DataService } from './../../common/services/data.service';
 import { LoadingService } from './../../common/services/loading.service';
 import { LocalStorageService } from 'src/app/common/services/localStorage.service';
@@ -27,11 +27,16 @@ export class MyExperiencesPage implements OnInit {
     private experienceService: ExperienceService) { }
 
   ngOnInit() {
-    this.myExperiences = this.localStorage.getMyExperiences()
+    //this.myExperiences = this.localStorage.getMyExperiences()
     this.data.getMyExperiences()
     this.data.myExperiencesObserver.subscribe(myExperiences => {
       this.myExperiences = myExperiences
-      this.localStorage.setMyExperiences(myExperiences)
+
+      // for (let i = 0; i < myExperiences.experiences.length; i++) {
+      //   myExperiences.experiences[i].pic = null
+      // }
+
+      //this.localStorage.setMyExperiences(myExperiences)
 
       if (this.loading.isOpened)
         this.loading.dismiss()
@@ -39,17 +44,20 @@ export class MyExperiencesPage implements OnInit {
       this.experiencesOpened = true
       this.onRefresh = false
     })
-  }
 
-  refresh() {
+    this.loading.create().subscribe(() => {})
+  }
+  
+  refresh(event) {
     if (!this.onRefresh) {
       this.onRefresh = true
       this.data.getMyExperiences()
       this.loading.create(null, 500).subscribe(() => {})
+      //setTimeout(() => { event.target.complete() }, 500)
     }
   }
 
-  public navigate(experience: iExperience){
+  public navigate(experience: iExperience) {
     this.experienceService.setExperience(experience)
     this.router.navigate(['home/experience']);
   }

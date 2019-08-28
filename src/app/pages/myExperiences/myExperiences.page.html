@@ -1,12 +1,16 @@
 <ion-header>
   <ion-toolbar id="header">
     <div>
-      <ion-avatar [class.onRefresh]="onRefresh" (click)="refresh()"><img src="./../../assets/icon/favicon.ico"></ion-avatar>
+      <ion-avatar (click)="refresh()"><img src="./../../assets/icon/favicon.ico"></ion-avatar>
       <ion-title>Minhas experiências</ion-title>
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content id="content">
+
+<ion-content>
+  <!-- <ion-refresher (ionRefresh)="refresh($event)">
+    <div style="margin-top: 8px; width: 100%; text-align:center"><tag [icon]="'globe'" [fontColor]="'dark'">{{ onRefresh ? 'carregando dados...' : 'carregar dados'}}</tag></div>
+  </ion-refresher> -->
   <mat-accordion>
     <mat-expansion-panel class="panel" [(expanded)]="achievementsOpened" hideToggle>
       <mat-expansion-panel-header>
@@ -15,7 +19,7 @@
           <ion-icon class="tabIcon" [class.tabOpened]="achievementsOpened" name="trophy"></ion-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div class="panelContent">
+      <div class="panelContent" (click)=$event.stopPropagation()>
         <mat-grid-list  cols="4" rowHeight="100px" gutterSize="8px">
           <mat-grid-tile *ngFor="let achievement of myExperiences?.achievements"
             [colspan]="2"
@@ -58,7 +62,7 @@
           <mat-list-item *ngFor="let experience of myExperiences?.experiences" (click)="navigate(experience)">
             <img src="{{experience.pic | imageURISync}}"matListAvatar>
             <h3 matLine>{{experience.name}}</h3>
-            <tag class="floatRight" *ngIf="experience.date" [icon]="'calendar'" [size]="'small'" [fontColor]="'dark'">{{experience.date | date: 'short'}}</tag>
+            <tag class="floatRight" [icon]="'calendar'" [size]="'small'" [fontColor]="'dark'">{{experience.date ? (experience.date | date: 'short') : (experience.arrival | date: 'short') + ' - ' + (experience.departure | date: 'shortTime')}}</tag>
             <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>

@@ -36,8 +36,8 @@ export class NavigationService {
         alert.dismiss()
         return
       }
-      if (this.router.url != '' && this.router.url != '/' && this.router.url != '/home' && this.router.url != '/home/myList' && this.router.url != '/signUp') {
-        this.location.back()
+      if (this.router.url == 'home/role' || this.router.url == 'home/addExperience' || this.router.url == 'home/myExperiences' || this.router.url == 'home/experience') {
+        //this.location.back()
       }
     })
   }

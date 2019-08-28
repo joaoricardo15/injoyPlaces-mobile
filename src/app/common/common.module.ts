@@ -40,7 +40,8 @@ import { LoadingService } from './services/loading.service';
 
 import { ImageURIPipe } from './pipes/imageURI.pipe';
 import { ImageURISyncPipe } from './pipes/imageURI.pipe';
-import { AddressPipe } from './pipes/address.pipe';
+import { AddressCompletePipe } from './pipes/address.pipe';
+import { AddressShortPipe } from './pipes/address.pipe';
 import { DataService } from './services/data.service';
 import { RoleService } from './components/role/roles.service';
 import { ExperienceService } from './components/experience/experience.service';
@@ -59,7 +60,8 @@ import { ExperienceService } from './components/experience/experience.service';
   declarations: [
     ImageURIPipe,
     ImageURISyncPipe,
-    AddressPipe,
+    AddressCompletePipe,
+    AddressShortPipe,
     RoleComponent,
     RolePage,
     ExperienceComponent,
@@ -74,7 +76,8 @@ import { ExperienceService } from './components/experience/experience.service';
   exports: [
     ImageURIPipe,
     ImageURISyncPipe,
-    AddressPipe,
+    AddressCompletePipe,
+    AddressShortPipe,
     RoleComponent,
     RolePage,
     ExperienceComponent,

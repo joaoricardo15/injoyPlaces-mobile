@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { ApiService } from './api.service';
-import { iMyExperiences, iMylist, iRole } from '../interfaces/injoyApi.interface';
+import { iMyExperiences, iMylist } from '../interfaces/injoyApi.interface';
 import { Subject } from 'rxjs';
 
 @Injectable()
@@ -14,21 +14,21 @@ export class DataService {
 
   getMyList() {
     this.api.getRolesForMe()
-      .subscribe((lists: iMylist) => {
+      .then((lists: iMylist) => {
         this.myListObserver.next(lists)
       })
   }
   
   getRolesAround() {
     this.api.getRolesAround()
-      .subscribe(result => {
+      .then(result => {
         this.rolesAroundObserver.next(result)
       })
   }
 
   getMyExperiences() {
     this.api.getMyExperiences()
-      .subscribe((myExperiences: iMyExperiences) => {
+      .then((myExperiences: iMyExperiences) => {
         this.myExperiencesObserver.next(myExperiences)
       })
   }

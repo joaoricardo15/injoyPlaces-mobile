@@ -11,12 +11,13 @@ import { AlertService } from 'src/app/common/services/alert.service';
 import { ToastService } from 'src/app/common/services/toast.service';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { LoadingService } from 'src/app/common/services/loading.service';
-import { NavigationService } from 'src/app/common/services/navigation.service';
+import { ImageURISyncPipe } from 'src/app/common/pipes/imageURI.pipe';
 
 @Component({
   selector: 'addExperience-page',
   templateUrl: 'addExperience.page.html',
-  styleUrls: ['addExperience.page.scss']
+  styleUrls: ['addExperience.page.scss'],
+  providers: [ ImageURISyncPipe ]
 })
 export class AddExperiencePage {
 
@@ -40,7 +41,10 @@ export class AddExperiencePage {
   comment: FormControl
   form: FormGroup
 
+  onRefresh: boolean = false
   isLocationAvailable: boolean = false
+  sugestionsListMaxLength: number = 20
+
   godMode: boolean = false
 
   constructor(
@@ -51,6 +55,7 @@ export class AddExperiencePage {
     private toast: ToastService,
     private camera: CameraService,
     private diagnostic: Diagnostic,
+    private imagePipe: ImageURISyncPipe,
     private loading: LoadingService,
     private sheet: ActionSheetController,
     private localStorage: LocalStorageService) {  }
@@ -85,7 +90,17 @@ export class AddExperiencePage {
         this.location.setValue(result['location'])
         this.rolesAround = result['roles']
         this.setAddress(result['location'])
+        this.onRefresh = false
       })
+  }
+
+  setAddress(location: iLocation ) {
+    this.api.getAddress(location)
+      .then(address => { 
+        this.localAddress = address 
+        if (!this.address.value) 
+          this.address.setValue(address) 
+        })
   }
 
   setAddressManualy() {
@@ -97,15 +112,6 @@ export class AddExperiencePage {
             this.location.setValue(location)
           })
       })
-  }
-
-  setAddress(location: iLocation ) {
-    this.api.getAddress(location)
-      .then(address => { 
-        this.localAddress = address 
-        if (!this.address.value) 
-          this.address.setValue(address) 
-        })
   }
 
   ionViewWillEnter() {
@@ -181,7 +187,7 @@ export class AddExperiencePage {
     this.router.navigate(['home/myExperiences'])
 
     this.api.postExperience(experience)
-      .subscribe(() => {
+      .then(() => {
         this.toast.create('Experiência salva com sucesso!!!', 'success')
         this.data.getMyExperiences()
         this.data.getMyList()
@@ -197,19 +203,18 @@ export class AddExperiencePage {
     if (type == 'roles') {
       sheetObject.header = 'rolês próximos de você'
 
-      for (let i = 0; i < this.rolesAround.length; i++) {
+      for (let i = 0; i < this.rolesAround.length || i >= this.sugestionsListMaxLength; i++) {
         sheetObject.buttons.push({
           text: this.rolesAround[i].name + ' (' + this.rolesAround[i].ratting.rattings + ' avaliações)',
           role: 'destructive',
           icon: 'pin',
           handler: () => {
             this.currentRole = this.rolesAround[i]
+            this.currentPic = this.imagePipe.transform(this.rolesAround[i].pics[this.rolesAround[i].pic]) 
             this.name.setValue(this.rolesAround[i].name)
             this.address.setValue(this.rolesAround[i].address)
-
+            
             this.nameChip = this.rolesAround[i].name
-            this.occasion.setValue(null)
-            this.tag.setValue(null)
           }
         })
       }
@@ -223,7 +228,7 @@ export class AddExperiencePage {
     else if (type == 'occasions') {
       sheetObject.header = 'Ocasiões mais escolhidas'
 
-      for (let i = 0; i < this.currentRole.occasions.length; i++) {
+      for (let i = 0; i < this.currentRole.occasions.length || i >= this.sugestionsListMaxLength; i++) {
         sheetObject.buttons.push({
           text: this.currentRole.occasions[i],
           role: 'destructive',
@@ -242,9 +247,9 @@ export class AddExperiencePage {
       })
     }
     else if (type == 'tags') {
-      sheetObject.header = 'Tags mais votadas'
+      sheetObject.header = 'Tags mais escolhidas'
 
-      for (let i = 0; i < this.currentRole.tags.length; i++) {
+      for (let i = 0; i < this.currentRole.tags.length || i >= this.sugestionsListMaxLength; i++) {
         sheetObject.buttons.push({
           text: this.currentRole.tags[i],
           role: 'destructive',
@@ -268,7 +273,7 @@ export class AddExperiencePage {
 
   canDeactivate(): Promise<boolean> | boolean {
     if(this.submitted != true && (this.ratting.value || this.occasion.value|| this.tag.value || this.pic.value || this.comment.value))
-      return this.alert.createConfirmation()
+      return this.alert.createConfirmation('deseja sair?', 'sair')
     else
       return true
   }
@@ -279,14 +284,11 @@ export class AddExperiencePage {
   }
 
   removeName() {
+    this.currentPic = 'assets/images/InJoyWoman.png'
     this.name.setValue(null)
     this.address.setValue(this.localAddress)
-    this.occasion.setValue(null)
-    this.tag.setValue(null)
-    this.currentRole = null
     this.nameChip = null
-    this.occasionChip = null
-    this.tagChip = null
+    this.currentRole = null
   }
 
   addTag()  {
@@ -310,24 +312,33 @@ export class AddExperiencePage {
   }
 
   addPicture() {
-    this.camera.getPicture()
-      .then(imageData => {
-        let pic = 'data:image/png;base64,' + imageData
-        this.currentPic = pic
-        this.pic.setValue(pic)
-      })
+    this.alert.createConfirmation('', 'Camera', 'Imagens salvas')
+      .then(camera => {
+        this.camera.getPicture(camera)
+          .then(imageData => {
+            let pic = 'data:image/png;base64,' + imageData
+            this.currentPic = pic
+            this.pic.setValue(pic)
+          })
+    })
   }
 
   resetForm() {
+    this.name.setValue(null)
+    this.address.setValue(null)
     this.location.setValue(null)
     this.ratting.setValue(null)
     this.occasion.setValue(null)
     this.tag.setValue(null)
     this.pic.setValue(null)
     this.comment.setValue(null)
+
+    this.rolesAround = null
+    this.currentRole = null
     this.currentPic = 'assets/images/InJoyWoman.png'
-    this.tagChip = null
+    this.nameChip = null
     this.occasionChip = null
+    this.tagChip = null
     this.submitted = false
     this.submitting = false
   }

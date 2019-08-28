@@ -1,6 +1,6 @@
 <div *ngIf="role">
   <ion-content>
-    <backgroundImageWrap [img]="role.pic | imageURI">
+    <backgroundImageWrap [img]="role.pics[role.pic] | imageURI">
       <div id="content">
         <ion-label color="light">{{role.name}}</ion-label>
         <ratting [rate]="role.ratting.average" [size]="'large'"></ratting>
