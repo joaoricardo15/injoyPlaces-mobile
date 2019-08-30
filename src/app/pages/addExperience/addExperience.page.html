@@ -13,9 +13,6 @@
       <ion-grid>
         <ion-row id="nameForm" justify-content-center>
           <tag *ngIf="nameChip" [color]="'light'" [size]="'large'" [close]="true" (onClose)="removeName()">{{name.value}}</tag>
-          <div id="addressChip">
-            <tag *ngIf="nameChip" [icon]="'pin'" [color]="'danger'" [fontColor]="address.value ? 'light' : 'danger'" [size]="'small'" [close]="godMode" (onClose)="setAddressManualy()">{{address.value ? (address.value.suburb) : 'carregando a sua localização...' }}</tag>
-          </div>
           <div *ngIf="!nameChip">
             <div class="formWarning" [style.visibility]="(submitting && form.controls.name?.errors?.required) ? 'visible' : 'hidden'">é necessário preencher o nome do local...</div>
             <display id="newRoleInput" [class.filledNameBackground]="form.controls.name?.valid">
@@ -25,6 +22,11 @@
               <ion-icon id="optionsIcon" *ngIf="rolesAround?.length > 0" [class.onCurrentRole]="rolesAround?.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('roles')"></ion-icon>
             </display>
           </div> 
+        </ion-row>
+        <ion-row justify-content-center>
+          <div id="addressChip">
+            <tag [icon]="'pin'" [color]="'danger'" [fontColor]="address.value ? 'light' : 'danger'" [size]="'small'" [close]="godMode" (onClose)="setAddressManualy()">{{address.value ? (address.value | addressShort) : 'carregando a sua localização...' }}</tag>
+          </div>
         </ion-row>
         <ion-row id="rattingForm" justify-content-center>
           <div class="formWarning" *ngIf="submitting && form.controls.ratting?.invalid">é necessário avaliar o rolê...</div>

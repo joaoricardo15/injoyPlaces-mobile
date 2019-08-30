@@ -62,7 +62,7 @@
 }
 
 #nameForm {
-  height: $global-size-spacing-extraLarge*3;
+  height: $global-size-spacing-extraLarge*2 + $global-size-spacing-large;
 
   tag {
     max-width: 100%;
