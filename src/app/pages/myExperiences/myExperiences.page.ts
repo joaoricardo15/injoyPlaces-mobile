@@ -32,10 +32,6 @@ export class MyExperiencesPage implements OnInit {
     this.data.myExperiencesObserver.subscribe(myExperiences => {
       this.myExperiences = myExperiences
 
-      // for (let i = 0; i < myExperiences.experiences.length; i++) {
-      //   myExperiences.experiences[i].pic = null
-      // }
-
       //this.localStorage.setMyExperiences(myExperiences)
 
       if (this.loading.isOpened)
@@ -53,7 +49,6 @@ export class MyExperiencesPage implements OnInit {
       this.onRefresh = true
       this.data.getMyExperiences()
       this.loading.create(null, 500)
-      //setTimeout(() => { event.target.complete() }, 500)
     }
   }
 

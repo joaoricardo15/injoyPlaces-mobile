@@ -8,7 +8,8 @@ import { AlertService } from './alert.service';
 @Injectable()
 export class ApiService {
 
-  InJoyServerURL = 'https://injoyserver.azurewebsites.net'
+  InJoyServerURL = 'http://injoyserver-env.x2mviib6hg.us-east-1.elasticbeanstalk.com'
+  //InJoyServerURL = 'https://injoyserver.azurewebsites.net'
   //InJoyServerURL = 'http://127.0.0.1:1000'
   //InJoyServerURL = 'http://192.168.0.22:1000'
   InJoyServerLocationsURL = '/positions'
