@@ -8,7 +8,7 @@ export class LoadingService {
 
   constructor(private loading: LoadingController) {}
 
-  create(message?: string, duration?: number) {
+  create(message?: string, duration?: number): Promise<null> {
     this.isOpened = true;
     return new Promise(resolve => {
       this.loading.create({
@@ -17,6 +17,7 @@ export class LoadingService {
         duration: duration ? duration : null,
         translucent: true
       }).then(loadingObject => { loadingObject.present().then(() => {  resolve() }) })
+
     })
   }
 
