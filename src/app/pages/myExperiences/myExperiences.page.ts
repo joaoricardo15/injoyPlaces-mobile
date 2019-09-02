@@ -27,21 +27,16 @@ export class MyExperiencesPage implements OnInit {
     private experienceService: ExperienceService) { }
 
   ngOnInit() {
-    //this.myExperiences = this.localStorage.getMyExperiences()
+    this.myExperiences = this.localStorage.getMyExperiences()
     this.data.getMyExperiences()
     this.data.myExperiencesObserver.subscribe(myExperiences => {
       this.myExperiences = myExperiences
 
-      //this.localStorage.setMyExperiences(myExperiences)
-
-      if (this.loading.isOpened)
-        this.loading.dismiss()
+      this.localStorage.setMyExperiences(myExperiences)
       
       this.experiencesOpened = true
       this.onRefresh = false
     })
-
-    this.loading.create()
   }
   
   refresh() {

@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { iUser, iLocation, iAddress } from '../interfaces/injoyApi.interface';
 import { LocalStorageService } from './localStorage.service';
 import { AlertService } from './alert.service';
+import { LoadingService } from './loading.service';
 
 @Injectable()
 export class ApiService {
@@ -17,6 +18,7 @@ export class ApiService {
   constructor(
     private http: HttpClient,
     private alert: AlertService,
+    private loading: LoadingService,
     private localStorage: LocalStorageService) { }
 
   get(url: string, params): Promise<any> {
@@ -26,6 +28,9 @@ export class ApiService {
           resolve(result)
         }, error => {
           this.errorHandler('não foi possível atualizar os dados : (')
+        }, () => {
+          if (this.loading.isOpened)
+            this.loading.dismiss()
         })
     })
   }
@@ -36,7 +41,10 @@ export class ApiService {
         result => {
           resolve(result)
         }, error => {
-          //this.errorHandler('não foi possível postar os dados : (')
+          this.errorHandler('não foi possível postar os dados : (')
+        }, () => {
+          if (this.loading.isOpened)
+            this.loading.dismiss()
         })
     })
   }

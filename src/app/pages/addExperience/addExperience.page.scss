@@ -49,23 +49,17 @@
   margin-right: $global-size-spacing-extraLarge;
 }
 
-#nameForm, #rattingForm {
-  margin-top: $global-size-spacing-extraLarge;
-}
-
-#occasionForm {
-  margin-top: $global-size-spacing-large*2;
-}
-
 #tagForm, #imageForm, #commentForm {
   margin-top: $global-size-spacing-large;
 }
 
 #nameForm {
+  margin-top: $global-size-spacing-large*2;
   height: $global-size-spacing-extraLarge*2 + $global-size-spacing-large;
 
   tag {
     max-width: 100%;
+    margin-top: $global-size-spacing-large;
   }
 
   & > div {
@@ -88,13 +82,14 @@
     #newRoleInput {
       display: flex;
   
-      #pinIcon {
-        height: 100%;
-        padding-left: $global-size-spacing-default;
+      #nameInput {
+        text-align: center;
+        color: var(--ion-color-light);
+        font-size: $global-size-font-default*1.5;
       }
   
       #optionsIcon {
-        height: 100%;
+        padding-top: $global-size-spacing-default;
         padding-right: $global-size-spacing-default;
       }
     }
@@ -103,11 +98,12 @@
 
 #addressChip {
   text-align: center;
-  margin-top: $global-size-spacing-default;
+  margin-top: $global-size-spacing-large*2;
 }
 
 #rattingForm {
-  
+  margin-top: $global-size-spacing-large*2;
+
   ratting {
     zoom: 1.3;
   }
@@ -133,6 +129,7 @@
 }
 
 #occasionForm {
+  margin-top: $global-size-spacing-large*2;
   height: $global-size-spacing-extraLarge + $global-size-spacing-large;
 
   display {
@@ -216,10 +213,17 @@
   margin-bottom:  $global-size-spacing-default;
 }
 
-#formNameWarning, #formTagWarning, #formOccasionWarning, #formCommentWarning {
+#formNameWarning {
+  left: 0;
+  top: $global-size-spacing-large*2;
+  width: 100%;
+  text-align: center;
   position: absolute;
-  left: 125px;
+}
 
+#formTagWarning, #formOccasionWarning, #formCommentWarning {
+  position: absolute;
+  left: 120px;
 }
 
 #formNameWarning, #formTagWarning, #formOccasionWarning {

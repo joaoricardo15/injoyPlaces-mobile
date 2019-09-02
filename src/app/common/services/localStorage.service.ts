@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { iUser, iMylist, iMyExperiences } from './../interfaces/injoyApi.interface';
 
+let window
+
 @Injectable()
 export class LocalStorageService {
 

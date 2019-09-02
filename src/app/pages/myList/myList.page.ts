@@ -30,40 +30,35 @@ export class MyListPage implements OnInit {
     private geolocation: BackgroundGeolocationService) { }
 
   ngOnInit() {
-    //this.myList = this.localStorage.getMyList()
-    this.loading.create().then(() => {
-      this.data.getMyList()    
-      this.data.myListObserver.subscribe(myList => {
-        if (this.myList) {
+    this.myList = this.localStorage.getMyList()
+    this.data.getMyList()    
+    this.data.myListObserver.subscribe(myList => {
+      if (this.myList) {
 
-          if (this.myList.roles.length !== myList.roles.length)
-            this.myList.roles = myList.roles
-          else
-            for (let i = 0; i < this.myList.roles.length; i++)
-              if (this.myList.roles[i].ratting.rattings !== myList.roles[i].ratting.rattings ||
-                this.myList.roles[i].occasions.length !== myList.roles[i].occasions.length ||
-                this.myList.roles[i].tags.length !== myList.roles[i].tags.length ||
-                this.myList.roles[i].pics.length !== myList.roles[i].pics.length || 
-                this.myList.roles[i].comments.length !== myList.roles[i].comments.length)
-                this.myList.roles[i] = myList.roles[i]
-
-          if (this.myList.myLists.length !== myList.myLists.length)
-            this.myList.myLists = myList.myLists
-          else
-            for (let i = 0; i < this.myList.myLists.length; i++)
-              if (this.myList.myLists[i].roles.length !== myList.myLists[i].roles.length)
-                this.myList.myLists[i] = myList.myLists[i]
-        }
+        if (this.myList.roles.length !== myList.roles.length)
+          this.myList.roles = myList.roles
         else
-          this.myList = myList
+          for (let i = 0; i < this.myList.roles.length; i++)
+            if (this.myList.roles[i].ratting.rattings !== myList.roles[i].ratting.rattings ||
+              this.myList.roles[i].occasions.length !== myList.roles[i].occasions.length ||
+              this.myList.roles[i].tags.length !== myList.roles[i].tags.length ||
+              this.myList.roles[i].pics.length !== myList.roles[i].pics.length || 
+              this.myList.roles[i].comments.length !== myList.roles[i].comments.length)
+              this.myList.roles[i] = myList.roles[i]
 
-        //this.localStorage.setMyList(myList)
+        if (this.myList.myLists.length !== myList.myLists.length)
+          this.myList.myLists = myList.myLists
+        else
+          for (let i = 0; i < this.myList.myLists.length; i++)
+            if (this.myList.myLists[i].roles.length !== myList.myLists[i].roles.length)
+              this.myList.myLists[i] = myList.myLists[i]
+      }
+      else
+        this.myList = myList
 
-        if (this.loading.isOpened)
-          this.loading.dismiss()
-        
-        this.onRefresh = false
-      })
+      this.localStorage.setMyList(myList)
+      
+      this.onRefresh = false
     })
     this.geolocation.startBackgroundGeolocationTracker(this.localStorage.getUser().user);
   }

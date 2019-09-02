@@ -88,8 +88,8 @@ export class AddExperiencePage {
     this.data.rolesAroundObserver
       .subscribe(result => {
         this.location.setValue(result['location'])
-        this.rolesAround = result['roles']
         this.setAddress(result['location'])
+        this.rolesAround = result['roles']
         this.onRefresh = false
       })
   }

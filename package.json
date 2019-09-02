@@ -9,7 +9,13 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deleteAndroid": "ionic cordova platform remove android",
+    "addAndroid": "ionic cordova platform add android",
+    "clearAndroid": "npm run deleteAndroid && npm run addAndroid",
+    "buildRelease": "ionic cordova build android --release",
+    "signBuild": "\"C:Program Files/Java/jdk1.8.0_211/bin/jarsigner.exe\" -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore injoy.keystore app-release-unsigned.apk injoy",
+    "createRelease": "npm run deleteAndroid && npm run addAndroid && npm run buildRelease"
   },
   "private": true,
   "dependencies": {
@@ -79,16 +85,7 @@
       "cordova-plugin-camera": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
-      "cordova-plugin-mauron85-background-geolocation": {
-        "GOOGLE_PLAY_SERVICES_VERSION": "11+",
-        "ANDROID_SUPPORT_LIBRARY_VERSION": "26+",
-        "ICON": "@mipmap/icon",
-        "SMALL_ICON": "@mipmap/icon",
-        "ACCOUNT_NAME": "@string/app_name",
-        "ACCOUNT_LABEL": "@string/app_name",
-        "ACCOUNT_TYPE": "$PACKAGE_NAME.account",
-        "CONTENT_AUTHORITY": "$PACKAGE_NAME"
-      },
+      "cordova-plugin-mauron85-background-geolocation": {},
       "cordova.plugins.diagnostic": {
         "ANDROID_SUPPORT_VERSION": "28.+"
       },
