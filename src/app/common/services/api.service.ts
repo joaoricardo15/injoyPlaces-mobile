@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { iUser, iLocation, iAddress } from '../interfaces/injoyApi.interface';
 import { LocalStorageService } from './localStorage.service';
 import { AlertService } from './alert.service';
@@ -10,9 +10,7 @@ import { LoadingService } from './loading.service';
 export class ApiService {
 
   InJoyServerURL = 'http://injoyserver-env.x2mviib6hg.us-east-1.elasticbeanstalk.com'
-  //InJoyServerURL = 'https://injoyserver.azurewebsites.net'
   //InJoyServerURL = 'http://127.0.0.1:1000'
-  //InJoyServerURL = 'http://192.168.0.22:1000'
   InJoyServerLocationsURL = '/positions'
 
   constructor(
