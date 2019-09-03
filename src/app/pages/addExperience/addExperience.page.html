@@ -16,10 +16,10 @@
           <div *ngIf="!nameChip">
             <div class="formWarning" [style.visibility]="(submitting && form.controls.name?.errors?.required) ? 'visible' : 'hidden'">é necessário preencher o nome do local...</div>
             <div id="formNameWarning" class="formWarning" *ngIf="submitting && form.controls.name?.errors?.minlength">mínimo 3 caracteres...</div>
-            <div id="newRoleInput">
+            <display id="newRoleInput">
               <ion-input id="nameInput" formControlName="name" (keyup.enter)="addName()" (focusout)="addName()" type="text" maxlength="30" spellcheck="false" placeholder="digite o nome do rolê..."></ion-input>
               <ion-icon id="optionsIcon" *ngIf="rolesAround?.length > 0" [class.onCurrentRole]="rolesAround?.length > 0" name="arrow-dropdown" size="large" color="light" (click)="presentActionSheet('roles')"></ion-icon>
-            </div>
+            </display>
           </div> 
         </ion-row>
         <ion-row id="addressChip" justify-content-center>

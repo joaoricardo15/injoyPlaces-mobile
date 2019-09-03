@@ -65,32 +65,27 @@
   & > div {
     width: 100%;
 
-    #newRoleTitle {
-      text-align: center;
-      margin-bottom: $global-size-spacing-large*2;
-
-      & > ion-icon {
-        vertical-align: bottom;
-      }
-
-      & > ion-label {
-        font-size: $global-size-font-large;
-        margin-left: $global-size-spacing-default;
-      }
-    }
-
     #newRoleInput {
       display: flex;
-  
+      
+      #nameIcon {
+        height: 100%;
+        padding-left: $global-size-spacing-large;
+      }
+
       #nameInput {
         text-align: center;
         color: var(--ion-color-light);
-        font-size: $global-size-font-default*1.5;
+        font-size: $global-size-font-default;
       }
   
       #optionsIcon {
-        padding-top: $global-size-spacing-default;
-        padding-right: $global-size-spacing-default;
+        // height: 100%;
+        // padding-right: 2px;
+        top: 54px;
+        right: 32px;
+        z-index: 2;
+        position: absolute;
       }
     }
   }
