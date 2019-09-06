@@ -5,12 +5,13 @@ import { iUser, iLocation, iAddress } from '../interfaces/injoyApi.interface';
 import { LocalStorageService } from './localStorage.service';
 import { AlertService } from './alert.service';
 import { LoadingService } from './loading.service';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 
 @Injectable()
 export class ApiService {
 
-  InJoyServerURL = 'http://injoyserver-env.x2mviib6hg.us-east-1.elasticbeanstalk.com'
   //InJoyServerURL = 'http://127.0.0.1:1000'
+  InJoyServerURL = 'http://injoyserver-env.x2mviib6hg.us-east-1.elasticbeanstalk.com'
   InJoyServerLocationsURL = '/positions'
 
   constructor(
@@ -61,12 +62,22 @@ export class ApiService {
 
   getRolesAround(): Promise<any> {
     return new Promise(resolve => {
-      navigator.geolocation.getCurrentPosition(location => {
-          let locationFormated: iLocation = { lat: location.coords.latitude, lng: location.coords.longitude }
-          this.get('/rolesAround', { location: JSON.stringify(locationFormated) })
-          .then(roles => { resolve({ location: locationFormated, roles: roles}) })
-        },
-        error => { this.errorHandler('não foi possível obter a sua localização : (') })
+      BackgroundGeolocation.getCurrentLocation()
+        .then(location => {
+            let locationFormated: iLocation = { lat: location.latitude, lng: location.longitude }
+            this.get('/rolesAround', { location: JSON.stringify(locationFormated) })
+              .then(roles => { resolve({ location: locationFormated, roles: roles}) })
+        }).catch(() => {
+          navigator.geolocation.getCurrentPosition(
+            location => {
+              let locationFormated: iLocation = { lat: location.coords.latitude, lng: location.coords.longitude }
+              this.get('/rolesAround', { location: JSON.stringify(locationFormated) })
+                .then(roles => { resolve({ location: locationFormated, roles: roles}) })
+            },
+            () => { 
+              this.errorHandler('não foi possível obter a sua localização : (')
+            })
+        })
     })
   }
 

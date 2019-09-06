@@ -30,7 +30,7 @@ export class MyListPage implements OnInit {
     private geolocation: BackgroundGeolocationService) { }
 
   ngOnInit() {
-    this.myList = this.localStorage.getMyList()
+    //this.myList = this.localStorage.getMyList()
     this.data.getMyList()    
     this.data.myListObserver.subscribe(myList => {
       if (this.myList) {
@@ -56,10 +56,11 @@ export class MyListPage implements OnInit {
       else
         this.myList = myList
 
-      this.localStorage.setMyList(myList)
+      //this.localStorage.setMyList(myList)
       
       this.onRefresh = false
     })
+    this.loading.create()
     this.geolocation.startBackgroundGeolocationTracker(this.localStorage.getUser().user);
   }
 

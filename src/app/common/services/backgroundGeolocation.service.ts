@@ -11,15 +11,15 @@ export class BackgroundGeolocationService {
     let config: BackgroundGeolocationConfig = {
       locationProvider: 2,
       desiredAccuracy: 0,
-      interval: 60000,
-      fastestInterval: 60000,
-      stationaryRadius: 10,
-      distanceFilter: 10,
+      interval: 20000,
+      fastestInterval: 20000,
+      stationaryRadius: 2,
+      distanceFilter: 2,
       debug: false,
       stopOnTerminate: false,
       startForeground: false, // nao é necessário para rodar em background, basta só stopOnTerminate = false
       pauseLocationUpdates: false,
-      saveBatteryOnBackground: true,
+      saveBatteryOnBackground: false,
     
       startOnBoot: true, // nao funciona
       notificationsEnabled: false, // nao funciona
@@ -42,20 +42,20 @@ export class BackgroundGeolocationService {
 
     BackgroundGeolocation.configure(config)
       .then(() => { 
-
         BackgroundGeolocation.checkStatus()
           .then((status) => {
             if (!status.isRunning) {
-              BackgroundGeolocation.start().then(() => {
-                BackgroundGeolocation.getValidLocations()
-                  .then(locations => {
-                    if (locations.length > 0) {
-                      this.api.postLocations(locations).subscribe(() => {
-                        BackgroundGeolocation.deleteAllLocations()
-                      })
-                    }
+              BackgroundGeolocation.start()
+                .then(() => {
+                  BackgroundGeolocation.getValidLocations()
+                    .then(locations => {
+                      if (locations.length > 0) {
+                        this.api.postLocations(locations).subscribe(() => {
+                          BackgroundGeolocation.deleteAllLocations()
+                        })
+                      }
+                  })
                 })
-              })
             }
           })
 

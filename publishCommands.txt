@@ -4,11 +4,13 @@ ionic cordova platform add android
 
 ///// não esquecer de criar a pasta mipmap para evitar o erro do backgroundGeolocation plugin
 
+///// não esquecer de mudar o número da versão no arquivo config.xml para aceitação na Play Store
+
 ionic cordova build android --release
 
 ///// só podem ser executados de um prompt do windows
 
-"C:\Program Files\Java\jdk1.8.0_211\bin\keytool.exe" -genkey -v -keystore injoy.keystore -alias injoy -keyalg RSA -keysize 2048 -validity 10000
+///// se não houver chaves para serem assinadas utilize -> "C:\Program Files\Java\jdk1.8.0_211\bin\keytool.exe" -genkey -v -keystore injoy.keystore -alias injoy -keyalg RSA -keysize 2048 -validity 10000
 
 "C:\Program Files\Java\jdk1.8.0_211\bin\jarsigner.exe" -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore injoy.keystore app-release-unsigned.apk injoy
 

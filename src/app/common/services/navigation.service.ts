@@ -25,7 +25,7 @@ export class NavigationService {
   }
 
   backButtonControler() {
-    this.platform.backButton.subscribe( async () => {
+    this.platform.backButton.subscribe(async () => {
       const sheet = await this.sheet.getTop()
       if (sheet) {
         sheet.dismiss()
@@ -37,7 +37,7 @@ export class NavigationService {
         return
       }
       if (this.router.url == 'home/role' || this.router.url == 'home/addExperience' || this.router.url == 'home/myExperiences' || this.router.url == 'home/experience') {
-        //this.location.back()
+        this.location.back()
       }
     })
   }
