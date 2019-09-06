@@ -11,10 +11,10 @@ export class BackgroundGeolocationService {
     let config: BackgroundGeolocationConfig = {
       locationProvider: 2,
       desiredAccuracy: 0,
-      interval: 20000,
-      fastestInterval: 20000,
-      stationaryRadius: 2,
-      distanceFilter: 2,
+      interval: 10000,
+      fastestInterval: 10000,
+      stationaryRadius: 1,
+      distanceFilter: 1,
       debug: false,
       stopOnTerminate: false,
       startForeground: false, // nao é necessário para rodar em background, basta só stopOnTerminate = false
